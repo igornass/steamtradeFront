@@ -1,0 +1,93 @@
+<div class="content columns-{{columns}} fullsize">
+	<div class="content-top">
+		<div class="game">
+			<h1>Выберите игру</h1>
+			<div ng-click="selectGame('570')" ng-class="{ 'current': selectedGame == 570}"><ng-include src="'resources/svg/dota.svg'"></ng-include></div>
+			<div ng-click="selectGame('730')" ng-class="{ 'current': selectedGame == 730}"><ng-include src="'resources/svg/csgo.svg'"></ng-include></div>
+			<div ng-click="selectGame('440')" ng-class="{ 'current': selectedGame == 440}"><ng-include src="'resources/svg/tf.svg'"></ng-include></div>
+		</div>
+		
+		<div class="search" ng-show="selectedGame">
+			<h1>Поиск по названию</h1>
+			<input type="text" class="default" ng-model="search.description.market_name" placeholder="Введите название" ng-focus="filterBlock = true">
+			<button type="button" class="filter-button" ng-click="getOffers(selectedGame, null, null, price.from, price.to, search.description.market_name, null, null, null )">Подобрать</button>
+			<div class="filter" ng-click="selectedGame ? filterBlock = !filterBlock : null"><ng-include src="'resources/svg/filter.svg'"></ng-include></div>
+			<div class="filter-block buy" ng-show="filterBlock">
+				<div>
+					<div class="price-block">
+						<h1>Цена</h1>
+						<span>От</span><input class="default price" type="text" ng-model="price.from">
+						<span>до</span><input class="default price" type="text" ng-model="price.to">
+					</div>
+					<div ng-show="selectedGame == 570 || selectedGame == 730">
+						<h1>Тип</h1>
+						<div class="custom-select">
+							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
+							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.Type" ng-focus="search.tags.Type = ''; selectType = true" ng-blur="selectType = false">
+							<ul ng-class="{ 'visible': selectType == true }">
+								<li ng-repeat="query in filters.Type | orderBy:query | filter:search.tags.Type" ng-click="$parent.search.tags.Type = query; $parent.selectType = false">{{query}}</li>
+							</ul>
+						</div>
+					</div>
+					<div ng-show="selectedGame == 570">
+						<h1>Герой</h1>
+						<div class="custom-select">
+							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
+							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.Hero" ng-focus="search.tags.Hero = ''; selectHero = true" ng-blur="selectHero = false">
+							<ul ng-class="{ 'visible': selectHero == true }">
+								<li ng-repeat="query in filters.Hero | orderBy:query | filter:search.tags.Hero" ng-click="$parent.search.tags.Hero = query; $parent.selectHero = false">{{query}}</li>
+							</ul>
+						</div>
+					</div>
+					<div ng-show="selectedGame == 730">
+						<h1>Коллекция</h1>
+						<div class="custom-select">
+							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
+							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.ItemSet" ng-focus="search.tags.ItemSet = ''; selectItemSet = true" ng-blur="selectItemSet = false">
+							<ul ng-class="{ 'visible': selectItemSet == true }">
+								<li ng-repeat="query in filters.ItemSet | orderBy:query | filter:search.tags.ItemSet" ng-click="$parent.search.tags.ItemSet = query; $parent.selectItemSet = false">{{query}}</li>
+							</ul>
+						</div>
+					</div>
+					<div ng-show="selectedGame == 570 || selectedGame == 730">
+						<h1>Редкость</h1>
+						<div class="custom-select">
+							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
+							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.Rarity" ng-focus="search.tags.Rarity = ''; selectRarity = true" ng-blur="selectRarity = false">
+							<ul ng-class="{ 'visible': selectRarity == true }">
+								<li ng-repeat="query in filters.Rarity | orderBy:query | filter:search.tags.Rarity" ng-click="$parent.search.tags.Rarity = query; $parent.selectRarity = false">{{query}}</li>
+							</ul>
+						</div>
+					</div> 
+					<div ng-show="selectedGame == 570 || selectedGame == 730">
+						<h1>Качество</h1>
+						<div class="custom-select">
+							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
+							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.Quality" ng-focus="search.tags.Quality = ''; selectQuality = true" ng-blur="selectQuality = false">
+							<ul ng-class="{ 'visible': selectQuality == true }">
+								<li ng-repeat="query in filters.Quality | orderBy:query | filter:search.tags.Quality" ng-click="$parent.search.tags.Quality = query; $parent.selectQuality = false">{{query}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div ng-repeat="offer in offers" class="content-block">
+		<img draggable="false" ng-src="{{applicationUtils.imageURL(offer.item.icon_url_large, 300)}}">
+		<div class="info-1">
+			<span class="title">{{offer.item.name}}</span>
+			<div>Количество: <span>{{offer.count}}</span></div>
+			<div>Цена: <span class="price">{{offer.price}}</span></div>
+			<div>Цена в Steam: <span class="steam-price">{{offer.price}}</span></div>			
+		</div>
+		<div class="info-2">
+			<div ng-show="selectedGame == 570"><b>Герой:</b> {{offer.tags.Hero}}</div>
+			<div ng-show="selectedGame == 570 || selectedGame == 730"><b>Редкость:</b> {{offer.tags.Rarity}}</div>
+			<div ng-show="selectedGame == 570"><b>Слот:</b> {{offer.tags.Slot}}</div>
+			<button type="button">Купить</button>
+		</div>
+	</div>
+	
+</div>

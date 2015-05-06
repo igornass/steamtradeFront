@@ -1,0 +1,147 @@
+<div class="content fullsize" ng-show="!isLoggedIn && !isUserUpdating">
+    <div class="error-message">Для просмотра данной страницы необходимо войти на сайт через Steam.</div>
+</div>
+
+<div class="content columns-{{columns}}" ng-show="isLoggedIn">
+
+	<div class="content-top" ng-show="isLoggedIn">
+		<div class="game">
+			<h1>Выберите игру</h1>
+			<div ng-click="getInventory('570')" ng-class="{ 'current': selectedGame == 570}"><ng-include src="'resources/svg/dota.svg'"></ng-include></div>
+			<div ng-click="getInventory('730')" ng-class="{ 'current': selectedGame == 730}"><ng-include src="'resources/svg/csgo.svg'"></ng-include></div>
+			<div ng-click="getInventory('440')" ng-class="{ 'current': selectedGame == 440}"><ng-include src="'resources/svg/tf.svg'"></ng-include></div>
+		</div>
+		
+		<div class="search">
+			<h1>Поиск по названию</h1>
+			<input type="text" class="default" ng-model="search.description.market_name" placeholder="Введите название">
+			<div class="filter" ng-click="selectedGame ? filterBlock = !filterBlock : null"><ng-include src="'resources/svg/filter.svg'"></ng-include></div>
+			<div class="filter-block" ng-show="filterBlock">
+				<div>
+					<div ng-show="selectedGame == 570 || selectedGame == 730">
+						<h1>Тип</h1>
+						<div class="custom-select">
+							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
+							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.Type" ng-focus="search.tags.Type = ''; selectType = true" ng-blur="selectType = false">
+							<ul ng-class="{ 'visible': selectType == true }">
+								<li ng-repeat="query in filters.Type | orderBy:query | filter:search.tags.Type" ng-click="$parent.search.tags.Type = query; $parent.selectType = false">{{query}}</li>
+							</ul>
+						</div>
+					</div>
+					<div ng-show="selectedGame == 570">
+						<h1>Герой</h1>
+						<div class="custom-select">
+							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
+							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.Hero" ng-focus="search.tags.Hero = ''; selectHero = true" ng-blur="selectHero = false">
+							<ul ng-class="{ 'visible': selectHero == true }">
+								<li ng-repeat="query in filters.Hero | orderBy:query | filter:search.tags.Hero" ng-click="$parent.search.tags.Hero = query; $parent.selectHero = false">{{query}}</li>
+							</ul>
+						</div>
+					</div>
+					<div ng-show="selectedGame == 730">
+						<h1>Коллекция</h1>
+						<div class="custom-select">
+							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
+							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.ItemSet" ng-focus="search.tags.ItemSet = ''; selectItemSet = true" ng-blur="selectItemSet = false">
+							<ul ng-class="{ 'visible': selectItemSet == true }">
+								<li ng-repeat="query in filters.ItemSet | orderBy:query | filter:search.tags.ItemSet" ng-click="$parent.search.tags.ItemSet = query; $parent.selectItemSet = false">{{query}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div>
+					<div ng-show="selectedGame == 570 || selectedGame == 730">
+						<h1>Редкость</h1>
+						<div class="custom-select">
+							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
+							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.Rarity" ng-focus="search.tags.Rarity = ''; selectRarity = true" ng-blur="selectRarity = false">
+							<ul ng-class="{ 'visible': selectRarity == true }">
+								<li ng-repeat="query in filters.Rarity | orderBy:query | filter:search.tags.Rarity" ng-click="$parent.search.tags.Rarity = query; $parent.selectRarity = false">{{query}}</li>
+							</ul>
+						</div>
+					</div> 
+					<div ng-show="selectedGame == 570 || selectedGame == 730">
+						<h1>Качество</h1>
+						<div class="custom-select">
+							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
+							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.Quality" ng-focus="search.tags.Quality = ''; selectQuality = true" ng-blur="selectQuality = false">
+							<ul ng-class="{ 'visible': selectQuality == true }">
+								<li ng-repeat="query in filters.Quality | orderBy:query | filter:search.tags.Quality" ng-click="$parent.search.tags.Quality = query; $parent.selectQuality = false">{{query}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div ui-draggable="true" drag="item" ng-dblclick="addItem(item)" ng-click="detailedView(item)"
+		 on-drop-success="dropSuccessHandler($event, item, inventory)"
+		 dir-paginate="item in inventory | filter:search | itemsPerPage: 12" class="content-block" ng-class="{ 'detailed': detailedItem == item.id }">
+		<div class="brief-view">
+			<img draggable="false" ng-src="{{applicationUtils.imageURL(item.description.icon_url_large, 300)}}">
+			<div class="title">{{item.description.market_name}}</div>
+		</div>
+		<div class="detailed-view">
+			<img draggable="false" ng-src="{{applicationUtils.imageURL(item.description.icon_url_large, 300)}}">
+			<div class="info">
+				<b>{{item.description.market_name}}</b>
+				<div class="description">
+					<div ng-repeat="line in item.description.descriptions">{{line.value.charAt(0) == '<' ? "" : line.value }}</div>
+				</div>
+				<div class="tags">
+					<div ng-show="item.tags.Hero" class="tag"><b>Герой: </b>{{item.tags.Hero}}</div>
+					<div ng-show="item.tags.Quality" class="tag"><b>Качество: </b>{{item.tags.Quality}}</div>
+					<div ng-show="item.tags.Rarity" class="tag"><b>Редкость: </b>{{item.tags.Rarity}}</div>
+					<div ng-show="item.tags.Slot" class="tag"><b>Слот: </b>{{item.tags.Slot}}</div>
+					<div ng-show="item.tags.Type" class="tag"><b>Тип: </b>{{item.tags.Type}}</div>
+					<div ng-show="item.tags.Weapon" class="tag"><b>Оружие: </b>{{item.tags.Weapon}}</div>
+					<div ng-show="item.tags.ItemSet" class="tag"><b>Коллекция: </b>{{item.tags.ItemSet}}</div>
+				</div>
+				<button type="button" ng-click="addItem(item)">Продать</button>
+			</div>			
+		</div>
+	</div>
+	
+	<div ng-show="inventoryUnavailable" class="error-message">Не удалось получить содержимое инвентаря. Убедитесь, что ваш инвентарь открыт и в нем есть предметы, для которых разрешен обмен.</div>
+	<div ng-show="steamUnavailable" class="error-message">Сервис Steam сейчас недоступен, попробуйте повторить запрос позднее.</div>
+	
+	<dir-pagination-controls></dir-pagination-controls>
+</div>
+
+<div ng-class="{ 'maximized': sidebarMaximized == true && menuMaximized == false }" class="sidebar" ui-on-Drop="onDrop($event, $data, selectedItems)" ng-show="isLoggedIn">
+	<div class="scroller">
+		<h1>Выбранный инвентарь</h1>
+		<div ng-hide="selectedItems.length != 0">Перетащите сюда инвентарь, который Вы хотите продать, либо кликните по объекту два раза.</div>
+		
+		<div on-drop-success="dropSuccessHandler($event, $index, selectedItems)"
+			 ng-repeat="item in selectedItems"
+			 class="selected-item">
+			<img draggable="false" ng-src="{{applicationUtils.imageURL(item.description.icon_url_large, 300)}}">
+			<div class="description">
+				<div ng-click="removeItem(item)"><ng-include src="'resources/svg/delete.svg'"></ng-include></div>
+				<div class="title">{{item.description.market_name}}</div>
+				<div class="tag"><b>Герой: </b>{{item.tags.Hero}}</div>
+				<div class="tag"><b>Редкость: </b>{{item.tags.Rarity}}</div>
+			</div>
+			<div class="money">
+				<div class="tag">Рекоммендованная цена: <span class="price"></span></div>
+				<div class="left">
+					<div class="tag">Ваша цена:</div>
+					<input type="text" class="default" ng-model="item.price" onkeypress='return event.charCode >= 44 && event.charCode <= 57 && event.charCode != 45 && event.charCode != 47'>
+				</div><div class="right">
+					<div class="tag">При продаже вы получите:</div>
+					<div><span class="price">{{item.price * 0.9 | number:2}}</span><span class="help"><ng-include src="'resources/svg/help.svg'"></ng-include></span></div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="dnd-socket" ng-hide="selectedItems.length != 0">
+			<ng-include src="'resources/svg/add-plug.svg'"></ng-include>			
+		</div>
+	</div>
+	
+	<div class="sell">
+		<button type="button" ng-click="sellSelectedItems()" ng-class="{ 'disabled': selectedItems.length == 0 }">Продать</button>
+	</div>
+</div>

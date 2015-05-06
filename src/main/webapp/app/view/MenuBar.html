@@ -1,0 +1,36 @@
+<div ng-class="{ 'maximized': menuMaximized == true }" class="menu">
+	<div class="menu-wrapper">
+		<div class="menu-scroller">
+			<label>Основное меню</label>
+			
+			<a class="menu-link" ui-sref="buy_state" ui-sref-active="current"><ng-include src="'resources/svg/buy.svg'"></ng-include><span>Купить</span></a>
+			<a class="menu-link" ui-sref="sell_state" ui-sref-active="current"><ng-include src="'resources/svg/sell.svg'"></ng-include><span>Продать</span></a>
+			<a class="menu-link" ui-sref="lots_state" ui-sref-active="current"><ng-include src="'resources/svg/lots.svg'"></ng-include><span>Лоты</span></a>
+			<a class="menu-link" ui-sref="exchange_state" ui-sref-active="current"><ng-include src="'resources/svg/exchange.svg'"></ng-include><span>Обмены</span></a>
+			<a class="menu-link" ui-sref="balance_state" ui-sref-active="current"><ng-include src="'resources/svg/balance.svg'"></ng-include><span>Баланс</span></a>
+			<a class="menu-link" ui-sref="settings_state" ui-sref-active="current"><ng-include src="'resources/svg/settings.svg'"></ng-include><span>Настройки</span></a>
+			
+			<label>Информация</label>
+			
+			<div class="sub-menu">
+				<a class="menu-link" ui-sref="agreement_state" ui-sref-active="current">Пользовательское соглашение</a>
+				<a class="menu-link" ui-sref="contract_state" ui-sref-active="current">Агентский договор</a>
+				<a class="menu-link" ui-sref="contacts_state" ui-sref-active="current">Контакты</a>
+				<a class="menu-link" ui-sref="support_state" ui-sref-active="current">Поддержка</a>
+			</div>
+			
+			<label>Платежные системы<br />
+				<ng-include src="'resources/svg/visa.svg'"></ng-include>
+				<ng-include src="'resources/svg/mastercard.svg'"></ng-include>
+				<ng-include src="'resources/svg/paypal.svg'"></ng-include>
+				<ng-include src="'resources/svg/solo.svg'"></ng-include>
+				<ng-include src="'resources/svg/diners-club.svg'"></ng-include>
+				<ng-include src="'resources/svg/webmoney.svg'"></ng-include>
+				<ng-include src="'resources/svg/qiwi.svg'"></ng-include>
+				<ng-include src="'resources/svg/yandex.svg'"></ng-include>
+				<a class="methods-link" href="#">+ 10 платежных систем</a>
+			</label>
+		</div>
+	</div>
+	<div class="menu-toggle" ng-click="toggleMenu(); $event.stopPropagation()"><ng-include src="'resources/svg/menu.svg'"></ng-include></div>		
+</div>

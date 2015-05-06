@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html ng-app="SteamShop">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<!-- javascript libraries -->
+		<script src="resources/lib/angularjs/angular.js"></script>
+		<script src="resources/lib/angularjs/angular-cookies.js"></script>
+		<script src="resources/lib/angularjs/plugins/dirPagination.js"></script>
+		<script src="resources/lib/angularjs/plugins/angular-ui-router.js"></script>
+		<script src="resources/lib/angularjs/plugins/angular-touch.min.js"></script>
+		<script src="resources/lib/angularjs/plugins/draganddrop.js"></script>
+		<script src="resources/lib/jquery/jquery.js"></script>
+		
+		<!-- application -->
+		<link rel="stylesheet" type="text/css" href="resources/css/style.css">
+		
+		<script src="app/js/app.js"></script>
+		<script src="app/js/controllers.js"></script>
+		<script src="app/js/constants.js"></script>
+		<script src="app/js/services.js"></script>
+		
+		<!-- queries module of application -->
+		<script src="app/modules/buy/js/buy_module.js"></script>
+		<script src="app/modules/buy/js/buy_controllers.js"></script>
+		<script src="app/modules/buy/js/buy_services.js"></script>
+		<script src="app/modules/buy/js/buy_constants.js"></script>
+		
+		<script src="app/modules/sell/js/sell_module.js"></script>
+		<script src="app/modules/sell/js/sell_controllers.js"></script>
+		<script src="app/modules/sell/js/sell_services.js"></script>
+		<script src="app/modules/sell/js/sell_constants.js"></script>
+		
+		<script src="app/modules/lots/js/lots_module.js"></script>
+		
+		<script src="app/modules/exchange/js/exchange_module.js"></script>
+		
+		<script src="app/modules/balance/js/balance_module.js"></script>
+		<script src="app/modules/balance/js/balance_controllers.js"></script>
+		
+		<script src="app/modules/settings/js/settings_module.js"></script>
+		
+		<script src="app/modules/agreement/js/agreement_module.js"></script>
+		
+		<script src="app/modules/contract/js/contract_module.js"></script>
+		
+		<script src="app/modules/contacts/js/contacts_module.js"></script>
+		
+		<script src="app/modules/support/js/support_module.js"></script>
+		
+		<title>Steamtrade Platform</title>
+	</head>
+  
+	<body ng-class="{ 'overlayed': isLoading == true }" ng-controller="mainCtrl" ng-click="menuMaximized = false; sidebarMaximized = false" ng-swipe-left="sidebarMaximized = true" ng-swipe-right="menuMaximized = true">
+
+    	<div ui-view></div>
+    	
+    	<!-- Static menu -->
+    	<ng-include src="'app/view/MenuBar.html'"></ng-include>
+    	
+    	<!--  Header -->
+    	<div class="header">
+			<span class="vertical-aligner"></span>
+			<div class="menu-toggle" ng-click="toggleMenu(); $event.stopPropagation()"><ng-include src="'resources/svg/menu.svg'"></ng-include></div>		
+			<div class="logo">				
+				<label>Steam</label>Trade <span>Network</span>
+			</div>
+			
+			<div class="login" ng-hide="isUserUpdating || isLoggedIn">
+				<button type="button" title="Войти" ng-click="loginHandler()"></button>
+			</div>
+   
+            <div ng-show="isUserUpdating" class="user-update"></div>
+
+			<div class="account" ng-show="isLoggedIn && !isUserUpdating">
+				<span class="vertical-aligner"></span>
+				<span class="avatar"><img ng-src="{{currentUser.profile_url}}"></span>
+				<span class="name" ng-bind="currentUser.username"></span>
+				<span class="balance" ng-bind="currentUser.balance"></span>
+				<span class="logout" ng-click="logoutHandler()"><ng-include src="'resources/svg/exit.svg'"></ng-include></span>
+			</div>
+			
+			<div class="page-title" ng-bind="getPageTitle($state.current.name)"></div>
+		</div>		
+    	
+    	<div class="overlay" ng-show="isLoading"></div>	
+		
+	</body>
+</html>

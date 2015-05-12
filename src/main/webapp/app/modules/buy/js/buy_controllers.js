@@ -6,7 +6,8 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
 	 var ctrl = this;
 	 
 	 $scope.offers = [];
-     $scope.filters = {'Hero' : ['Weaver', 'Clockwerk'], 'Rarity' : ['Rare', 'Uncommon'], 'Quality' : ['Genuine', 'Unusual'], 'Type' : ['Wearable', 'Courier']};
+	 $scope.search = {};
+	 $scope.filters = {'Hero' : ['Weaver', 'Clockwerk'], 'Rarity' : ['Rare', 'Uncommon'], 'Quality' : ['Genuine', 'Unusual'], 'Type' : ['Wearable', 'Courier']};
 	 $scope.applicationUtils = ApplicationUtils;
      
      $scope.adjustGrid = function() {		  
@@ -35,6 +36,9 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
      $scope.selectGame = function(app_id) {
     	 $scope.selectedGame = app_id;
     	 $scope.offers = [];
+    	 $scope.search = {};
+    	 
+    	 $scope.getOffers($scope.selectedGame, null, null, null, null, null, null, null, null);
      };
 	 
      $scope.getOfferDetails = function(offerId) {
@@ -87,20 +91,65 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
     		 }
 
     	 }
+    	 
+    	 console.log($scope.offers);
 
      };
        
      $scope.adjustGrid();
+     $scope.selectGame(570);
    }
 ]);
 
-buyControllers.controller('ItemDetailsCtrl', ['$scope', 'OffersService', 'itemDetails',
-   function($scope,  OffersService, itemDetails)                                          
+buyControllers.controller('ItemDetailsCtrl', ['$scope', '$rootScope', '$sce', 'OffersService', 'ApplicationUtils', 'itemDetails',
+   function($scope, $rootScope, $sce, OffersService, ApplicationUtils, itemDetails)                                          
    {
 	 var ctrl = this;
+	 $scope.applicationUtils = ApplicationUtils;
 	 
-	 //ctrl.selectedItem = $stateParams.itemId;
-     alert('from ctrl' + itemDetails);
+	 $scope.item = {};
+	 $scope.offers = {};
+	 
+	 $rootScope.isLoading = true;
+	 
+	 ctrl.cb_get_offers_success = function(data) {
+    	 $scope.offers = angular.fromJson(data);
+    	 
+    	 if ($scope.offers.length > 0) {
+    		 OffersService.getItemDetails(itemDetails.game, $scope.offers[0].item.class_id, $scope.offers[0].item.instance_id, ctrl.cb_get_item_success, ApplicationUtils.cb_error_handler)
+    	 } else {
+    		 alert('There are no offers for the requested item');
+    		 $rootScope.isLoading = false;
+    	 }
+     };
+     
+     ctrl.cb_get_item_success = function(data) {
+    	 $rootScope.isLoading = false;
+    	 response = angular.fromJson(data);
+    	 if ($scope.offers[0].item.instance_id) {
+    		 $scope.item = response.result[$scope.offers[0].item.class_id + '_' + $scope.offers[0].item.instance_id];
+    	 } else {
+    		 $scope.item = response.result[$scope.offers[0].item.class_id];
+    	 }
+    	 
+    	 $scope.item.descriptionsArray = [];
+    	 
+    	 for (var description in $scope.item.descriptions) {
+    		 $scope.item.descriptionsArray.push($scope.item.descriptions[description]);    		 
+    	 }
+    	 
+    	 console.log($scope.item);
+    	 console.log('---');
+    	 console.log($scope.offers);
+     };
+     
+     $scope.toTrusted = function(html_code) {
+	     return $sce.trustAsHtml(html_code);
+	 }
+	 
+	 OffersService.getOffers(itemDetails.game, null, null, null, null, itemDetails.item,
+			 null, null, null, ctrl.cb_get_offers_success, ApplicationUtils.cb_error_handler);
+	 
   }
 ]);                                 
                                               

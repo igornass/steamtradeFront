@@ -10,14 +10,14 @@
 		<div class="search" ng-show="selectedGame">
 			<h1>Поиск по названию</h1>
 			<input type="text" class="default" ng-model="search.description.market_name" placeholder="Введите название" ng-focus="filterBlock = true">
-			<button type="button" class="filter-button" ng-click="getOffers(selectedGame, null, null, price.from, price.to, search.description.market_name, null, null, null )">Подобрать</button>
+			<button type="button" class="filter-button" ng-click="getOffers(selectedGame, null, null, search.price.from, search.price.to, search.description.market_name, null, null, null )">Подобрать</button>
 			<div class="filter" ng-click="selectedGame ? filterBlock = !filterBlock : null"><ng-include src="'resources/svg/filter.svg'"></ng-include></div>
 			<div class="filter-block buy" ng-show="filterBlock">
 				<div>
 					<div class="price-block">
 						<h1>Цена</h1>
-						<span>От</span><input class="default price" type="text" ng-model="price.from">
-						<span>до</span><input class="default price" type="text" ng-model="price.to">
+						<span>От</span><input class="default price" type="text" ng-model="search.price.from">
+						<span>до</span><input class="default price" type="text" ng-model="search.price.to">
 					</div>
 					<div ng-show="selectedGame == 570 || selectedGame == 730">
 						<h1>Тип</h1>
@@ -74,20 +74,24 @@
 		</div>
 	</div>
 	
-	<div ng-repeat="offer in offers" class="content-block">
-		<img draggable="false" ng-src="{{applicationUtils.imageURL(offer.item.icon_url_large, 300)}}">
-		<div class="info-1">
-			<span class="title">{{offer.item.name}}</span>
-			<div>Количество: <span>{{offer.count}}</span></div>
-			<div>Цена: <span class="price">{{offer.price}}</span></div>
-			<div>Цена в Steam: <span class="steam-price">{{offer.price}}</span></div>			
-		</div>
-		<div class="info-2">
-			<div ng-show="selectedGame == 570"><b>Герой:</b> {{offer.tags.Hero}}</div>
-			<div ng-show="selectedGame == 570 || selectedGame == 730"><b>Редкость:</b> {{offer.tags.Rarity}}</div>
-			<div ng-show="selectedGame == 570"><b>Слот:</b> {{offer.tags.Slot}}</div>
-			<button type="button">Купить</button>
-		</div>
+	<div ng-repeat="offer in offers" class="content-block buy">
+		<a ui-sref="buy_item_state({game: selectedGame, item: offer.item.name})" target="_blank">
+            <img draggable="false" ng-src="{{applicationUtils.imageURL(offer.item.icon_url_large, 300)}}">
+    		<div class="info-1">
+    			<span class="title">{{offer.item.name}}</span>
+    			<div>Количество: <span>{{offer.count}}</span></div>
+    			<div>Цена: <span class="price">{{offer.price}}</span></div>
+    			<div>Цена в Steam: <span class="steam-price">{{offer.price}}</span></div>			
+    		</div>
+    		<div class="info-2">
+    			<div ng-show="selectedGame == 570"><b>Герой:</b> {{offer.tags.Hero}}</div>
+    			<div ng-show="selectedGame == 570 || selectedGame == 730"><b>Редкость:</b> {{offer.tags.Rarity}}</div>
+    			<div ng-show="selectedGame == 570"><b>Слот:</b> {{offer.tags.Slot}}</div>
+    		</div>
+        </a>
+        <div class="info-3">
+            <button type="button">Купить</button>
+        </div>
 	</div>
 	
 </div>

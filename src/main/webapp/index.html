@@ -53,7 +53,9 @@
   
 	<body ng-class="{ 'overlayed': isLoading == true }" ng-controller="mainCtrl" ng-click="menuMaximized = false; sidebarMaximized = false" ng-swipe-left="sidebarMaximized = true" ng-swipe-right="menuMaximized = true">
 
-    	<div ui-view></div>
+    	<div ui-view></div>    
+        
+        <div class="overlay" ng-show="isLoading"></div> 
     	
     	<!-- Static menu -->
     	<ng-include src="'app/view/MenuBar.html'"></ng-include>
@@ -81,9 +83,7 @@
 			</div>
 			
 			<div class="page-title" ng-bind="getPageTitle($state.current.name)"></div>
-		</div>		
-    	
-    	<div class="overlay" ng-show="isLoading"></div>	
+		</div>	
 		
 	</body>
 </html>

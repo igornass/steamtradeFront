@@ -28,20 +28,20 @@ app.config(function(paginationTemplateProvider, $urlRouterProvider, $stateProvid
     
     $stateProvider
     .state(STATE_BUY, {
-        url: '/',
+        url: '/buy',
         templateUrl: 'app/modules/buy/view/ContentBuy.html',
         controller: 'BuyContentCtrl'
     })
-    .state('buy_item_state', {
-        url: '/item/{itemId}',
-        templateUrl: 'app/modules/buy/view/ContentBuy.html',
+    .state(STATE_BUY_ITEM, {
+        url: '/item/{game}&{item}',
+        templateUrl: 'app/modules/buy/view/ContentOffer.html',
         
         resolve: {
         	offersService: 'OffersService',
             itemDetails: function(offersService, $stateParams){
 
-                var itemId = $stateParams.itemId;
-                return itemId;
+                var item = {game: $stateParams.game, item: $stateParams.item};
+                return item;
             }
         },
     
@@ -90,7 +90,7 @@ app.config(function(paginationTemplateProvider, $urlRouterProvider, $stateProvid
         controller: 'ValidateLoginCtrl'
     });
     
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/buy');
 });
 
 app.run(function(AuthService) {

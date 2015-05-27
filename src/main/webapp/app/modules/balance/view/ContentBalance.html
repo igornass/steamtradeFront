@@ -29,8 +29,6 @@
 		<span id="visa" ng-click="selectMethod('visa')" ng-class="{ 'current': selectedMethod == 'visa' }" class="method"><ng-include src="'resources/svg/visa.svg'"></ng-include></span>
 		<span id="mastercard" ng-click="selectMethod('mastercard')" ng-class="{ 'current': selectedMethod == 'mastercard' }" class="method"><ng-include src="'resources/svg/mastercard.svg'"></ng-include></span>
 		<span id="paypal" ng-click="selectMethod('paypal')" ng-class="{ 'current': selectedMethod == 'paypal' }" class="method"><ng-include src="'resources/svg/paypal.svg'"></ng-include></span>
-		<span id="solo" ng-click="selectMethod('solo')" ng-class="{ 'current': selectedMethod == 'solo' }" class="method"><ng-include src="'resources/svg/solo.svg'"></ng-include></span>
-		<span id="diners-club" ng-click="selectMethod('diners-club')" ng-class="{ 'current': selectedMethod == 'diners-club' }" class="method"><ng-include src="'resources/svg/diners-club.svg'"></ng-include></span>
 		<span id="webmoney" ng-click="selectMethod('webmoney')" ng-class="{ 'current': selectedMethod == 'webmoney' }" class="method"><ng-include src="'resources/svg/webmoney.svg'"></ng-include></span>
 		<span id="qiwi" ng-click="selectMethod('qiwi')" ng-class="{ 'current': selectedMethod == 'qiwi' }" class="method"><ng-include src="'resources/svg/qiwi.svg'"></ng-include></span>
 		<span id="yandex" ng-click="selectMethod('yandex')" ng-class="{ 'current': selectedMethod == 'yandex' }" class="method"><ng-include src="'resources/svg/yandex.svg'"></ng-include></span>
@@ -78,42 +76,6 @@
 		<div class="left">
 			<h1>Ваш кошелек PayPal</h1>
 			<input type="text" placeholder="Введите кошелек" class="default">
-		</div>
-		<div class="right">
-			<h1>Сумма</h1>
-			<input type="text" placeholder="Введите сумму" class="default">
-		</div>
-		
-		<div class="controls">
-			<a href="#"><h1>О выводе средств</h1></a>
-			<button type="button">Вывести</button>
-		</div>
-	</div>
-	
-	<div ng-show="selectedMethod == 'solo'" class="content-top balance">
-		<div><b>Вывод средств:</b> Шаг 2</div>
-		
-		<div class="left">
-			<h1>Номер вашей карты</h1>
-			<input type="text" placeholder="Введите номер карты" class="default">
-		</div>
-		<div class="right">
-			<h1>Сумма</h1>
-			<input type="text" placeholder="Введите сумму" class="default">
-		</div>
-		
-		<div class="controls">
-			<a href="#"><h1>О выводе средств</h1></a>
-			<button type="button">Вывести</button>
-		</div>
-	</div>
-	
-	<div ng-show="selectedMethod == 'diners-club'" class="content-top balance">
-		<div><b>Вывод средств:</b> Шаг 2</div>
-		
-		<div class="left">
-			<h1>Номер вашей карты</h1>
-			<input type="text" placeholder="Введите номер карты" class="default">
 		</div>
 		<div class="right">
 			<h1>Сумма</h1>

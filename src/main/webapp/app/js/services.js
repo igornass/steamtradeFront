@@ -17,6 +17,11 @@ commonServices.service('HttpConnectionService',['$http', '$rootScope', function(
        this.sendHttpRequestWithToken( 'POST', url, authToken, dataObject, cb_success, cb_error );
     };
     
+    this.raisePutHttpRequest = function(url, authToken, dataObject, cb_success, cb_error)
+    {
+       this.sendHttpRequestWithToken( 'PUT', url, authToken, dataObject, cb_success, cb_error );
+    };
+    
     this.sendHttpRequestWithToken = function(method, url, authToken, dataObject, cb_success, cb_error)
     {
     	var request =

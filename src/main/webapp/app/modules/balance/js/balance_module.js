@@ -2,5 +2,6 @@
 
 // angular module
 angular.module('SteamShop.Balance', [
-      	'Balance.controllers'
-      	]);
+	'Balance.services',
+	'Balance.controllers'
+  	]);

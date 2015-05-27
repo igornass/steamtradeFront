@@ -67,7 +67,8 @@ app.config(function(paginationTemplateProvider, $urlRouterProvider, $stateProvid
     })
     .state(STATE_SETTINGS, {
     	url: '/settings',
-        templateUrl: 'app/modules/settings/view/ContentSettings.html'     
+        templateUrl: 'app/modules/settings/view/ContentSettings.html',        
+        controller: 'SettingsContentCtrl'     
     })
     .state(STATE_AGREEMENT, {
     	url: '/agreement',

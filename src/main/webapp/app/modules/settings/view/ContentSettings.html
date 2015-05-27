@@ -2,10 +2,22 @@
     <div class="error-message">Для просмотра данной страницы необходимо войти на сайт через Steam.</div>
 </div>
 
-<div class="content" ng-show="isLoggedIn">
-	<h1>Настройки</h1>
-</div>
-
-<div ng-class="{ 'maximized': sidebarMaximized == true }" class="sidebar" ng-show="isLoggedIn">
-	<h1>Сайдбар</h1>
+<div class="content fullsize" ng-show="isLoggedIn">
+    <div class="content-top settings">
+        <h1>Ссылка на обмен</h1>
+        <input class="default trade-link" type="text" ng-model="user.link_trade" placeholder="Вставьте вашу ссылку">
+        <button type="button" ng-click="setTradeLink(user.link_trade)">Применить</button>
+        
+        <h1 ng-hide="user.trader || operationId">Подключить номер телефона для возможности продажи</h1>
+        <h1 ng-show="user.trader">Изменить номер телефона</h1>
+        <h1 ng-show="operationId">Подтвердите ваш номер с помощью кода, высланного вам в виде SMS</h1>
+        <div ng-hide="operationId">
+            <input class="default" type="text" ng-model="phone" placeholder="7xxxxxxxxxx">
+            <button type="button" ng-click="setPhone(phone)">Получить код</button>
+        </div>
+        <div ng-show="operationId">
+            <input class="default" type="text" ng-model="code" placeholder="Введите код">
+            <button type="button" ng-click="sendCode(code)">Подтвердить</button>
+        </div>
+    </div>	
 </div>

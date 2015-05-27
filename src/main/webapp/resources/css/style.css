@@ -827,6 +827,18 @@ button.disabled {
 	min-height: 124px;
 }
 
+.content .content-top.settings {
+    padding: 20px;
+}
+
+.content .content-top.settings input {
+    margin: 0 10px 10px 0;
+}
+    
+.content .content-top.settings .trade-link {
+    min-width: 50%;
+}
+
 .content .content-top .filter-button {
   padding: 8px 20px;
   margin: 10px 0 0 20px;
@@ -945,11 +957,26 @@ button.disabled {
 }
 
 .content .content-top.balance,
+.content .content-top.deposit,
 .content .content-top.support {
 	padding: 20px;
 	background: white;
 	font-size: 14px;
 	font-family: roboto-regular;
+	min-height: 0;
+}
+
+.content .content-top.deposit .deposit-block {
+    display: inline-block;
+    width: 35%;
+    min-width: 250px;
+    vertical-align: top;
+}
+
+.content .content-top.deposit button {
+    padding: 10px 40px;
+    margin-top: 10px;
+    vertical-align: bottom;
 }
 
 .content .content-top.support h1 {
@@ -1023,6 +1050,7 @@ button.disabled {
 .content .content-top.balance .left {
 	display: inline-block;
 	width: 65%;
+	min-width: 200px;
 }
 
 .content .content-top.balance input {
@@ -1032,6 +1060,7 @@ button.disabled {
 .content .content-top.balance .right {
 	display: inline-block;
 	width: 30%;
+	min-width: 160px;
 }
 
 .content .content-top.balance .controls {
@@ -1555,6 +1584,10 @@ h1 {
 	.header .page-title {
 	  max-width: 25%;
 	}
+    
+    .content .content-top.settings .trade-link {
+        min-width: 0;
+    }
 }
 
 @media screen and (max-width: 500px) {	

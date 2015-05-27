@@ -3,6 +3,26 @@
 </div>
 
 <div class="content" ng-show="isLoggedIn">
+    <div class="content-top deposit">
+        <div><b>Пополнение средств</b></div>
+        <div class="deposit-block">
+            <h1>Платежный шлюз</h1>
+            <div class="custom-select">
+                <ng-include src="'resources/svg/arrow.svg'"></ng-include>
+                <input readonly type="text" class="default" placeholder="Выберите способ" ng-model="gatewayDisplay" ng-focus="selectTheme = true" ng-blur="selectTheme = false">
+                <input type="text" class="hidden" ng-model="gateway">
+                <ul ng-class="{ 'visible': selectTheme == true }">
+                    <li ng-repeat="item in [{name: 'Карта', value: 'card'}, {name: 'АльфаКлик', value: 'alfaClick'}, {name: 'Наличные', value: 'cash'}]" ng-click="$parent.gatewayDisplay = item.name; $parent.gateway = item.value; $parent.selectTheme = false">{{item.name}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="deposit-block">
+            <h1>Сумма</h1>
+            <input type="text" placeholder="Введите сумму" ng-model="depositSum" class="default" onkeypress='return event.charCode >= 44 && event.charCode <= 57 && event.charCode != 45 && event.charCode != 47'>
+        </div>
+        <button type="button" ng-click="deposit()">Пополнить</button>
+    </div>
+    
 	<div class="content-top balance">
 		<div><b>Вывод средств:</b> Шаг 1</div>
 		<h1>Платежные системы</h1>

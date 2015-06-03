@@ -2,6 +2,12 @@ var buyServices = angular.module('Buy.services', []);
 
 buyServices.service('OffersService', ['HttpConnectionService', 'AuthService', 'ApplicationUtils',  function(HttpConnectionService, AuthService, ApplicationUtils){
 
+	this.buyItem = function(itemId, cb_success, cb_error)
+    {
+       var url = BUY_REST_WS_URL + itemId;
+       HttpConnectionService.raisePostHttpRequest(url, AuthService.getAuthToken(), cb_success, cb_error);
+    };
+	
 	this.getItemDetails = function(gameId, classId, instanceId, cb_success, cb_error)
     {
        var url = ITEMS_REST_WS_URL + gameId + '/' + classId + '/' + instanceId;

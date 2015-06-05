@@ -83,7 +83,7 @@
 				<span class="vertical-aligner"></span>
 				<span class="avatar"><img ng-src="{{currentUser.profile_url}}"></span>
 				<span class="name" ng-bind="currentUser.username"></span>
-				<span class="balance" ng-bind="currentUser.balance"></span>
+				<span class="balance" ng-bind="currentUser.balance / 100"></span>
 				<span class="logout" ng-click="logoutHandler()"><ng-include src="'resources/svg/exit.svg'"></ng-include></span>
 			</div>
 			

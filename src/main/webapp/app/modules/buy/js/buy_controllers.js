@@ -110,8 +110,6 @@ buyControllers.controller('ItemDetailsCtrl', ['$scope', '$rootScope', '$sce', 'O
 	 $scope.item = {};
 	 $scope.offers = {};
 	 
-	 $rootScope.isLoading = true;
-	 
 	 ctrl.cb_get_offers_success = function(data) {
     	 $scope.offers = angular.fromJson(data);
     	 
@@ -121,6 +119,12 @@ buyControllers.controller('ItemDetailsCtrl', ['$scope', '$rootScope', '$sce', 'O
     		 alert('There are no offers for the requested item');
     		 $rootScope.isLoading = false;
     	 }
+     };
+     
+     ctrl.cb_buy_item_success = function(data) {
+    	 $rootScope.isLoading = false;
+    	 var response = angular.fromJson(data);
+    	 alert("Предмет успешно куплен. Мы отправили обмен на ваш аккаунт. Статус обменов вы можете посмотреть здесь");
      };
      
      ctrl.cb_get_item_success = function(data) {
@@ -146,7 +150,14 @@ buyControllers.controller('ItemDetailsCtrl', ['$scope', '$rootScope', '$sce', 'O
      $scope.toTrusted = function(html_code) {
 	     return $sce.trustAsHtml(html_code);
 	 }
+     
+     $scope.buyOffer = function(id) {
+    	 $rootScope.isLoading = true;
+    	 OffersService.buyItem(id, ctrl.cb_buy_item_success, ApplicationUtils.cb_error_handler);
+    	 
+	 }
 	 
+     $rootScope.isLoading = true;
 	 OffersService.getOffers(itemDetails.game, null, null, null, null, itemDetails.item,
 			 null, null, null, ctrl.cb_get_offers_success, ApplicationUtils.cb_error_handler);
 	 

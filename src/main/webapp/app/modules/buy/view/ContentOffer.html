@@ -7,7 +7,7 @@
             <br>
             <div class="tag" ng-repeat="tag in item.tags"><b>{{tag.category}}:</b> {{tag.name}}</div>
             <div class="price"><b>Цена: </b>{{offers[0].price}}</div>
-            <button type="button">Купить</button>
+            <button type="button" ng-click="buyOffer(offers[0].id)">Купить</button>
         </div>
 	</div>
  
@@ -16,7 +16,7 @@
         <div class="item-description-small">
             <h1>{{item.market_hash_name}}</h1>
             <div class="price"><b>Цена: </b>{{offer.price}}</div>
-            <button type="button">Купить</button>
+            <button type="button" ng-click="buyOffer(offer.id)">Купить</button>
         </div>
     </div>
 	

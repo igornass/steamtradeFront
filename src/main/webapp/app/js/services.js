@@ -65,6 +65,14 @@ commonServices.service('ApplicationUtils', ['$rootScope', function($rootScope){
 	  }
     };
     
+    this.raisePopup = function(title, body, buttons) {
+    	$rootScope.popup = {
+			title: title,
+			body: body, 			
+			buttons: buttons
+	    };
+    };
+    
     this.v_trim = function(str)
     {
        if (str.trim)

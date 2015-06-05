@@ -6,6 +6,7 @@ function($scope, $rootScope, $state, AuthService, ApplicationUtils, $window) {
    var ctrl = this;   
    
    $scope.$state = $state;
+   $rootScope.popup = undefined;
    
    $scope.currentUser = {};
    $scope.isLoggedIn = false;

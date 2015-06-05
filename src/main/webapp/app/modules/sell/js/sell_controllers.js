@@ -117,7 +117,7 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 		  var selectedItemsJson = [];
 		  for (var index = 0; index < $scope.selectedItems.length; index++) {
 			   var itemJson = {
-				   "price" : $scope.selectedItems[index].price,
+				   "price" : $scope.selectedItems[index].price * 100,
 				   "item" : {
 					   "app_id": $scope.selectedItems[index].description.appid,
 					   "asset_id": $scope.selectedItems[index].id,
@@ -127,7 +127,7 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 			   };
 			   selectedItemsJson.push(itemJson);
 		   }
-		  InventoryService.sellSelectedItems(selectedItemsJson, cb_sell_items_success, APP);
+		  InventoryService.sellSelectedItems(selectedItemsJson, cb_sell_items_success, ApplicationUtils.cb_error_handler);
 	  }
       
       //CALL BACKS

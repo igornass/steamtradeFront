@@ -80,8 +80,8 @@
     		<div class="info-1">
     			<span class="title">{{offer.item.name}}</span>
     			<div>Количество: <span>{{offer.count}}</span></div>
-    			<div>Цена: <span class="price">{{offer.price}}</span></div>
-    			<div>Цена в Steam: <span class="steam-price">{{offer.price}}</span></div>			
+    			<div>Цена: <span class="price">{{offer.price / 100}}</span></div>
+    			<div>Цена в Steam: <span class="steam-price">{{offer.price / 100}}</span></div>			
     		</div>
     		<div class="info-2">
     			<div ng-show="selectedGame == 570"><b>Герой:</b> {{offer.tags.Hero}}</div>
@@ -90,7 +90,7 @@
     		</div>
         </a>
         <div class="info-3">
-            <button type="button">Купить</button>
+            <button type="button" ng-click="buyOffer(offer.id)">Купить</button>
         </div>
 	</div>
 	

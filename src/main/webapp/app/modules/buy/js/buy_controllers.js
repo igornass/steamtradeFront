@@ -109,6 +109,7 @@ buyControllers.controller('ItemDetailsCtrl', ['$scope', '$rootScope', '$sce', 'O
 	 
 	 $scope.item = {};
 	 $scope.offers = {};
+	 $scope.selectedOffer = undefined;
 	 
 	 ctrl.cb_get_offers_success = function(data) {
     	 $scope.offers = angular.fromJson(data);
@@ -124,7 +125,10 @@ buyControllers.controller('ItemDetailsCtrl', ['$scope', '$rootScope', '$sce', 'O
      ctrl.cb_buy_item_success = function(data) {
     	 $rootScope.isLoading = false;
     	 var response = angular.fromJson(data);
-    	 alert("Предмет успешно куплен. Мы отправили обмен на ваш аккаунт. Статус обменов вы можете посмотреть здесь");
+    	 title = 'Предмет успешно куплен.';
+		 body = 'Мы отправили обмен на ваш аккаунт. Статус обменов вы можете посмотреть <a href="#/exchange">здесь</a>'
+			 
+		 $scope.applicationUtils.raisePopup(title, body);
      };
      
      ctrl.cb_get_item_success = function(data) {
@@ -151,10 +155,49 @@ buyControllers.controller('ItemDetailsCtrl', ['$scope', '$rootScope', '$sce', 'O
 	     return $sce.trustAsHtml(html_code);
 	 }
      
+     $scope.buyButton = function(id, price, name) {    	 
+    	 var title = "";
+    	 var body = "";
+    	 var buttons = [];
+    	 
+    	 if (!$scope.isLoggedIn) {
+    		 title = 'Вы не авторизованы';
+    		 body = 'Для покупки предметов необходимо войти через Steam'
+    		 
+    		 $scope.applicationUtils.raisePopup(title, body);
+    		 return;
+    	 }
+    	 
+    	 if (!$scope.currentUser.trader) {
+    		 title = 'Вы не можете покупать предметы';
+    		 body = 'Для подключения возможности покупки предметов подтвердите свой аккаунт с помощью мобильного телефона в <a href="#/settings">Настройках</a>'
+    			 
+    		 $scope.applicationUtils.raisePopup(title, body);
+    		 return;
+    	 }
+    	 
+    	 $scope.selectedOffer = id;
+    	 
+    	 title = 'Подтвердите покупку';
+    	 body = 'Вы покупаете ' + name + ' за ' + price + 'руб.<br>Подтверждая покупку вы соглашаетесь с <a href="#/contract">условиями агентского договора</a>';
+    	 
+    	 buttons = [
+    	            { text: 'Я подтверждаю', func: buySelectedOffer},
+    	            { text: 'Отмена', red: 'red', func: applicationUtils.closePopup}
+    	            ]
+    	 
+    	 $scope.applicationUtils.raisePopup(title, body, buttons);
+    	 
+	 }
+     
      $scope.buyOffer = function(id) {
     	 $rootScope.isLoading = true;
-    	 OffersService.buyItem(id, ctrl.cb_buy_item_success, ApplicationUtils.cb_error_handler);
-    	 
+    	 OffersService.buyItem(id, ctrl.cb_buy_item_success, ApplicationUtils.cb_error_handler);    	 
+	 }
+     
+     $scope.buySelectedOffer = function(id) {
+    	 $rootScope.isLoading = true;
+    	 OffersService.buyItem($scope.selectedOffer, ctrl.cb_buy_item_success, ApplicationUtils.cb_error_handler);    	 
 	 }
 	 
      $rootScope.isLoading = true;

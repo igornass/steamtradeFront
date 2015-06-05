@@ -3,7 +3,8 @@ var commonControllers = angular.module('SteamShop.commonControllers', ['ui.route
 //Main of Application Controller
 commonControllers.controller('mainCtrl', ['$scope', '$rootScope', '$state', 'AuthService', 'ApplicationUtils', '$window',
 function($scope, $rootScope, $state, AuthService, ApplicationUtils, $window) {
-   var ctrl = this;   
+   var ctrl = this;
+   $scope.applicationUtils = ApplicationUtils;
    
    $scope.$state = $state;
    $rootScope.popup = undefined;

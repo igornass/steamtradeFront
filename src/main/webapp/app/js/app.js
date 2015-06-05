@@ -20,7 +20,8 @@ var app = angular.module('SteamShop',[
 	'angularUtils.directives.dirPagination',
 	'ui.router',
 	'ang-drag-drop',
-	'ngTouch'
+	'ngTouch', 
+	'ngSanitize'
 ]);
 
 app.config(function(paginationTemplateProvider, $urlRouterProvider, $stateProvider) {

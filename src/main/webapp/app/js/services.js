@@ -108,8 +108,11 @@ commonServices.service('ApplicationUtils', ['$rootScope', function($rootScope){
     this.cb_error_handler = function(data, status)
     {
     	$rootScope.isLoading = false;
-    	var response = angular.fromJson(data);
-    	alert('Error occured, status =  ' + response.status + ', error = ' + response.error + ', error_code = ' + response.error_code);
+    	
+    	var title = 'Произошла ошибка';
+		var body = angular.fromJson(data);
+		 
+		this.raisePopup(title, body);
     };
     
 }]);

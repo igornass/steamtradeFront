@@ -1,7 +1,46 @@
-<div class="content">
-	<h1>Обмены</h1>
-</div>
+<div class="content fullsize">
 
-<div ng-class="{ 'maximized': sidebarMaximized == true }" class="sidebar">
-	<h1>Сайдбар</h1>
+    <div class="content-top exchange">
+        <button type="button" ng-class="{'invert': selectedTab == 'history'}" ng-click="selectedTab = 'current'">Незавершенные</button>
+        <button type="button" ng-class="{'invert': selectedTab != 'history'}" ng-click="selectedTab = 'history'">Завершенные</button>
+    </div>
+    
+    <div class="content-block exchange" ng-hide="selectedTab == 'history'">
+        <div class="status outgoing"><ng-include src="'resources/svg/arrow.svg'"></ng-include></div>
+        <div class="date">3 января 2015</div>
+        <div class="body">
+            <div><span class="type">Продажа</span> <b>Название предмета 1</b> <span class="price">за 10</span></div>
+            <div><span class="type">Продажа</span> <b>Название предмета 2</b> <span class="price">за 20</span></div>
+        </div>
+        <button type="button">Принять</button>
+    </div>
+    
+    <div class="content-block exchange" ng-hide="selectedTab == 'history'">
+        <div class="status incoming"><ng-include src="'resources/svg/arrow.svg'"></ng-include></div>
+        <div class="date">2 января 2015</div>
+        <div class="body">
+            <div><span class="type">Покупка</span> <b>Название предмета 1</b> <span class="price">за 10</span></div>
+        </div>
+        <button type="button">Принять</button>
+    </div>
+    
+    <div class="content-block exchange" ng-hide="selectedTab == 'history'">
+        <div class="status canceled"><ng-include src="'resources/svg/arrow.svg'"></ng-include></div>
+        <div class="date">1 января 2015</div>
+        <div class="body">
+            <div><span class="type">Снятие</span> <b>Название предмета 1</b> <span>с продажи</span></div>
+        </div>
+        <button type="button" class="red">Повторить</button>
+    </div>
+    
+    <div class="content-block exchange" ng-show="selectedTab == 'history'">
+        <div class="status done"><ng-include src="'resources/svg/arrow.svg'"></ng-include></div>
+        <div class="date">4 января 2015</div>
+        <div class="body">
+            <div><span class="type">Продажа</span> <b>Название предмета 1</b> <span class="price">за 10</span></div>
+            <div><span class="type">Продажа</span> <b>Название предмета 2</b> <span class="price">за 20</span></div>
+        </div>
+        <div class="result">Завершён</div>
+    </div>
+    
 </div>

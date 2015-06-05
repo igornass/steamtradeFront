@@ -73,6 +73,10 @@ commonServices.service('ApplicationUtils', ['$rootScope', function($rootScope){
 	    };
     };
     
+    this.closePopup = function() {
+    	$rootScope.popup = undefined;
+    }
+    
     this.v_trim = function(str)
     {
        if (str.trim)

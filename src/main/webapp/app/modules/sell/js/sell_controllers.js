@@ -43,9 +43,10 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
     	  InventoryService.getUserInventory(gameId, cb_get_inventory_success, cb_get_inventory_error);
       };
       
-      $scope.getPendingSales = function() {
+      
+      $scope.getPendingTrades = function() {
     	  $rootScope.isLoading = true;
-    	  InventoryService.getPendingSales(cb_get_pending_sales_success, ApplicationUtils.cb_error_handler);
+    	  InventoryService.getPendingTrades(cb_get_pending_sales_success, ApplicationUtils.cb_error_handler);
       };
       
       $scope.cancelCurrentSale = function() {
@@ -191,12 +192,23 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
       };
       
       var cb_get_pending_sales_success = function(data) {
-    	  $rootScope.isLoading = false;
     	  var response = angular.fromJson(data);
+    	  if (response.is)
+    	  {
+    		 alert("User must be redirected to the second step of the sale as there is unfinished trade data");
+    	  }
+    	  else
+    	  {
+    		 if (InventoryService.isSelectedItemsHistoryEmpty())
+    	     {
+    		   $scope.getInventory(570);
+    	     }
+    		 else
+    		 {
+    			 alert("User must be redirected to the second step of the sale as there is unfinished trade data");
+    		 }
+    	  }
       };    
-
-	  $scope.adjustGrid();
-	  $scope.getInventory(570);
       
       var cb_sell_items_success = function(data) {
     	  $rootScope.isLoading = false;
@@ -207,6 +219,9 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
     	  $rootScope.isLoading = false;
     	  var response = angular.fromJson(data);
       };
+      
+	  $scope.adjustGrid();
+	  $scope.getPendingTrades();
    },
 
 ]);

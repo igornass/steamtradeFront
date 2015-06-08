@@ -10,7 +10,7 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 	  $scope.inventory = [];
 	  $scope.selectedItems = [];
 	  $scope.applicationUtils = ApplicationUtils;
-	  $scope.applicationUtils.setPath('Купить');
+	  $scope.applicationUtils.setPath('Продать');
 	  
 	  $scope.adjustGrid = function() {		  
 		  	if ($window.innerWidth <= 400)

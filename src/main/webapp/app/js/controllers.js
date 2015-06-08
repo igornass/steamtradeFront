@@ -36,11 +36,6 @@ function($scope, $rootScope, $state, AuthService, ApplicationUtils, $window) {
    $scope.toggleMenu = function() {
  	  $scope.menuMaximized = !$scope.menuMaximized;
    };
-   
-   $scope.test = function() {
-	   $scope.applicationUtils.setPath([{text: 'Купить', link: '#/buy'}, {text: 'Шаг'}]);
-	   $scope.applicationUtils.setStep(1, 2);
-   };
 }]);
  
 

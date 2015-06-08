@@ -67,7 +67,7 @@
     	<ng-include src="'app/view/MenuBar.html'"></ng-include>
     	
     	<!--  Header -->
-    	<div class="header">
+    	<div class="header" ng-click="test()">
 			<span class="vertical-aligner"></span>
 			<div class="menu-toggle" ng-click="toggleMenu(); $event.stopPropagation()"><ng-include src="'resources/svg/menu.svg'"></ng-include></div>		
 			<div class="logo">				
@@ -88,7 +88,7 @@
 				<span class="logout" ng-click="logoutHandler()"><ng-include src="'resources/svg/exit.svg'"></ng-include></span>
 			</div>
 			
-			<div class="page-title" ng-bind="getPageTitle($state.current.name)"></div>
+			<div class="page-title"><a class="path" ng-href="{{item.link}}" ng-repeat="item in path">{{item.text}}</a><span class="step" ng-class="{ 'current': $index + 1 == step.current }" ng-repeat="item in step.total">{{$index + 1}}</span></div>
 		</div>
   
         <div class="popup" ng-show="popup">

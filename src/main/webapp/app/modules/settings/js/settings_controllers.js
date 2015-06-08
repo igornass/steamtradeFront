@@ -5,6 +5,7 @@ settingsControllers.controller('SettingsContentCtrl', ['$scope', '$rootScope', '
    {
 	 var ctrl = this;
 	 $scope.applicationUtils = ApplicationUtils;
+	 $scope.applicationUtils.setPath('Настройки');
 
 	 $scope.user = {};
 	 $scope.operationId = undefined;

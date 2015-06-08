@@ -77,6 +77,31 @@ commonServices.service('ApplicationUtils', ['$rootScope', function($rootScope){
     	$rootScope.popup = undefined;
     }
     
+    this.setPath = function(path) {
+    	if (path.constructor !== Array) {
+    		path = [{text: path}]; 
+    	}
+    	$rootScope.path = path;
+    }
+    
+    this.clearPath = function() {
+    	$rootScope.path = [];
+    }
+    
+    this.setStep = function(current, total) {
+    	var totalArray = [];
+
+    	for (var i = 1; i <= total; i++) {
+    		totalArray.push(i);
+    	}
+    	
+    	$rootScope.step = {current: current, total: totalArray};
+    }
+    
+    this.clearStep = function() {
+    	$rootScope.step = {};
+    }
+    
     this.v_trim = function(str)
     {
        if (str.trim)

@@ -628,6 +628,40 @@ button.red {
 	font-size: 16px;
 	font-family: roboto-medium;
 	color: #495b69;
+	cursor: default;
+}
+
+.header .page-title a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.header .page-title .path:not(:first-child)::before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    background: url('../svg/arrow.svg') no-repeat center;
+    background-size: 9px;
+    opacity: 0.7;
+}
+
+.header .page-title .step {
+    margin-left: 5px;
+    color: white;
+    background: #495b69;
+    border-radius: 100%;
+    display: inline-block;
+    font-family: roboto-black;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.header .page-title .step.current {
+    background: #47a1dd;
 }
 
 /*	Menu elements		*/

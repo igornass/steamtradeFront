@@ -37,9 +37,10 @@ function($scope, $rootScope, $state, AuthService, ApplicationUtils, $window) {
  	  $scope.menuMaximized = !$scope.menuMaximized;
    };
    
-   $scope.getPageTitle = function(stateName) {
-	   return PAGES[stateName];
-   }
+   $scope.test = function() {
+	   $scope.applicationUtils.setPath([{text: 'Купить', link: '#/buy'}, {text: 'Шаг'}]);
+	   $scope.applicationUtils.setStep(1, 2);
+   };
 }]);
  
 

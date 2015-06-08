@@ -9,6 +9,7 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
 	 $scope.search = {};
 	 $scope.filters = {'Hero' : ['Weaver', 'Clockwerk'], 'Rarity' : ['Rare', 'Uncommon'], 'Quality' : ['Genuine', 'Unusual'], 'Type' : ['Wearable', 'Courier']};
 	 $scope.applicationUtils = ApplicationUtils;
+	 $scope.applicationUtils.setPath('Купить');
      
      $scope.adjustGrid = function() {		  
     	 if ($window.innerWidth <= 400)

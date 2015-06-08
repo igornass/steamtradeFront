@@ -174,6 +174,18 @@ commonServices.factory('AuthService', [ 'HttpConnectionService', '$cookieStore',
           });
       },
       
+      getSelectedItemsHistory: function() {
+    	  return $cookieStore.get(SELECTED_ITEMS_HISTORY);
+      },
+      
+      updateSelectedItemsHistory: function(items) {
+    	  $cookieStore.put(SELECTED_ITEMS_HISTORY, items);
+      },
+      
+      removeSelectedItemsHistory: function() {
+    	  $cookieStore.remove(SELECTED_ITEMS_HISTORY);
+      },
+      
       logout: function(cb_error) {
     	  isUserUpdating = true;
     	  HttpConnectionService.raiseDeleteHttpRequest(USERS_REST_WS_URL, this.getAuthToken(), function(data) {

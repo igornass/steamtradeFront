@@ -49,6 +49,8 @@ commonServices.service('HttpConnectionService',['$http', '$rootScope', function(
 
 commonServices.service('ApplicationUtils', ['$rootScope', function($rootScope){
 
+    var that = this;
+    
     this.imageURL = function(imageName, x, y)
     {
   	  if (imageName) {
@@ -135,9 +137,9 @@ commonServices.service('ApplicationUtils', ['$rootScope', function($rootScope){
     	$rootScope.isLoading = false;
     	
     	var title = 'Произошла ошибка';
-		var body = angular.fromJson(data);
+		var body = angular.fromJson(data).reason;
 		 
-		this.raisePopup(title, body);
+		that.raisePopup(title, body);
     };
     
 }]);
@@ -184,6 +186,18 @@ commonServices.factory('AuthService', [ 'HttpConnectionService', '$cookieStore',
       
       removeSelectedItemsHistory: function() {
     	  $cookieStore.remove(SELECTED_ITEMS_HISTORY);
+      },
+      
+      getCachedOffers: function() {
+    	  return $cookieStore.get(CACHED_OFFERS);
+      },
+      
+      updateCachedOffers: function(offers) {
+    	  $cookieStore.put(CACHED_OFFERS, offers);
+      },
+      
+      removeCachedOffers: function() {
+    	  $cookieStore.remove(CACHED_OFFERS);
       },
       
       logout: function(cb_error) {

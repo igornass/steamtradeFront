@@ -18,7 +18,6 @@ settingsControllers.controller('SettingsContentCtrl', ['$scope', '$rootScope', '
      ctrl.cb_get_user_details_success = function(data) {
     	 $rootScope.isLoading = false;
     	 $scope.user = angular.fromJson(data);
-    	 console.log($scope.user);
      };
      
      $scope.setTradeLink = function(tradeLink) {

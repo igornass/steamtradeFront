@@ -25,6 +25,7 @@ var CHECK_TRADES_WS_URL = TRADES_REST_WS_URL + 'check/';
 var AUTH_TOKEN = 'authToken';
 var TMP_AUTH_TOKEN = 'tmpAuthToken';
 var SELECTED_ITEMS_HISTORY = 'selectedItemsHistory';
+var CACHED_OFFERS = 'cachedOffers';
 
 //States
 var STATE_BUY = 'buy_state';

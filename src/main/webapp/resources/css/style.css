@@ -781,6 +781,79 @@ button.red {
     color: #495b69;
 }
 
+.content .content-top.sell .content-top-wrapper {
+    background: white;
+    padding: 10px 15px;
+    font-size: 15px;
+}
+
+.content .content-top.sell.disabled {
+    position: relative;
+}
+
+.content .content-top.sell.disabled::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #d6dee8;
+    opacity: 0.5;
+}
+
+.content .content-top.sell .content-top-wrapper::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.content .content-top.sell .content-top-wrapper.transparent {
+    background: none;
+}
+
+.content .content-top.sell .instruction { 
+    padding: 0px 15px;
+    font-size: 15px;
+}
+
+.content .content-top.sell .instruction-trigger {
+    text-transform: uppercase;
+    font-family: roboto-black;
+    color: #47a1dd;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline;
+}
+
+.content .content-top.sell h2 {
+  text-transform: none;
+  font-size: 15px;
+  font-family: roboto-medium;
+  font-weight: normal;
+}
+
+.content .content-top.sell button {
+  padding: 2px 10px;
+  float: right;
+}
+.content .content-top.sell .button-wrapper {
+    text-align: right;
+}
+
+.content .content-top.sell .button-wrapper button {
+    float: none;
+}
+
+.content .content-top.sell input.default {
+    width: calc(100% - 40px);
+}
+
+.content .content-top.sell .notice {
+    margin: 10px 0;
+    font-size: 13px;
+} 
+ 
 .content .content-top.lots,
 .content .content-top.exchange {
     min-height: 0;
@@ -1632,6 +1705,37 @@ h1 {
 
 .sidebar .dnd-socket {
 	padding: 180px;
+}
+
+.sidebar.sell .sell-item {
+    background: #f8f9fa;
+    margin: 5px 0;
+}
+
+.sidebar.sell .sell-item img {
+    width: 40%;
+}
+
+.sidebar.sell .sell-item .item-info {
+    width: 60%;
+    float: right;
+    font-family: roboto-medium;
+    font-size: 15px;
+}
+
+.sidebar.sell .sell-item .item-info .title {
+    margin: 10px;
+}
+
+.sidebar.sell .sell-item .item-info .price {
+    margin: 10px;
+    text-transform: uppercase;
+}
+
+.sidebar.sell .sell-item .item-info .price::after {   
+    content: 'i';
+    font-family: rouble;
+    text-transform: none;
 }
 
 @media screen and (max-width: 1580px) {

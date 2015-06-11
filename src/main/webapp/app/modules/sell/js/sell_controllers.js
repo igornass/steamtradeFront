@@ -1,16 +1,23 @@
 var sellControllers = angular.module('Sell.controllers', []);
 
-sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout', '$window', 'InventoryService', 'ApplicationUtils',
-   function($scope, $rootScope, $timeout, $window, InventoryService, ApplicationUtils)
+sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout', '$window', 'InventoryService', 'ApplicationUtils', 'AuthService',
+   function($scope, $rootScope, $timeout, $window, InventoryService, ApplicationUtils, AuthService)
    {
 	  var ctrl = this;
 	  
 	  $scope.doubleClickFlag = true;
+	  $scope.user = {};
 	  
 	  $scope.inventory = [];
 	  $scope.selectedItems = [];
 	  $scope.applicationUtils = ApplicationUtils;
 	  $scope.applicationUtils.setPath('Продать');
+	  $scope.activeSell = false;
+	  $scope.secondStep = false;
+	   
+	  $scope.$watch( AuthService.isLoggedIn, function () {
+	      $scope.user = AuthService.getCurrentUser();
+	  });
 	  
 	  $scope.adjustGrid = function() {		  
 		  	if ($window.innerWidth <= 400)
@@ -131,6 +138,21 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 		   }
 		  InventoryService.sellSelectedItems(selectedItemsJson, cb_sell_items_success, ApplicationUtils.cb_error_handler);
 	  }
+	  
+	  $scope.proceedToSell = function() {
+		  $rootScope.isLoading = false;
+		  $scope.activeSell = true;
+		  $scope.applicationUtils.setPath([{text: 'Купить'}, {text: 'Шаг'}]);
+		  $scope.applicationUtils.setStep(1, 2);
+	  }
+	  
+	  $scope.proceedSale = function() {
+		  //Здесь надо отправить запрос POST /offers а по успешному колбэку сделать то, что ниже 
+		  $scope.applicationUtils.setStep(2, 2);
+		  $scope.secondStep = true;
+		  $scope.tradeLink = 'http://www.google.com';
+		  $scope.confirmationKey = '2i1dqkb85a';
+	  }
       
       //CALL BACKS
       var cb_get_inventory_success = function(data) {
@@ -196,7 +218,7 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
     	  var response = angular.fromJson(data);
     	  if (response.is)
     	  {
-    		 alert("User must be redirected to the second step of the sale as there is unfinished trade data");
+    		  $scope.proceedToSell();
     	  }
     	  else
     	  {
@@ -206,7 +228,7 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
     	     }
     		 else
     		 {
-    			 alert("User must be redirected to the second step of the sale as there is unfinished trade data");
+    			 $scope.proceedToSell();
     		 }
     	  }
       };    

@@ -1,7 +1,7 @@
 var sellControllers = angular.module('Sell.controllers', []);
 
-sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout', '$window', 'InventoryService', 'ApplicationUtils', 'AuthService',
-   function($scope, $rootScope, $timeout, $window, InventoryService, ApplicationUtils, AuthService)
+sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout', '$window', '$interval', 'InventoryService', 'ApplicationUtils', 'AuthService',
+   function($scope, $rootScope, $timeout, $window, $interval, InventoryService, ApplicationUtils, AuthService)
    {
 	  var ctrl = this;
 	  
@@ -10,10 +10,13 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 	  
 	  $scope.inventory = [];
 	  $scope.selectedItems = [];
+	  $scope.currentTrade = null;
 	  $scope.applicationUtils = ApplicationUtils;
 	  $scope.applicationUtils.setPath('Продать');
+	  $scope.applicationUtils.setStep(0, 0);
 	  $scope.activeSell = false;
 	  $scope.secondStep = false;
+	  $scope.counter = 0;
 	   
 	  $scope.$watch( AuthService.isLoggedIn, function () {
 	      $scope.user = AuthService.getCurrentUser();
@@ -51,15 +54,21 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
     	  InventoryService.getUserInventory(gameId, cb_get_inventory_success, cb_get_inventory_error);
       };
       
+      $scope.validateSelectedItems = function() {
+    	  if (!$scope.selectedItems) return false;
+    	  
+    	  if ($scope.selectedItems.length == 0) return false;
+    	  
+    	  for (var item in $scope.selectedItems) { 
+    		  if (!$scope.selectedItems[item].price) return false;     		  
+    	  }
+    	  
+    	  return true;
+      }
       
       $scope.getPendingTrades = function() {
     	  $rootScope.isLoading = true;
     	  InventoryService.getPendingTrades(cb_get_pending_sales_success, ApplicationUtils.cb_error_handler);
-      };
-      
-      $scope.cancelCurrentSale = function() {
-    	  $rootScope.isLoading = true;
-    	  InventoryService.cancelCurrentSale(cb_cancel_sale_success, ApplicationUtils.cb_error_handler);
       };
       
       $scope.dropSuccessHandler = function($event, item, array){
@@ -136,25 +145,124 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 			   };
 			   selectedItemsJson.push(itemJson);
 		   }
-		  InventoryService.sellSelectedItems(selectedItemsJson, cb_sell_items_success, ApplicationUtils.cb_error_handler);
+		  InventoryService.sellSelectedItems(selectedItemsJson, $scope.getPendingTrades, ApplicationUtils.cb_error_handler);
 	  }
 	  
-	  $scope.proceedToSell = function() {
-		  $rootScope.isLoading = false;
+	  $scope.beginTrade = function() {
+		  InventoryService.saveSelectedItemsHistory($scope.selectedItems);
 		  $scope.activeSell = true;
 		  $scope.applicationUtils.setPath([{text: 'Купить'}, {text: 'Шаг'}]);
 		  $scope.applicationUtils.setStep(1, 2);
 	  }
 	  
-	  $scope.proceedSale = function() {
-		  //Здесь надо отправить запрос POST /offers а по успешному колбэку сделать то, что ниже 
-		  $scope.applicationUtils.setStep(2, 2);
-		  $scope.secondStep = true;
-		  $scope.tradeLink = 'http://www.google.com';
-		  $scope.confirmationKey = '2i1dqkb85a';
+	  $scope.cancelTrade = function() {
+		  $scope.applicationUtils.raisePopup('Отмена продажи', 'Вы уверены?', [{text: 'Да', red: 'red', func: $scope.doCancelTrade}, {text: 'Нет', func: $scope.applicationUtils.closePopup}]);
 	  }
+	  
+	  $scope.doCancelTrade = function() {
+		  $scope.applicationUtils.closePopup();
+		  if ($scope.currentTrade) {
+			  $rootScope.isLoading = true;
+			  InventoryService.deleteTrade($scope.currentTrade.trade_id, cb_cancel_sale_success, ApplicationUtils.cb_error_handler);
+		  } else {
+			  $scope.resetSale();  		  
+		  }
+	  }
+	  
+	  $scope.skipToSale = function() {
+		  $rootScope.isLoading = false;
+		  $scope.selectedItems = InventoryService.getSelectedItemsHistory();
+		  $scope.activeSell = true;
+		  $scope.applicationUtils.setPath([{text: 'Купить'}, {text: 'Шаг'}]);
+		  $scope.applicationUtils.setStep(1, 2);
+		  
+		  if($scope.currentTrade) {
+			  $scope.applicationUtils.setStep(2, 2);
+			  $scope.secondStep = true;
+			  
+			  $scope.checkStatus = $interval($scope.tradeStatusCheck, 5000);
+		  }
+	  }
+	  
+	  $scope.tradeStatusCheck = function() {
+		  $scope.counter++;
+		  if ($scope.counter > 1) {
+			  $scope.stopCheck();
+			  $scope.showCheckManual = true;
+			  return;
+		  }
+		  
+		  $scope.checkTradeStatus();
+		  
+	  }
+	  
+	  $scope.stopCheck = function() {
+		  if(angular.isDefined($scope.checkStatus)) {
+			  $scope.counter = 0;
+			  $interval.cancel($scope.checkStatus);
+			  $scope.checkStatus = undefined;
+          }
+      };
+      
+      $scope.checkTradeStatus = function() {
+    	  InventoryService.checkTradeStatus($scope.currentTrade.trade_id, cb_trade_status_success, cb_trade_status_failed);
+      };
+      
+      $scope.confirmTrade = function() {
+    	  $rootScope.isLoading = true;
+    	  InventoryService.confirmTrade($scope.currentTrade.trade_id, cb_trade_confirm_success, ApplicationUtils.cb_error_handler);
+      };
+      
+      $scope.retryTrade = function() {
+    	  $rootScope.isLoading = true;
+    	  InventoryService.retryTrade($scope.currentTrade.trade_id, cb_trade_retry_success, cb_trade_retry_failed);
+      };
+      
+      $scope.resetSale = function() {
+    	  $scope.stopCheck();
+    	  $scope.currentTrade = null;
+    	  $scope.showCheckManual = false;
+		  $scope.showCheckSuccess = false;
+		  $scope.activeSell = false;
+		  $scope.secondStep = false;
+		  $scope.applicationUtils.setPath('Купить');
+		  $scope.applicationUtils.setStep(0, 0);
+		  InventoryService.clearSelectedItemsHistory();
+		  if ($scope.inventory.length == 0) $scope.getInventory(570);
+      };
       
       //CALL BACKS
+      var cb_trade_confirm_success = function() {
+    	  $rootScope.isLoading = false;
+    	  $scope.resetSale();
+    	  $scope.selectedItems = [];
+    	  ApplicationUtils.raisePopup('Статус обмена', 'Обмен успешно произведен');
+      };
+
+      var cb_trade_status_success = function(data) {
+    	  var response = angular.fromJson(data);
+    	  console.log(response);
+    	  
+    	  if(response.status_trade == 'created') {
+    		  $scope.stopCheck();
+    		  $scope.showCheckManual = false;
+    		  $scope.showCheckSuccess = true;
+    		  return;
+    	  }
+    	  
+    	  if(response.status_trade == 'failed') {
+    		  $scope.applicationUtils.raisePopup('Ошибка', 'Не удалось создать обмен. Попробовать еще раз?', [{text: 'Да', func: $scope.retryTrade}, {text: 'Нет', red: 'red', func: $scope.resetSale}]);
+    		  return;
+    	  }
+    	  
+    	  if ($scope.showCheckManual) ApplicationUtils.raisePopup('Статус обмена', response.status_trade);
+      };
+      
+      var cb_trade_status_failed = function() {
+    	  ApplicationUtils.raisePopup('Статус обмена', 'Произошла внутренняя ошибка, ваш обмен не был создан. Попробуйте повторить попытку позднее.');
+    	  $scope.resetSale();
+      }
+      
       var cb_get_inventory_success = function(data) {
     	  $rootScope.isLoading = false;
     	  
@@ -190,7 +298,18 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
         		  }        		  
         	  }
         	  
-        	  if (inventoryObject[itemObject].description.tradable == 1) $scope.inventory.push(inventoryObject[itemObject]);
+        	  if (inventoryObject[itemObject].description.tradable == 1) {
+        		  var alreadyThere = false;
+
+        		  for (var i = 0; i < $scope.selectedItems.length; i++) {
+        			  var price = $scope.selectedItems[i].price;
+        			  delete $scope.selectedItems[i].price;
+        			  if (angular.equals(inventoryObject[itemObject], $scope.selectedItems[i])) alreadyThere = true;
+        			  $scope.selectedItems[i].price = price;
+          		  }
+        		  
+        		  if (!alreadyThere) $scope.inventory.push(inventoryObject[itemObject]);
+        	  }
         	  
           }
           
@@ -218,7 +337,8 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
     	  var response = angular.fromJson(data);
     	  if (response.is)
     	  {
-    		  $scope.proceedToSell();
+    		  $scope.currentTrade = response.trade;
+    		  $scope.skipToSale();
     	  }
     	  else
     	  {
@@ -228,19 +348,14 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
     	     }
     		 else
     		 {
-    			 $scope.proceedToSell();
+    			 $scope.skipToSale();
     		 }
     	  }
-      };    
-      
-      var cb_sell_items_success = function(data) {
-    	  $rootScope.isLoading = false;
-    	  var response = angular.fromJson(data);
       };
       
       var cb_cancel_sale_success = function(data) {
     	  $rootScope.isLoading = false;
-    	  var response = angular.fromJson(data);
+    	  $scope.resetSale();
       };
       
 	  $scope.adjustGrid();

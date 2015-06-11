@@ -1,6 +1,6 @@
 var sellServices = angular.module('Sell.services', []);
 
-sellServices.service('InventoryService', ['HttpConnectionService', 'AuthService',  function(HttpConnectionService, AuthService){
+sellServices.service('InventoryService', ['HttpConnectionService', 'AuthService', 'LocalStorageService',  function(HttpConnectionService, AuthService, LocalStorageService){
 
     this.getUserInventory = function(gameId, cb_success, cb_error)
     {
@@ -20,7 +20,22 @@ sellServices.service('InventoryService', ['HttpConnectionService', 'AuthService'
     
     this.isSelectedItemsHistoryEmpty = function()
     {
-       return jQuery.isEmptyObject(AuthService.getSelectedItemsHistory());
+       return jQuery.isEmptyObject(LocalStorageService.getSelectedItemsHistory());
+    };
+    
+    this.saveSelectedItemsHistory = function(items)
+    {
+    	LocalStorageService.updateSelectedItemsHistory(items);
+    };
+    
+    this.clearSelectedItemsHistory = function()
+    {
+    	LocalStorageService.removeSelectedItemsHistory();
+    }
+    
+    this.getSelectedItemsHistory = function()
+    {
+       return LocalStorageService.getSelectedItemsHistory();
     };
     
     this.cancelCurrentSale = function(cb_success, cb_error)

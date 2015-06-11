@@ -143,7 +143,7 @@
     	</div>
     	
     	<div class="sell">
-    		<button type="button" ng-click="sellSelectedItems()" ng-class="{ 'disabled': selectedItems.length == 0 }">Продать</button>
+    		<button type="button" ng-click="beginTrade()" ng-disabled="!validateSelectedItems()" ng-class="{ 'disabled': !validateSelectedItems() }">Продать</button>
     	</div>
     </div>
 </div>
@@ -167,7 +167,7 @@
             </div>
             
             <div class="content-top-wrapper" ng-class="{ 'transparent': instruction } ">
-                <button type="button" ng-disabled="!user.link_trade || secondStep" ng-class="{ 'disabled': !user.link_trade } " ng-click="proceedSale()">Следующий шаг</button>
+                <button type="button" ng-disabled="!user.link_trade || secondStep" ng-class="{ 'disabled': !user.link_trade } " ng-click="sellSelectedItems()">Следующий шаг</button>
                 <div class="instruction-trigger" ng-click="instruction = !instruction" ng-show="instruction">Скрыть инструкцию</div>
                 <div class="instruction-trigger" ng-click="instruction = !instruction" ng-hide="instruction">Показать инструкцию</div>
             </div>
@@ -177,9 +177,12 @@
             <div class="content-top-wrapper">
                 <h2><b>Шаг 2:</b> Примите обмен</h2>
                 <h2>Вам отправлен обмен. Вы можете подтвердить его, пройдя по ссылке:</h2>
-                <a ng-href="{{tradeLink}}">{{tradeLink}}</a>
+                <a ng-href="{{currentTrade[' link_trade']}}">{{currentTrade[' link_trade']}}</a>
                 <div class="notice">Удостоверьтесь, что к обмену прикреплено сообщение с текстом: <b ng-bind="confirmationKey">DICKWAD</b>. Это гарантия того, что Вы отправляете свои вещи именно нам.</div>
-                <div class="button-wrapper"><button type="button">Я принял обмен</button></div>
+                <div class="button-wrapper">
+                    <button type="button" ng-show="showCheckManual" ng-click="checkTradeStatus()">Проверить статус</button>
+                    <button type="button" ng-show="showCheckSuccess" ng-click="confirmTrade()">Я принял обмен</button>
+                </div>
             </div>
         </div>
         
@@ -189,25 +192,18 @@
         <div class="scroller">
             <h1>Выбранный инвентарь</h1>
             
-            <div class="sell-item">
-                <img src="http://store.valvesoftware.com/product_images/main_images/DOTA-LOGO-BEANIE_MAIN.png">
+            <div class="sell-item" ng-repeat="item in selectedItems">
+                <img draggable="false" ng-src="{{applicationUtils.imageURL(item.description.icon_url_large, 300)}}">
                 <div class="item-info">
-                    <div class="title">Item title</div>
-                    <div class="price">Ваша цена: <b>60</b></div>
+                    <div class="title">{{item.description.market_name}}</div>
+                    <div class="price">Ваша цена: <b>{{item.price}}</b></div>
                 </div>
             </div>
             
-            <div class="sell-item">
-                <img src="http://store.valvesoftware.com/product_images/main_images/DOTA-LOGO-BEANIE_MAIN.png">
-                <div class="item-info">
-                    <div class="title">Item title</div>
-                    <div class="price">Ваша цена: <b>50</b></div>
-                </div>
-            </div>
         </div>        
         
         <div class="sell">
-            <button type="button" class="red">Отменить продажу</button>
+            <button type="button" class="red" ng-click="cancelTrade()">Отменить продажу</button>
         </div>
         
     </div>

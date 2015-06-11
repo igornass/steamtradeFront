@@ -137,7 +137,11 @@ commonServices.service('ApplicationUtils', ['$rootScope', function($rootScope){
     	$rootScope.isLoading = false;
     	
     	var title = 'Произошла ошибка';
-		var body = angular.fromJson(data).reason;
+    	var body = 'Неизвестная ошибка';
+    	
+		if (angular.fromJson(data)) {
+			body = angular.fromJson(data).reason || angular.fromJson(data).error || 'Неизвестная ошибка';
+		}
 		 
 		that.raisePopup(title, body);
     };
@@ -174,30 +178,6 @@ commonServices.factory('AuthService', [ 'HttpConnectionService', '$cookieStore',
         	  $cookieStore.remove(AUTH_TOKEN);
         	  isUserUpdating = false;
           });
-      },
-      
-      getSelectedItemsHistory: function() {
-    	  return $cookieStore.get(SELECTED_ITEMS_HISTORY);
-      },
-      
-      updateSelectedItemsHistory: function(items) {
-    	  $cookieStore.put(SELECTED_ITEMS_HISTORY, items);
-      },
-      
-      removeSelectedItemsHistory: function() {
-    	  $cookieStore.remove(SELECTED_ITEMS_HISTORY);
-      },
-      
-      getCachedOffers: function() {
-    	  return $cookieStore.get(CACHED_OFFERS);
-      },
-      
-      updateCachedOffers: function(offers) {
-    	  $cookieStore.put(CACHED_OFFERS, offers);
-      },
-      
-      removeCachedOffers: function() {
-    	  $cookieStore.remove(CACHED_OFFERS);
       },
       
       logout: function(cb_error) {
@@ -247,5 +227,31 @@ commonServices.factory('AuthService', [ 'HttpConnectionService', '$cookieStore',
     };
 }]);
 
-
+commonServices.service('LocalStorageService', ['$localStorage', function($localStorage){
+    
+    this.getSelectedItemsHistory = function() {
+    	return $localStorage[SELECTED_ITEMS_HISTORY];
+    };
+    
+    this.updateSelectedItemsHistory = function(items) {
+    	$localStorage[SELECTED_ITEMS_HISTORY] = items;
+    };
+    
+    this.removeSelectedItemsHistory = function() {
+    	delete $localStorage[SELECTED_ITEMS_HISTORY];
+    };
+    
+    this.getCachedOffers = function() {
+    	return $localStorage[CACHED_OFFERS];
+    };
+    
+    this.updateCachedOffers = function(offers) {
+    	$localStorage[CACHED_OFFERS] = offers;
+    };
+    
+    this.removeCachedOffers = function() {
+    	delete $localStorage[CACHED_OFFERS];
+    };
+    
+}]);
 

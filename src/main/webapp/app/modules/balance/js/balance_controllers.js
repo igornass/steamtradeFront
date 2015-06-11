@@ -7,6 +7,7 @@ balanceControllers.controller('BalanceContentCtrl', ['$scope', '$rootScope', '$w
 
 	  $scope.applicationUtils = ApplicationUtils;
 	  $scope.applicationUtils.setPath('Баланс');
+	  $scope.applicationUtils.setStep(0, 0);
 	  
 	  $scope.selectMethod = function(methodId) {
 		  $scope.selectedMethod = methodId;

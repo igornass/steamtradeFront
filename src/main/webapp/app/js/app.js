@@ -21,7 +21,8 @@ var app = angular.module('SteamShop',[
 	'ui.router',
 	'ang-drag-drop',
 	'ngTouch', 
-	'ngSanitize'
+	'ngSanitize',
+	'ngStorage'
 ]);
 
 app.config(function(paginationTemplateProvider, $urlRouterProvider, $stateProvider) {

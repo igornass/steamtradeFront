@@ -186,7 +186,7 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 	  
 	  $scope.tradeStatusCheck = function() {
 		  $scope.counter++;
-		  if ($scope.counter > 1) {
+		  if ($scope.counter > 2) {
 			  $scope.stopCheck();
 			  $scope.showCheckManual = true;
 			  return;
@@ -232,6 +232,14 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
       };
       
       //CALL BACKS
+      var cb_trade_retry_success = function() {
+    	  $scope.sellSelectedItems();
+      };
+      
+      var cb_trade_retry_failed = function() {
+    	  $scope.applicationUtils.raisePopup('Ошибка', 'Не удалось создать обмен. Попробовать еще раз?', [{text: 'Да', func: $scope.retryTrade}, {text: 'Нет', red: 'red', func: $scope.resetSale}]);
+      };
+      
       var cb_trade_confirm_success = function() {
     	  $rootScope.isLoading = false;
     	  $scope.resetSale();

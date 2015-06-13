@@ -3,7 +3,7 @@
 		<div class="menu-scroller">
 			<label>Основное меню</label>
 			
-			<a class="menu-link" ui-sref="buy_state" ui-sref-active="current"><ng-include src="'resources/svg/buy.svg'"></ng-include><span>Купить</span></a>
+			<a class="menu-link" ui-sref="buy_state" ui-sref-active="current" ng-class="{ current: $state.includes('buy_item_state') }"><ng-include src="'resources/svg/buy.svg'"></ng-include><span>Купить</span></a>
 			<a class="menu-link" ui-sref="sell_state" ui-sref-active="current"><ng-include src="'resources/svg/sell.svg'"></ng-include><span>Продать</span></a>
 			<a class="menu-link" ui-sref="lots_state" ui-sref-active="current"><ng-include src="'resources/svg/lots.svg'"></ng-include><span>Лоты</span></a>
 			<a class="menu-link" ui-sref="exchange_state" ui-sref-active="current"><ng-include src="'resources/svg/exchange.svg'"></ng-include><span>Обмены</span></a>

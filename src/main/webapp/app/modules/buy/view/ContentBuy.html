@@ -2,9 +2,9 @@
 	<div class="content-top">
 		<div class="game">
 			<h1>Выберите игру</h1>
-			<div ng-click="selectGame('570')" ng-class="{ 'current': selectedGame == 570}"><ng-include src="'resources/svg/dota.svg'"></ng-include></div>
-			<div ng-click="selectGame('730')" ng-class="{ 'current': selectedGame == 730}"><ng-include src="'resources/svg/csgo.svg'"></ng-include></div>
-			<div ng-click="selectGame('440')" ng-class="{ 'current': selectedGame == 440}"><ng-include src="'resources/svg/tf.svg'"></ng-include></div>
+			<div ui-sref="buy_state({game: 570})" ng-class="{ 'current': selectedGame == 570}"><ng-include src="'resources/svg/dota.svg'"></ng-include></div>
+			<div ui-sref="buy_state({game: 730})" ng-class="{ 'current': selectedGame == 730}"><ng-include src="'resources/svg/csgo.svg'"></ng-include></div>
+			<div ui-sref="buy_state({game: 440})" ng-class="{ 'current': selectedGame == 440}"><ng-include src="'resources/svg/tf.svg'"></ng-include></div>
 		</div>
 		
 		<div class="search" ng-show="selectedGame">
@@ -75,7 +75,7 @@
 	</div>
 	
 	<div ng-repeat="offer in offers" class="content-block buy">
-		<a ui-sref="buy_item_state({game: selectedGame, item: offer.item.name})" target="_blank">
+		<a ui-sref="buy_item_state({game: selectedGame, item: offer.item.name})">
             <img draggable="false" ng-src="{{applicationUtils.imageURL(offer.item.icon_url_large, 300)}}">
     		<div class="info-1">
     			<span class="title">{{offer.item.name}}</span>
@@ -90,7 +90,7 @@
     		</div>
         </a>
         <div class="info-3">
-            <button type="button" ng-click="buyOffer(offer.id)">Купить</button>
+            <button type="button" ng-click="buyButton(offer.id, offer.price / 100, offer.item.name)">Купить</button>
         </div>
 	</div>
 	

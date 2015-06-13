@@ -151,7 +151,7 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 	  $scope.beginTrade = function() {
 		  InventoryService.saveSelectedItemsHistory($scope.selectedItems);
 		  $scope.activeSell = true;
-		  $scope.applicationUtils.setPath([{text: 'Купить'}, {text: 'Шаг'}]);
+		  $scope.applicationUtils.setPath([{text: 'Продать'}, {text: 'Шаг'}]);
 		  $scope.applicationUtils.setStep(1, 2);
 	  }
 	  
@@ -173,7 +173,7 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 		  $rootScope.isLoading = false;
 		  $scope.selectedItems = InventoryService.getSelectedItemsHistory();
 		  $scope.activeSell = true;
-		  $scope.applicationUtils.setPath([{text: 'Купить'}, {text: 'Шаг'}]);
+		  $scope.applicationUtils.setPath([{text: 'Продать'}, {text: 'Шаг'}]);
 		  $scope.applicationUtils.setStep(1, 2);
 		  
 		  if($scope.currentTrade) {
@@ -225,7 +225,7 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 		  $scope.showCheckSuccess = false;
 		  $scope.activeSell = false;
 		  $scope.secondStep = false;
-		  $scope.applicationUtils.setPath('Купить');
+		  $scope.applicationUtils.setPath('Продать');
 		  $scope.applicationUtils.setStep(0, 0);
 		  InventoryService.clearSelectedItemsHistory();
 		  if ($scope.inventory.length == 0) $scope.getInventory(570);

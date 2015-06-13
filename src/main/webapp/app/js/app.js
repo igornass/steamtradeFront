@@ -30,8 +30,15 @@ app.config(function(paginationTemplateProvider, $urlRouterProvider, $stateProvid
     
     $stateProvider
     .state(STATE_BUY, {
-        url: '/buy',
+        url: '/buy/{game}',
         templateUrl: 'app/modules/buy/view/ContentBuy.html',
+        
+        resolve: {
+            selectedGame: function($stateParams){
+                return $stateParams.game;
+            }
+        },
+        
         controller: 'BuyContentCtrl'
     })
     .state(STATE_BUY_ITEM, {

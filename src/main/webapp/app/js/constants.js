@@ -27,6 +27,12 @@ var TMP_AUTH_TOKEN = 'tmpAuthToken';
 var SELECTED_ITEMS_HISTORY = 'selectedItemsHistory';
 var CACHED_OFFERS = 'cachedOffers';
 
+//Game titles
+var GAMES = {};
+	GAMES[570] = 'Dota 2';
+	GAMES[730] = 'Counter Strike: Global Offensive';
+	GAMES[440] = 'Team Fortress 2';
+
 //States
 var STATE_BUY = 'buy_state';
 var STATE_BUY_ITEM = 'buy_item_state';

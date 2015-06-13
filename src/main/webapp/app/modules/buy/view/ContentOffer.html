@@ -1,23 +1,39 @@
-<div class="content columns-{{columns}} fullsize">
-	<div class="content-top" ng-show="item">
-        <img class="item-image" ng-src="{{item.icon_url_large ? applicationUtils.imageURL(item.icon_url_large, 650) : applicationUtils.imageURL(item.icon_url, 650)}}">
+<div class="content" ng-show="item">
+	<div class="content-top">
+        <img class="item-image" ng-src="{{item.icon_url_large ? applicationUtils.imageURL(item.icon_url_large, 783) : applicationUtils.imageURL(item.icon_url, 783)}}">
         <div class="item-description">
-            <h1>{{item.market_hash_name}}</h1>
-            <div class="description-entity" style="color: #{{description.color}}" ng-repeat="description in item.descriptionsArray" ng-bind-html="toTrusted(description.value)"></div>
-            <br>
+            <div class="description-title">{{item.market_hash_name}}</div>
+            <div class="description-entity" style="color: #{{description.color}}" ng-repeat="description in item.descriptionsArray" ng-bind-html="description.value"></div>
+        </div>
+        <div class="item-tags">
             <div class="tag" ng-repeat="tag in item.tags"><b>{{tag.category}}:</b> {{tag.name}}</div>
             <div class="price"><b>Цена: </b>{{offers[0].price / 100}}</div>
             <button type="button" ng-click="buyButton(offers[0].id, offers[0].price / 100, item.market_hash_name)">Купить</button>
         </div>
 	</div>
  
-    <div class="content-top" ng-show="item" ng-repeat="offer in offers" ng-if="$index > 0">
-        <img class="item-image-small" ng-src="{{item.icon_url_large ? applicationUtils.imageURL(item.icon_url_large, 650) : applicationUtils.imageURL(item.icon_url, 650)}}">
-        <div class="item-description-small">
-            <h1>{{item.market_hash_name}}</h1>
-            <div class="price"><b>Цена: </b>{{offer.price / 100}}</div>
-            <button type="button" ng-click="buyButton(offer.id, offer.price / 100, item.market_hash_name)">Купить</button>
-        </div>
+    <div class="content-top prices">
+        <div class="title">Динамика цен на {{item.market_hash_name}}</div>
+        <div>Данные не доступны</div>
     </div>
 	
+</div>
+
+<div ng-class="{ 'maximized': sidebarMaximized == true && menuMaximized == false }" class="sidebar buy">
+    <div class="scroller">
+        <h1>Другие предложения</h1>
+ 
+        <div class="buy-item" ng-repeat="offer in offers" ng-if="$index > 0">
+            <img class="item-image-sidebar" ng-src="{{item.icon_url_large ? applicationUtils.imageURL(item.icon_url_large, 250) : applicationUtils.imageURL(item.icon_url, 250)}}">
+            <div class="item-description-sidebar">
+                <div class="item-name">{{item.market_hash_name}}</div>
+                <div class="item-owner"><b>Владелец: </b>{{offer.owner_name}}</div>
+                <div class="item-number"><b>Количество: </b>1</div>
+                <div class="price"><b>Цена: </b>{{offer.price / 100}}</div>
+                <button type="button" ng-click="buyButton(offer.id, offer.price / 100, item.market_hash_name)">Купить</button>
+            </div>
+        </div>
+        
+    </div>
+    
 </div>

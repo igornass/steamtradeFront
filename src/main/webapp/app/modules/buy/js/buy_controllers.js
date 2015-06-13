@@ -1,10 +1,9 @@
 var buyControllers = angular.module('Buy.controllers', []);
 
-buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 'OffersService', 'ApplicationUtils',
-   function($scope, $rootScope, $window, OffersService, ApplicationUtils)
+buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 'OffersService', 'ApplicationUtils', 'selectedGame',
+   function($scope, $rootScope, $window, OffersService, ApplicationUtils, selectedGame)
    {
 	 var ctrl = this;
-	 
 	 $scope.offers = [];
 	 $scope.search = {};
 	 $scope.filters = {'Hero' : ['Weaver', 'Clockwerk'], 'Rarity' : ['Rare', 'Uncommon'], 'Quality' : ['Genuine', 'Unusual'], 'Type' : ['Wearable', 'Courier']};
@@ -86,7 +85,10 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
     		 
     		 if (listedAt >= 0) {
 				 $scope.offers[listedAt].count = $scope.offers[listedAt].count + 1;
-				 if ($scope.offers[listedAt].price > response[offer].price) $scope.offers[listedAt].price = response[offer].price;
+				 if ($scope.offers[listedAt].price > response[offer].price) {
+					 $scope.offers[listedAt].price = response[offer].price;
+					 $scope.offers[listedAt].id = response[offer].id;
+				 }
     		 } else {
     			 response[offer].count = 1;
 				 $scope.offers.push(response[offer]);
@@ -97,65 +99,6 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
     	 console.log($scope.offers);
 
      };
-       
-     $scope.adjustGrid();
-     $scope.selectGame(570);
-   }
-]);
-
-buyControllers.controller('ItemDetailsCtrl', ['$scope', '$rootScope', '$sce', 'OffersService', 'ApplicationUtils', 'itemDetails',
-   function($scope, $rootScope, $sce, OffersService, ApplicationUtils, itemDetails)                                          
-   {
-	 var ctrl = this;
-	 $scope.applicationUtils = ApplicationUtils;
-	 
-	 $scope.item = {};
-	 $scope.offers = {};
-	 $scope.selectedOffer = undefined;
-	 
-	 ctrl.cb_get_offers_success = function(data) {
-    	 $scope.offers = angular.fromJson(data);
-    	 
-    	 if ($scope.offers.length > 0) {
-    		 OffersService.getItemDetails(itemDetails.game, $scope.offers[0].item.class_id, $scope.offers[0].item.instance_id, ctrl.cb_get_item_success, ApplicationUtils.cb_error_handler)
-    	 } else {
-    		 alert('There are no offers for the requested item');
-    		 $rootScope.isLoading = false;
-    	 }
-     };
-     
-     ctrl.cb_buy_item_success = function(data) {
-    	 $rootScope.isLoading = false;
-    	 var response = angular.fromJson(data);
-    	 title = 'Предмет успешно куплен.';
-		 body = 'Мы отправили обмен на ваш аккаунт. Статус обменов вы можете посмотреть <a href="#/exchange">здесь</a>'
-			 
-		 $scope.applicationUtils.raisePopup(title, body);
-     };
-     
-     ctrl.cb_get_item_success = function(data) {
-    	 $rootScope.isLoading = false;
-    	 response = angular.fromJson(data);
-    	 if ($scope.offers[0].item.instance_id) {
-    		 $scope.item = response.result[$scope.offers[0].item.class_id + '_' + $scope.offers[0].item.instance_id];
-    	 } else {
-    		 $scope.item = response.result[$scope.offers[0].item.class_id];
-    	 }
-    	 
-    	 $scope.item.descriptionsArray = [];
-    	 
-    	 for (var description in $scope.item.descriptions) {
-    		 $scope.item.descriptionsArray.push($scope.item.descriptions[description]);    		 
-    	 }
-    	 
-    	 console.log($scope.item);
-    	 console.log('---');
-    	 console.log($scope.offers);
-     };
-     
-     $scope.toTrusted = function(html_code) {
-	     return $sce.trustAsHtml(html_code);
-	 }
      
      $scope.buyButton = function(id, price, name) {    	 
     	 var title = "";
@@ -184,27 +127,132 @@ buyControllers.controller('ItemDetailsCtrl', ['$scope', '$rootScope', '$sce', 'O
     	 body = 'Вы покупаете ' + name + ' за ' + price + 'руб.<br>Подтверждая покупку вы соглашаетесь с <a href="#/contract">условиями агентского договора</a>';
     	 
     	 buttons = [
-    	            { text: 'Я подтверждаю', func: buySelectedOffer},
-    	            { text: 'Отмена', red: 'red', func: applicationUtils.closePopup}
+    	            { text: 'Я подтверждаю', func: $scope.buySelectedOffer},
+    	            { text: 'Отмена', red: 'red', func: ApplicationUtils.closePopup}
     	            ]
     	 
     	 $scope.applicationUtils.raisePopup(title, body, buttons);
     	 
-	 }
+	 };
      
-     $scope.buyOffer = function(id) {
-    	 $rootScope.isLoading = true;
-    	 OffersService.buyItem(id, ctrl.cb_buy_item_success, ApplicationUtils.cb_error_handler);    	 
-	 }
-     
-     $scope.buySelectedOffer = function(id) {
+     $scope.buySelectedOffer = function() {
     	 $rootScope.isLoading = true;
     	 OffersService.buyItem($scope.selectedOffer, ctrl.cb_buy_item_success, ApplicationUtils.cb_error_handler);    	 
+	 };
+     
+     ctrl.cb_buy_item_success = function(data) {
+    	 $rootScope.isLoading = false;
+    	 var response = angular.fromJson(data);
+    	 title = 'Предмет успешно куплен.';
+		 body = 'Мы отправили обмен на ваш аккаунт. Статус обменов вы можете посмотреть <a href="#/exchange">здесь</a>'
+			 
+		 $scope.applicationUtils.raisePopup(title, body);
+     };
+       
+     $scope.adjustGrid();
+
+	 if (selectedGame) {
+		 $scope.selectGame(selectedGame);
+	 } else {
+		 $scope.selectGame(570);
 	 }
+   }
+]);
+
+buyControllers.controller('ItemDetailsCtrl', ['$scope', '$rootScope', '$sce', 'OffersService', 'ApplicationUtils', 'itemDetails',
+   function($scope, $rootScope, $sce, OffersService, ApplicationUtils, itemDetails)                                          
+   {
+	 var ctrl = this;
+	 $scope.applicationUtils = ApplicationUtils;
+	 
+	 $scope.item = undefined;
+	 $scope.offers = {};
+	 $scope.selectedOffer = undefined;
+	 
+	 ctrl.cb_get_offers_success = function(data) {
+    	 $scope.offers = angular.fromJson(data);
+    	 
+    	 if ($scope.offers.length > 0) {
+    		 OffersService.getItemDetails(itemDetails.game, $scope.offers[0].item.class_id, $scope.offers[0].item.instance_id, ctrl.cb_get_item_success, ApplicationUtils.cb_error_handler)
+    	 } else {
+    		 alert('There are no offers for the requested item');
+    		 $rootScope.isLoading = false;
+    	 }
+     };
+     
+     ctrl.cb_get_item_success = function(data) {
+    	 $rootScope.isLoading = false;
+    	 response = angular.fromJson(data);
+    	 if ($scope.offers[0].item.instance_id) {
+    		 $scope.item = response.result[$scope.offers[0].item.class_id + '_' + $scope.offers[0].item.instance_id];
+    	 } else {
+    		 $scope.item = response.result[$scope.offers[0].item.class_id];
+    	 }
+    	 
+    	 $scope.item.descriptionsArray = [];
+    	 
+    	 for (var description in $scope.item.descriptions) {
+    		 $scope.item.descriptionsArray.push($scope.item.descriptions[description]);    		 
+    	 }
+    	 
+    	 console.log($scope.item);
+    	 console.log('---');
+    	 console.log($scope.offers);
+     };
+     
+     $scope.buyButton = function(id, price, name) {    	 
+    	 var title = "";
+    	 var body = "";
+    	 var buttons = [];
+    	 
+    	 if (!$scope.isLoggedIn) {
+    		 title = 'Вы не авторизованы';
+    		 body = 'Для покупки предметов необходимо войти через Steam'
+    		 
+    		 $scope.applicationUtils.raisePopup(title, body);
+    		 return;
+    	 }
+    	 
+    	 if (!$scope.currentUser.trader) {
+    		 title = 'Вы не можете покупать предметы';
+    		 body = 'Для подключения возможности покупки предметов подтвердите свой аккаунт с помощью мобильного телефона в <a href="#/settings">Настройках</a>'
+    			 
+    		 $scope.applicationUtils.raisePopup(title, body);
+    		 return;
+    	 }
+    	 
+    	 $scope.selectedOffer = id;
+    	 
+    	 title = 'Подтвердите покупку';
+    	 body = 'Вы покупаете ' + name + ' за ' + price + 'руб.<br>Подтверждая покупку вы соглашаетесь с <a href="#/contract">условиями агентского договора</a>';
+    	 
+    	 buttons = [
+    	            { text: 'Я подтверждаю', func: $scope.buySelectedOffer},
+    	            { text: 'Отмена', red: 'red', func: ApplicationUtils.closePopup}
+    	            ]
+    	 
+    	 $scope.applicationUtils.raisePopup(title, body, buttons);
+    	 
+	 };
+     
+     $scope.buySelectedOffer = function() {
+    	 $rootScope.isLoading = true;
+    	 OffersService.buyItem($scope.selectedOffer, ctrl.cb_buy_item_success, ApplicationUtils.cb_error_handler);    	 
+	 };
+     
+     ctrl.cb_buy_item_success = function(data) {
+    	 $rootScope.isLoading = false;
+    	 var response = angular.fromJson(data);
+    	 title = 'Предмет успешно куплен.';
+		 body = 'Мы отправили обмен на ваш аккаунт. Статус обменов вы можете посмотреть <a href="#/exchange">здесь</a>'
+			 
+		 $scope.applicationUtils.raisePopup(title, body);
+     };
 	 
      $rootScope.isLoading = true;
 	 OffersService.getOffers(itemDetails.game, null, null, null, null, itemDetails.item,
 			 null, null, null, ctrl.cb_get_offers_success, ApplicationUtils.cb_error_handler);
+	 $scope.applicationUtils.setPath([{text: 'Купить'}, {text: GAMES[itemDetails.game], link: '#/buy/' + itemDetails.game}, {text: itemDetails.item}]);
 	 
   }
 ]);                                 

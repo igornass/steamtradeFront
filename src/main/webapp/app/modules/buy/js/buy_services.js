@@ -5,7 +5,7 @@ buyServices.service('OffersService', ['HttpConnectionService', 'AuthService', 'A
 	this.buyItem = function(itemId, cb_success, cb_error)
     {
        var url = BUY_REST_WS_URL + itemId;
-       HttpConnectionService.raisePostHttpRequest(url, AuthService.getAuthToken(), cb_success, cb_error);
+       HttpConnectionService.raisePostHttpRequest(url, AuthService.getAuthToken(), null, cb_success, cb_error);
     };
 	
 	this.getItemDetails = function(gameId, classId, instanceId, cb_success, cb_error)

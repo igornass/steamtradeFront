@@ -1446,7 +1446,7 @@ button.red {
 }
 
 .content .content-top .item-image {
-    width: 50%;
+    width: 100%;
     display: inline-block;
     vertical-align: top;
 }
@@ -1460,36 +1460,65 @@ button.red {
     vertical-align: top;
 }
 
-.content .content-top .item-description .tag {
+.content .content-top .item-description .description-title {
+    font-family: roboto-medium;
+    font-size: 18px;
+    margin: 3px 0 10px 0;
+}
+
+.content .content-top .item-description .description-entity {
+    font-size: 15px;
+}
+
+.content .content-top .item-tags {
+    font-size: 12px;
+    width: 50%;
+    box-sizing: border-box;
+    padding: 10px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.content .content-top .item-tags .tag {
     font-size: 14px;
     padding: 2px 0;
 }
 
-.content .content-top .item-description .price {
+.content .content-top .item-tags .price {
     font-size: 18px;
     padding: 10px 0;
     color: #85bf4d;
     font-weight: bold;
 }
 
-.content .content-top .item-description .price b {
+.content .content-top .item-tags .price b {
     color: #495b69;
 }
 
-.content .content-top .item-description .price::after {   
+.content .content-top .item-tags .price::after {   
     content: 'i';
     font-family: rouble;
     text-transform: none;
     font-weight: normal;
 }
 
-.content .content-top .item-description h1 {
-    font-size: 16px;
+.content .content-top .item-tags button {
+    display: block;
+    margin: 10px auto;
+    padding: 3px 35px;
 }
 
-.content .content-top .item-description button {
-    display: block;
-    margin: 10px auto; 
+.content .content-top.prices {
+    background: white;
+    font-size: 14px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.content .content-top.prices .title {
+    font-family: roboto-medium;
+    font-size: 15px;
+    margin: 3px 0 10px 0;
 }
 
 .content .content-bottom {
@@ -1572,6 +1601,71 @@ button.red {
 	bottom: 0;
 	left: 0;
 	right: 0;
+}
+
+.sidebar.buy .scroller {
+    bottom: 0;
+    padding: 25px;
+}
+
+.sidebar.buy .buy-item {
+    background: #f8f9fa;
+    margin-bottom: 10px;
+    font-size: 0;
+}
+
+.item-description-sidebar {
+    font-family: roboto-medium;
+    font-size: 15px;
+    display: inline-block;
+    width: 60%;
+    padding: 0 10px 10px 10px;
+    box-sizing: border-box;
+}
+
+.item-description-sidebar button {
+    float: right;
+    padding: 2px 18px;
+    margin-top: -20px;
+}
+
+.item-description-sidebar .item-name,
+.item-description-sidebar .item-owner {
+    color: #47a1dd;
+    margin: 5px 0;
+}
+
+.item-description-sidebar .item-number {
+    margin: 5px 0; 
+}
+
+.item-description-sidebar .price {
+    color: #85bf4d;
+    margin: 5px 0;
+}
+
+.item-description-sidebar .price::after {   
+    content: 'i';
+    font-family: rouble;
+    text-transform: none;
+}
+
+.item-description-sidebar .item-owner b,
+.item-description-sidebar .item-number b,
+.item-description-sidebar .price b {
+    color: #495b69;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.item-image-sidebar {
+    display: inline-block;
+    vertical-align: top;
+    width: 40%;
+}
+
+.item-description-sidebar .item-name {
+    color: 
 }
 
 .sidebar .dnd-socket {
@@ -1921,10 +2015,6 @@ h1 {
 	.content {
 		margin: 0px;
 	}
-	
-	.content .content-top .item-image {
-        width: 100%;
-    }
     
     .content .content-top .item-description {
         width: 100%;

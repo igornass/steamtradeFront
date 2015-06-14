@@ -148,7 +148,7 @@ commonServices.service('ApplicationUtils', ['$rootScope', function($rootScope){
     
 }]);
 
-commonServices.factory('AuthService', [ 'HttpConnectionService', '$cookieStore', '$window',  function (HttpConnectionService, $cookieStore, $window) {
+commonServices.factory('AuthService', [ 'HttpConnectionService', 'LocalStorageService', '$cookieStore', '$window',  function (HttpConnectionService, LocalStorageService, $cookieStore, $window) {
     var currentUser = {};
     var isLoggedIn = false;
     var isUserUpdating = false;
@@ -173,6 +173,7 @@ commonServices.factory('AuthService', [ 'HttpConnectionService', '$cookieStore',
     		  currentUser = angular.fromJson(data);
     		  isLoggedIn = true;
     		  isUserUpdating = false;
+    		  LocalStorageService.removeCachedOffers();
           }, function() {
         	  $cookieStore.remove(TMP_AUTH_TOKEN);
         	  $cookieStore.remove(AUTH_TOKEN);

@@ -143,7 +143,7 @@
 	</div>
 </div>
 
-<div ng-class="{ 'maximized': sidebarMaximized == true }" class="sidebar" ng-show="isLoggedIn">
+<div ng-class="{ 'maximized': sidebarMaximized == true }" class="sidebar" ng-show="isLoggedIn" ng-click="$event.stopPropagation();">
 	<div class="scroller fullsize">
 		<h1>История операций</h1>
 		<div class="balance-history positive">

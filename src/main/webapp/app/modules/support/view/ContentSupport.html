@@ -26,7 +26,7 @@
 	</div>
 </div>
 
-<div ng-class="{ 'maximized': sidebarMaximized == true }" class="sidebar">
+<div ng-class="{ 'maximized': sidebarMaximized == true }" class="sidebar" ng-click="$event.stopPropagation();">
 	<div class="scroller fullsize">
 		<h1>FAQ</h1>
 		<div class="faq" id="1" ng-click="selectedFAQ == 1 ? selectedFAQ = '' : selectedFAQ = 1" ng-class="{ 'current': selectedFAQ == 1 }">

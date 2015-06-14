@@ -1,6 +1,6 @@
 var buyServices = angular.module('Buy.services', []);
 
-buyServices.service('OffersService', ['HttpConnectionService', 'AuthService', 'ApplicationUtils',  function(HttpConnectionService, AuthService, ApplicationUtils){
+buyServices.service('OffersService', ['HttpConnectionService', 'AuthService', 'ApplicationUtils', 'LocalStorageService',  function(HttpConnectionService, AuthService, ApplicationUtils, LocalStorageService){
 
 	this.buyItem = function(itemId, cb_success, cb_error)
     {
@@ -65,5 +65,20 @@ buyServices.service('OffersService', ['HttpConnectionService', 'AuthService', 'A
        }
        var url = ApplicationUtils.addUrlAttrs( OFFERS_REST_WS_URL, attr );
        HttpConnectionService.raiseGetHttpRequest(url, '', cb_success, cb_error);
+    };
+    
+    this.saveCachedOffers = function(offers)
+    {
+    	LocalStorageService.updateCachedOffers(offers);
+    };
+    
+    this.clearCachedOffers = function()
+    {
+    	LocalStorageService.removeCachedOffers();
+    }
+    
+    this.getCachedOffers = function()
+    {
+       return LocalStorageService.getCachedOffers();
     };
 }]);

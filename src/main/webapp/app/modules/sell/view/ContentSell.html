@@ -110,7 +110,7 @@
     	<dir-pagination-controls></dir-pagination-controls>
     </div>
     
-    <div ng-class="{ 'maximized': sidebarMaximized == true && menuMaximized == false }" class="sidebar" ui-on-Drop="onDrop($event, $data, selectedItems)">
+    <div ng-class="{ 'maximized': sidebarMaximized == true && menuMaximized == false }" class="sidebar" ui-on-Drop="onDrop($event, $data, selectedItems)" ng-click="$event.stopPropagation();">
     	<div class="scroller">
     		<h1>Выбранный инвентарь</h1>
     		<div ng-hide="selectedItems.length != 0">Перетащите сюда инвентарь, который Вы хотите продать, либо кликните по объекту два раза.</div>
@@ -188,7 +188,7 @@
         
     </div>
     
-    <div ng-class="{ 'maximized': sidebarMaximized == true && menuMaximized == false }" class="sidebar sell">
+    <div ng-class="{ 'maximized': sidebarMaximized == true && menuMaximized == false }" class="sidebar sell" ng-click="$event.stopPropagation();">
         <div class="scroller">
             <h1>Выбранный инвентарь</h1>
             

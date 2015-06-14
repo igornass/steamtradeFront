@@ -1453,7 +1453,7 @@ button.red {
 
 .content .content-top .item-description {
     font-size: 12px;
-    width: 50%;
+    width: 67%;
     box-sizing: border-box;
     padding: 10px;
     display: inline-block;
@@ -1472,11 +1472,15 @@ button.red {
 
 .content .content-top .item-tags {
     font-size: 12px;
-    width: 50%;
+    width: 33%;
     box-sizing: border-box;
     padding: 10px;
-    display: inline-block;
+    display: none;
     vertical-align: top;
+}
+    
+.content .content-top .offer-wrapper .item-tags {
+    display: inline-block;
 }
 
 .content .content-top .item-tags .tag {
@@ -1920,6 +1924,17 @@ h1 {
 	.sidebar .selected-item .right {
 		width: 100%;
 	}
+	
+	.sidebar .item-image-sidebar,
+	.sidebar .item-description-sidebar {
+	   width: 100%;
+	}
+	
+	.sidebar .item-description-sidebar button {
+	   float: none;
+       display: block;
+       margin: 0 auto;
+	}
 }
 
 @media screen and (max-width: 940px) {
@@ -1968,7 +1983,7 @@ h1 {
 	}
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 730px) {
 	.header {
 		background: #ffffff;
 	}
@@ -1999,7 +2014,6 @@ h1 {
 	}
 	
 	.menu {
-		left: -240px;
 		box-shadow: 0px 0px 0px 1000px rgba(0, 0, 0, 0);
 		transition: left 0.5s ease, box-shadow 0.5s ease;
 	}
@@ -2008,16 +2022,31 @@ h1 {
 		box-shadow: 0px 0px 0px 1000px rgba(0, 0, 0, 0.7);
 	}
 	
-	.menu .menu-toggle {
-		display: none;
-	}
-	
 	.content {
 		margin: 0px;
 	}
+	
+	.content .content-top.offer {
+	   position: relative;
+	}
     
-    .content .content-top .item-description {
-        width: 100%;
+    .content .content-top .offer-wrapper {
+       float: left;
+       width: 67%;
+    }
+    
+    .content .content-top .offer-wrapper .item-tags {
+        display: none;
+    }
+    
+    .content .content-top .item-tags {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 33%;
+        background: #e6eaef;
     }
 	
 	.sidebar {
@@ -2039,8 +2068,34 @@ h1 {
 	  max-width: 25%;
 	}
     
+    .menu {
+        left: -240px;
+    }
+    
+    .menu .menu-toggle {
+        display: none;
+    }
+    
     .content .content-top.settings .trade-link {
         min-width: 0;
+    }
+    
+    .content .content-top .item-description {
+        width: 100%;
+    }
+    
+    .content .content-top .item-tags {
+        width: 100%;
+    }
+    
+    .content .content-top .offer-wrapper {
+       float: none;
+       width: 100%;
+    }
+    
+    .content .content-top .item-tags {
+        position: initial;
+        width: 100%%;
     }
 }
 
@@ -2099,6 +2154,14 @@ h1 {
 	.content .content-block .detailed-view .info {
 		width: 100%;
 	}
+	
+	.content .content-top.offer {
+	   margin: 0 -10px;
+	}
+	
+    .content .content-top.prices {
+        margin: 10px -10px -10px -10px;
+    }
     
     .content .content-top .item-image-small {
         width: 100%;

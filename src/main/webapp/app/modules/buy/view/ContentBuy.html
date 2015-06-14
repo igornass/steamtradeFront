@@ -2,9 +2,9 @@
 	<div class="content-top">
 		<div class="game">
 			<h1>Выберите игру</h1>
-			<div ui-sref="buy_state({game: 570})" ng-class="{ 'current': selectedGame == 570}"><ng-include src="'resources/svg/dota.svg'"></ng-include></div>
-			<div ui-sref="buy_state({game: 730})" ng-class="{ 'current': selectedGame == 730}"><ng-include src="'resources/svg/csgo.svg'"></ng-include></div>
-			<div ui-sref="buy_state({game: 440})" ng-class="{ 'current': selectedGame == 440}"><ng-include src="'resources/svg/tf.svg'"></ng-include></div>
+			<div ui-sref="buy_state({game: 570})" ng-click="clearCachedOffers()" ng-class="{ 'current': selectedGame == 570}"><ng-include src="'resources/svg/dota.svg'"></ng-include></div>
+			<div ui-sref="buy_state({game: 730})" ng-click="clearCachedOffers()" ng-class="{ 'current': selectedGame == 730}"><ng-include src="'resources/svg/csgo.svg'"></ng-include></div>
+			<div ui-sref="buy_state({game: 440})" ng-click="clearCachedOffers()" ng-class="{ 'current': selectedGame == 440}"><ng-include src="'resources/svg/tf.svg'"></ng-include></div>
 		</div>
 		
 		<div class="search" ng-show="selectedGame">

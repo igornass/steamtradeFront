@@ -34,7 +34,20 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
     	 });
      });
 	 
+     $scope.clearCachedOffers = function() {
+    	 OffersService.clearCachedOffers();
+     };
+     
      $scope.selectGame = function(app_id) {
+    	 var cachedOffers = OffersService.getCachedOffers(); 
+    	 
+    	 if (cachedOffers && cachedOffers[0] && cachedOffers[0].item.app_id == app_id) {
+    		 $scope.selectedGame = app_id;
+    		 $scope.offers = cachedOffers;
+        	 $scope.search = {};
+        	 return;
+    	 }
+    	 
     	 $scope.selectedGame = app_id;
     	 $scope.offers = [];
     	 $scope.search = {};
@@ -96,6 +109,7 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
 
     	 }
     	 
+    	 OffersService.saveCachedOffers($scope.offers);
     	 console.log($scope.offers);
 
      };

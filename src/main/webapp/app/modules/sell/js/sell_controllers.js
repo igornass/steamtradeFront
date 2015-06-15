@@ -44,6 +44,27 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 		    	$scope.adjustGrid();
 		    });
 		});
+	  
+	  $scope.selectGame = function(gameId) {
+
+    	 var cachedInventory = InventoryService.getCachedInventory(); 
+
+    	 if (cachedInventory && cachedInventory[0] && cachedInventory[0].description.appid == gameId && !$scope.selectedGame) {
+    		 $scope.selectedGame = gameId;
+    		 $scope.inventory = cachedInventory;
+    		 $scope.filters = InventoryService.getCachedFilters();
+        	 $scope.search = {};
+
+	       	 $scope.inventoryUnavailable = false;
+	       	 $scope.steamUnavailable = false;
+
+	    	 $rootScope.isLoading = false;
+	    	  
+        	 return;
+    	 }
+    	 
+    	 $scope.getInventory(gameId);
+	  };
       
       $scope.getInventory = function(gameId) {
     	  $rootScope.isLoading = true;
@@ -51,6 +72,8 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
     	  $scope.steamUnavailable = false;
     	  
     	  $scope.selectedGame = gameId;
+    	  InventoryService.clearCachedInventory();
+    	  InventoryService.clearCachedFilters();
     	  InventoryService.getUserInventory(gameId, cb_get_inventory_success, cb_get_inventory_error);
       };
       
@@ -317,8 +340,10 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
           		  }
         		  
         		  if (!alreadyThere) $scope.inventory.push(inventoryObject[itemObject]);
-        	  }
-        	  
+        	  }        	  
+
+        	  InventoryService.saveCachedInventory($scope.inventory);
+        	  InventoryService.saveCachedFilters($scope.filters);
           }
           
           $scope.inventory = $scope.inventory.sort(function(a, b) {
@@ -352,7 +377,7 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
     	  {
     		 if (InventoryService.isSelectedItemsHistoryEmpty())
     	     {
-    		   $scope.getInventory(570);
+    		   $scope.selectGame(570);
     	     }
     		 else
     		 {

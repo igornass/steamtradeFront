@@ -73,5 +73,33 @@ sellServices.service('InventoryService', ['HttpConnectionService', 'AuthService'
        HttpConnectionService.raiseDeleteHttpRequest(url, AuthService.getAuthToken(), cb_success, cb_error);
     };
     
+    this.saveCachedInventory = function(items)
+    {
+    	LocalStorageService.updateCachedInventory(items);
+    };
     
+    this.clearCachedInventory = function()
+    {
+    	LocalStorageService.removeCachedInventory();
+    }
+    
+    this.getCachedInventory = function()
+    {
+       return LocalStorageService.getCachedInventory();
+    };
+    
+    this.saveCachedFilters = function(filters)
+    {
+    	LocalStorageService.updateCachedFilters(filters);
+    };
+    
+    this.clearCachedFilters = function()
+    {
+    	LocalStorageService.removeCachedFilters();
+    }
+    
+    this.getCachedFilters = function()
+    {
+       return LocalStorageService.getCachedFilters();
+    };
 }]);

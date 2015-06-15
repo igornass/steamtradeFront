@@ -254,5 +254,29 @@ commonServices.service('LocalStorageService', ['$localStorage', function($localS
     	delete $localStorage[CACHED_OFFERS];
     };
     
+    this.getCachedInventory = function() {
+    	return $localStorage[CACHED_INVENTORY];
+    };
+    
+    this.updateCachedInventory = function(items) {
+    	$localStorage[CACHED_INVENTORY] = items;
+    };
+    
+    this.removeCachedInventory = function() {
+    	delete $localStorage[CACHED_INVENTORY];
+    };
+    
+    this.getCachedFilters = function() {
+    	return $localStorage[CACHED_FILTERS];
+    };
+    
+    this.updateCachedFilters = function(filters) {
+    	$localStorage[CACHED_FILTERS] = filters;
+    };
+    
+    this.removeCachedFilters = function() {
+    	delete $localStorage[CACHED_FILTERS];
+    };
+    
 }]);
 

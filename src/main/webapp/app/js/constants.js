@@ -26,6 +26,8 @@ var AUTH_TOKEN = 'authToken';
 var TMP_AUTH_TOKEN = 'tmpAuthToken';
 var SELECTED_ITEMS_HISTORY = 'selectedItemsHistory';
 var CACHED_OFFERS = 'cachedOffers';
+var CACHED_INVENTORY = 'cachedInventory';
+var CACHED_FILTERS = 'cachedFilters';
 
 //Game titles
 var GAMES = {};

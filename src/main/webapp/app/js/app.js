@@ -67,7 +67,8 @@ app.config(function(paginationTemplateProvider, $urlRouterProvider, $stateProvid
     })
     .state(STATE_EXCHANGE, {
     	url: '/exchange',
-        templateUrl: 'app/modules/exchange/view/ContentExchange.html'     
+        templateUrl: 'app/modules/exchange/view/ContentExchange.html',
+        controller: 'ExchangeContentCtrl'
     })
     .state(STATE_BALANCE, {
     	url: '/balance',

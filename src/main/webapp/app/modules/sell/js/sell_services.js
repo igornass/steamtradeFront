@@ -63,7 +63,7 @@ sellServices.service('InventoryService', ['HttpConnectionService', 'AuthService'
     
     this.confirmTrade = function(tradeId, cb_success, cb_error)
     {
-       var url = CHECK_TRADES_WS_URL + tradeId;
+       var url = CONFIRM_TRADE_WS_URL + tradeId;
        HttpConnectionService.raisePostHttpRequest(url, AuthService.getAuthToken(), null, cb_success, cb_error);
     };
     

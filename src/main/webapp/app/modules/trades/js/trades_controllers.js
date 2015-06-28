@@ -1,6 +1,6 @@
-var buyControllers = angular.module('Exchange.controllers', []);
+var tradesControllers = angular.module('Trades.controllers', []);
 
-buyControllers.controller('ExchangeContentCtrl', ['$scope', '$rootScope', '$window', 'TradesService', 'ApplicationUtils',
+tradesControllers.controller('TradesContentCtrl', ['$scope', '$rootScope', '$window', 'TradesService', 'ApplicationUtils',
    function($scope, $rootScope, $window, TradesService, ApplicationUtils)
    {
 	 var ctrl = this;

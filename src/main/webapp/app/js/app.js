@@ -7,7 +7,7 @@ var app = angular.module('SteamShop',[
 	'SteamShop.Buy',
 	'SteamShop.Sell',
 	'SteamShop.Lots',
-	'SteamShop.Exchange',
+	'SteamShop.Trades',
 	'SteamShop.Balance',
 	'SteamShop.Settings',
 
@@ -65,10 +65,10 @@ app.config(function(paginationTemplateProvider, $urlRouterProvider, $stateProvid
     	url: '/lots',
         templateUrl: 'app/modules/lots/view/ContentLots.html'     
     })
-    .state(STATE_EXCHANGE, {
-    	url: '/exchange',
-        templateUrl: 'app/modules/exchange/view/ContentExchange.html',
-        controller: 'ExchangeContentCtrl'
+    .state(STATE_TRADES, {
+    	url: '/trades',
+        templateUrl: 'app/modules/trades/view/ContentTrades.html',
+        controller: 'TradesContentCtrl'
     })
     .state(STATE_BALANCE, {
     	url: '/balance',

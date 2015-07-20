@@ -1,46 +1,28 @@
 <div class="content fullsize">
 
     <div class="content-top exchange">
-        <button type="button" ng-class="{'invert': selectedTab == 'history'}" ng-click="selectedTab = 'current'">Незавершенные</button>
-        <button type="button" ng-class="{'invert': selectedTab != 'history'}" ng-click="selectedTab = 'history'">Завершенные</button>
+        <button type="button" ng-class="{'invert': completedTrades}" ng-click="initTrades(false)">Незавершенные</button>
+        <button type="button" ng-class="{'invert': !completedTrades}" ng-click="initTrades(true)">Завершенные</button>
     </div>
     
-    <div class="content-block exchange" ng-hide="selectedTab == 'history'">
-        <div class="status outgoing"><ng-include src="'resources/svg/arrow.svg'"></ng-include></div>
-        <div class="date">3 января 2015</div>
+    <div class="content-block exchange" ng-repeat="trade in trades">
+        <div class="status" ng-class="{'input': trade.type == 'input' && !completedTrades, 'output': trade.type == 'output' && !completedTrades, 'done' : completedTrades}"><ng-include src="'resources/svg/arrow.svg'"></ng-include></div>
+        <div class="date">{{trade.human_time}}</div>
         <div class="body">
-            <div><span class="type">Продажа</span> <b>Название предмета 1</b> <span class="price">за 10</span></div>
-            <div><span class="type">Продажа</span> <b>Название предмета 2</b> <span class="price">за 20</span></div>
+            <div ng-repeat="item in trade.items">
+                <span class="type">
+                    {{trade.operation_type == 'buy' ? 'Покупка' : ''}}
+                    {{trade.operation_type == 'sale' ? 'Продажа' : ''}}
+                    {{trade.operation_type == 'cancel_offer' ? 'Отмена' : ''}}
+                </span>
+                <b>{{item.name}}</b>
+                <span class="price" ng-hide="true">за 10</span>
+            </div>
         </div>
-        <button type="button">Принять</button>
-    </div>
-    
-    <div class="content-block exchange" ng-hide="selectedTab == 'history'">
-        <div class="status incoming"><ng-include src="'resources/svg/arrow.svg'"></ng-include></div>
-        <div class="date">2 января 2015</div>
-        <div class="body">
-            <div><span class="type">Покупка</span> <b>Название предмета 1</b> <span class="price">за 10</span></div>
-        </div>
-        <button type="button">Принять</button>
-    </div>
-    
-    <div class="content-block exchange" ng-hide="selectedTab == 'history'">
-        <div class="status canceled"><ng-include src="'resources/svg/arrow.svg'"></ng-include></div>
-        <div class="date">1 января 2015</div>
-        <div class="body">
-            <div><span class="type">Снятие</span> <b>Название предмета 1</b> <span>с продажи</span></div>
-        </div>
-        <button type="button" class="red">Повторить</button>
-    </div>
-    
-    <div class="content-block exchange" ng-show="selectedTab == 'history'">
-        <div class="status done"><ng-include src="'resources/svg/arrow.svg'"></ng-include></div>
-        <div class="date">4 января 2015</div>
-        <div class="body">
-            <div><span class="type">Продажа</span> <b>Название предмета 1</b> <span class="price">за 10</span></div>
-            <div><span class="type">Продажа</span> <b>Название предмета 2</b> <span class="price">за 20</span></div>
-        </div>
-        <div class="result">Завершён</div>
+        <button class="button" ng-show="(trade.status_trade == 'created') && !completedTrades" type="button" ng-click="confirmTrade(trade.trade_id)">Принять</button>        
+        <button class="button red" ng-show="(trade.status_trade == 'failed') && !completedTrades" type="button" ng-click="retryTrade(trade.trade_id)">Повторить</button>
+        <span class="completed" ng-show="(trade.status_trade == 'non_created') && !completedTrades">Создается</span>
+        <span class="completed" ng-show="completedTrades">Завершён</span>
     </div>
     
 </div>

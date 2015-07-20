@@ -71,7 +71,10 @@ b {
 	font-family: roboto-black;
 }
 
-button {
+button,
+.button {
+    text-decoration: none;
+    text-align: center;
 	border: none;
 	background: #47a1dd;
 	color: #ffffff;
@@ -937,7 +940,7 @@ button.red {
     float: right;
 }
 
-.content .content-block.exchange button {
+.content .content-block.exchange .button {
     padding: 2px 10px;
     width: 140px;
     margin: 13px;
@@ -962,6 +965,20 @@ button.red {
     text-align: center;
 }
 
+.content .content-block.exchange .completed {
+    display: inline-block;
+    text-align: center;
+    box-sizing: border-box;
+    color: #85bf4d;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    width: 140px;
+    margin: 15px;
+    float: right;
+    font-size: 14px;
+    font-family: roboto-black;
+}
+
 .content .content-block.exchange .status {
     width: 20px;
     height: 20px;
@@ -976,7 +993,7 @@ button.red {
     margin: 5px;
 }
 
-.content .content-block.exchange .status.incoming svg {
+.content .content-block.exchange .status.input svg {
     transform: rotateZ(180deg);
     -webkit-transform: rotateZ(180deg);
 }

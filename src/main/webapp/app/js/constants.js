@@ -51,6 +51,20 @@ var STATE_CONTACTS = 'contacts_state';
 var STATE_SUPPORT = 'support_state';
 var STATE_VALID_OPENID = 'openid_valid';
 
+//Months
+var MONTH = ['января', 
+             'ферваля', 
+             'марта', 
+             'апреля', 
+             'мая', 
+             'июня', 
+             'июля', 
+             'августа', 
+             'сентября', 
+             'октября', 
+             'ноября', 
+             'декабря']
+
 //Page titles
 var PAGES = {};
 	PAGES[STATE_BUY] = 'Купить';

@@ -20,6 +20,22 @@ buyServices.service('OffersService', ['HttpConnectionService', 'AuthService', 'A
        HttpConnectionService.raiseGetHttpRequest(url, '', cb_success, cb_error);
     };
     
+    this.deleteOfferById = function(offerId, cb_success, cb_error)
+    {
+       var url = OFFERS_REST_WS_URL + offerId;
+       HttpConnectionService.raiseDeleteHttpRequest(url, AuthService.getAuthToken(), cb_success, cb_error);
+    };
+    
+    this.getOpenOffers = function(cb_success, cb_error)
+    {
+       HttpConnectionService.raiseGetHttpRequest(CURRENT_USER_OPEN_OFFERS_WS_URL, AuthService.getAuthToken(), cb_success, cb_error);
+    };
+    
+    this.getClosedOffers = function(cb_success, cb_error)
+    {
+       HttpConnectionService.raiseGetHttpRequest(CURRENT_USER_CLOSED_OFFERS_WS_URL, AuthService.getAuthToken(), cb_success, cb_error);
+    };
+    
     this.getOffers = function(app_id, page_size, page, start_price, finish_price, market_hash_name,
     		sort_by, type_sort, tags, cb_success, cb_error)
     {

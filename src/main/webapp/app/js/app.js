@@ -82,19 +82,23 @@ app.config(function(paginationTemplateProvider, $urlRouterProvider, $stateProvid
     })
     .state(STATE_AGREEMENT, {
     	url: '/agreement',
-        templateUrl: 'app/modules/agreement/view/ContentAgreement.html'     
+        templateUrl: 'app/modules/agreement/view/ContentAgreement.html',
+        controller: 'AgreementContentCtrl'
     })
     .state(STATE_CONTRACT, {
     	url: '/contract',
-        templateUrl: 'app/modules/contract/view/ContentContract.html'     
+        templateUrl: 'app/modules/contract/view/ContentContract.html',
+        controller: 'ContractContentCtrl'
     })
     .state(STATE_CONTACTS, {
     	url: '/contacts',
-        templateUrl: 'app/modules/contacts/view/ContentContacts.html'     
+        templateUrl: 'app/modules/contacts/view/ContentContacts.html',
+        controller: 'ContactsContentCtrl'
     })
     .state(STATE_SUPPORT, {
     	url: '/support',
-        templateUrl: 'app/modules/support/view/ContentSupport.html'     
+        templateUrl: 'app/modules/support/view/ContentSupport.html',
+        controller: 'SupportContentCtrl'
     })
     .state(STATE_VALID_OPENID, {
     	url: '/openid/valid?openid.ns&openid.mode&openid.op_endpoint&openid.claimed_id&openid.identity&openid.return_to&openid.response_nonce&openid.assoc_handle&openid.signed&openid.sig',

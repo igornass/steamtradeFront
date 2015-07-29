@@ -1177,6 +1177,14 @@ button.red {
 	min-height: 124px;
 }
 
+.content .content-top.agreement {
+    padding: 20px;
+}
+
+.content .content-top.agreement, .content .content-top.agreement h1 {
+    font-size: 14px;
+}
+
 .content .content-top.settings {
     padding: 20px;
 }

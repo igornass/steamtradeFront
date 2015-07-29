@@ -50,17 +50,21 @@
         <script src="app/modules/settings/js/settings_constants.js"></script>
 		
 		<script src="app/modules/agreement/js/agreement_module.js"></script>
-		
+	    <script src="app/modules/agreement/js/agreement_controllers.js"></script>	
+  
 		<script src="app/modules/contract/js/contract_module.js"></script>
+        <script src="app/modules/contract/js/contract_controllers.js"></script>
 		
 		<script src="app/modules/contacts/js/contacts_module.js"></script>
+        <script src="app/modules/contacts/js/contacts_controllers.js"></script>
 		
 		<script src="app/modules/support/js/support_module.js"></script>
+        <script src="app/modules/support/js/support_controllers.js"></script>
 		
 		<title>Steamtrade Platform</title>
 	</head>
   
-	<body ng-class="{ 'overlayed': isLoading == true }" ng-controller="mainCtrl" ng-click="menuMaximized = false; sidebarMaximized = false" ng-swipe-left="sidebarMaximized = true" ng-swipe-right="menuMaximized = true">
+	<body ng-class="{ 'overlayed': isLoading == true }" ng-controller="mainCtrl" ng-click="menuMaximized = false; sidebarMaximized = false" ng-swipe-disable-mouse ng-swipe-left="sidebarMaximized = true" ng-swipe-right="menuMaximized = true">
 
     	<div ui-view></div>    
         

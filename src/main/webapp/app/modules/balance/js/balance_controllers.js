@@ -24,11 +24,23 @@ balanceControllers.controller('BalanceContentCtrl', ['$scope', '$rootScope', '$w
 			  alert ('Invalid sum or gateway value');
 		  };
 	  };
+	  
+	  $scope.initCashHistory = function() {
+		  $rootScope.isLoading = true;
+		  BalanceService.getCashHistory(ctrl.cb_cash_history_success, ApplicationUtils.cb_error_handler);
+	  };
 
 	  ctrl.cb_request_deposit_success = function(data) {
 		  response = angular.fromJson(data);
 		  $window.location.href = response.payment_link;
 	  };
+	  
+	  ctrl.cb_cash_history_success = function(data) {
+		  $rootScope.isLoading = false;
+		  response = angular.fromJson(data);
+		  //TODO
+	  };
+	  
 	  
 	  $scope.validateSum = function(sum) {
 		  var regex  = /^\d+(?:\.{0,1}\d{0,2})$/;

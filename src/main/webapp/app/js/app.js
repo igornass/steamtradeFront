@@ -63,7 +63,8 @@ app.config(function(paginationTemplateProvider, $urlRouterProvider, $stateProvid
     })
     .state(STATE_LOTS, {
     	url: '/lots',
-        templateUrl: 'app/modules/lots/view/ContentLots.html'     
+        templateUrl: 'app/modules/lots/view/ContentLots.html',
+        controller: 'LotsContentCtrl'
     })
     .state(STATE_TRADES, {
     	url: '/trades',

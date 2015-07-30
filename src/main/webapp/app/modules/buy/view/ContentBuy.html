@@ -10,7 +10,7 @@
 		<div class="search" ng-show="selectedGame">
 			<h1>Поиск по названию</h1>
 			<input type="text" class="default" ng-model="search.description.market_name" placeholder="Введите название" ng-focus="filterBlock = true">
-			<button type="button" class="filter-button" ng-click="getOffers(selectedGame, null, null, search.price.from, search.price.to, search.description.market_name, null, null, null )">Подобрать</button>
+			<button type="button" class="filter-button" ng-click="getOffers(selectedGame, null, null, search.price.from * 100 + '', search.price.to * 100 + '', search.description.market_name, null, null, null )">Подобрать</button>
 			<div class="filter" ng-click="selectedGame ? filterBlock = !filterBlock : null"><ng-include src="'resources/svg/filter.svg'"></ng-include></div>
 			<div class="filter-block buy" ng-show="filterBlock">
 				<div>

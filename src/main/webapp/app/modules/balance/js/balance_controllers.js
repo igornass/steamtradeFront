@@ -4,7 +4,10 @@ balanceControllers.controller('BalanceContentCtrl', ['$scope', '$rootScope', '$w
    function($scope, $rootScope, $window, BalanceService, ApplicationUtils)
    {
 	  var ctrl = this;
-
+	  
+	  $scope.paymentMethods = [{name: 'Карта', value: 'AC'}, 
+	                           {name: 'Яндекс.Деньги', value: 'PC'}];
+	  
 	  $scope.applicationUtils = ApplicationUtils;
 	  $scope.applicationUtils.setPath('Баланс');
 	  $scope.applicationUtils.setStep(0, 0);

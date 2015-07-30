@@ -4,6 +4,9 @@ lotsControllers.controller('LotsContentCtrl', ['$scope', '$rootScope', '$window'
    function($scope, $rootScope, $window, OffersService, ApplicationUtils)
    {
 	 var ctrl = this;
+	 $scope.applicationUtils = ApplicationUtils;
+	 $scope.applicationUtils.setPath('Лоты');
+	 $scope.applicationUtils.setStep(0, 0);
 	 
 	 $scope.initOffers = function(openedOffers) {
 		 $scope.openedOffers = openedOffers;

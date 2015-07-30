@@ -1,4 +1,8 @@
-<div class="content fullsize">
+<div class="content fullsize" ng-show="!isLoggedIn && !isUserUpdating">
+    <div class="error-message">Для просмотра данной страницы необходимо войти на сайт через Steam.</div>
+</div>
+
+<div class="content fullsize" ng-show="isLoggedIn">
 
 	<div class="content-top lots">
         <button type="button" ng-class="{'invert': selectedTab == 'history'}" ng-click="selectedTab = 'current'">Текущие</button>

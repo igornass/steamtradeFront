@@ -4,6 +4,9 @@ tradesControllers.controller('TradesContentCtrl', ['$scope', '$rootScope', '$win
    function($scope, $rootScope, $window, TradesService, ApplicationUtils)
    {
 	 var ctrl = this;
+	 $scope.applicationUtils = ApplicationUtils;
+	 $scope.applicationUtils.setPath('Обмены');
+	 $scope.applicationUtils.setStep(0, 0);
 	 $scope.trades = [];
 	 
 	 $scope.confirmTrade = function(tradeId) {

@@ -12,7 +12,7 @@
                 <input readonly type="text" class="default" placeholder="Выберите способ" ng-model="gatewayDisplay" ng-focus="selectTheme = true" ng-blur="selectTheme = false">
                 <input type="text" class="hidden" ng-model="gateway">
                 <ul ng-class="{ 'visible': selectTheme == true }">
-                    <li ng-repeat="item in [{name: 'Карта', value: 'card'}, {name: 'АльфаКлик', value: 'alfaClick'}, {name: 'Наличные', value: 'cash'}]" ng-click="$parent.gatewayDisplay = item.name; $parent.gateway = item.value; $parent.selectTheme = false">{{item.name}}</li>
+                    <li ng-repeat="item in paymentMethods" ng-click="$parent.gatewayDisplay = item.name; $parent.gateway = item.value; $parent.selectTheme = false">{{item.name}}</li>
                 </ul>
             </div>
         </div>

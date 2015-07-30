@@ -1,0 +1,76 @@
+[
+  {
+    "property": "Type",
+    "multiple": false,
+    "alphabetic": true,
+    "tags": [
+      "Supply Crate",
+      "misc",
+      "TF_ItemDynamicRecipeTool",
+      "secondary",
+      "primary",
+      "melee",
+      "TF_ServerEnchantmentType",
+      "TF_T",
+      "TF_KillStreakifierToolA",
+      "TF_Gift",
+      "Craft Item",
+      "pda2",
+      "TF_KillStreakifierToolB",
+      "TF_KillStreakifierToolC",
+      "building",
+      "TF_Package_Type",
+      "taunt",
+      "TF_Party_Favor",
+      "TF_UnlockedCrate_Type",
+      "TF_StrangifierTool",
+      "TF_StrangePart",
+      "TF_StrangePartRestriction",
+      "pda",
+      "TF_UsableItem",
+      "action",
+      "TF_LockedCrate"
+    ]
+  },
+  {
+    "property": "Class",
+    "multiple": false,
+    "alphabetic": false,
+    "tags": [
+      "Pyro",
+      "Heavy",
+      "Soldier",
+      "Scout",
+      "Sniper",
+      "Medic",
+      "Demoman",
+      "Spy",
+      "Engineer"
+    ]
+  },
+  {
+    "property": "Rarity",
+    "multiple": true,
+    "alphabetic": false,
+    "tags": [
+      "Rarity_Common",
+      "Rarity_Rare",
+      "Rarity_Mythical",
+      "Rarity_Uncommon",
+      "Rarity_Legendary",
+      "Rarity_Ancient"
+    ]
+  },
+  {
+    "property": "Exterior",
+    "multiple": true,
+    "alphabetic": false,
+    "tags": [
+      "TFUI_InvTooltip_FieldTested",
+      "TFUI_InvTooltip_WellWorn",
+      "TFUI_InvTooltip_MinimalWear",
+      "TFUI_InvTooltip_BattleScared",
+      "TFUI_InvTooltip_FactoryNew"
+    ]
+  }
+]

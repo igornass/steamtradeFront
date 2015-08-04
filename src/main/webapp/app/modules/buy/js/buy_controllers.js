@@ -1,15 +1,41 @@
 var buyControllers = angular.module('Buy.controllers', []);
 
-buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 'OffersService', 'ApplicationUtils', 'selectedGame',
-   function($scope, $rootScope, $window, OffersService, ApplicationUtils, selectedGame)
+buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 'OffersService', 'ApplicationUtils', 'GameFilters', 'selectedGame',
+   function($scope, $rootScope, $window, OffersService, ApplicationUtils, GameFilters, selectedGame)
    {
 	 var ctrl = this;
 	 $scope.offers = [];
 	 $scope.search = {};
-	 $scope.filters = {'Hero' : ['Weaver', 'Clockwerk'], 'Rarity' : ['Rare', 'Uncommon'], 'Quality' : ['Genuine', 'Unusual'], 'Type' : ['Wearable', 'Courier']};
 	 $scope.applicationUtils = ApplicationUtils;
 	 $scope.applicationUtils.setPath('Купить');
 	 $scope.applicationUtils.setStep(0, 0);
+	  $scope.gameFilters = GameFilters;	
+	  
+	  $scope.getOffersBtn = function() {
+		  var startingPrice = null;
+		  var endingPrice = null;
+		  var name = null
+		  var tags = [];
+		  
+		  if ($scope.search.price) {
+			  startingPrice = $scope.search.price.from * 100 + '';
+			  endingPrice = $scope.search.price.to * 100 + '';
+		  }
+		  
+		  if ($scope.search.description) {
+			  name = $scope.search.description.market_name;
+		  }
+		  
+		  for (var tag in $scope.gameFilters.tags) {
+			  if ($scope.gameFilters.tags[tag]) {
+				  for (var i = 0; i < $scope.gameFilters.tags[tag].length; i++) {
+					  tags.push($scope.gameFilters.tags[tag][i]);
+				  }
+			  }
+		  }
+		  
+		  $scope.getOffers($scope.selectedGame, null, null, startingPrice, endingPrice, name, null, null, tags );
+	  };
      
      $scope.adjustGrid = function() {		  
     	 if ($window.innerWidth <= 400)
@@ -43,12 +69,14 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
     	 
     	 if (cachedOffers && cachedOffers[0] && cachedOffers[0].item.app_id == app_id) {
     		 $scope.selectedGame = app_id;
+    		 $scope.gameFilters.selectedGame = app_id;
     		 $scope.offers = cachedOffers;
         	 $scope.search = {};
         	 return;
     	 }
     	 
     	 $scope.selectedGame = app_id;
+    	 $scope.gameFilters.selectedGame = app_id;
     	 $scope.offers = [];
     	 $scope.search = {};
     	 

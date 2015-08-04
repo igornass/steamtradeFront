@@ -929,8 +929,9 @@ button.red {
 }
 
 .content .content-block.lots img {
-    height: 90px;
-    width: auto;
+    width: 140px;
+    height: auto;
+    vertical-align: top;
 }
 
 .content .content-block.lots button {
@@ -2211,9 +2212,9 @@ h1 {
 .custom-select {
 	position: relative;
 	display: inline-block;
-	height: 43px;
 	width: 90%;
 	color: #d6dee8;
+	vertical-align: top;
 }
 
 .custom-select:hover {
@@ -2224,32 +2225,71 @@ h1 {
 	color: #df6e60;
 }
 
-.custom-select::before {
-	content: '';
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	height: 7.5%;
-	background: #47a1dd;
+.custom-select .tag {
+    display: inline-block;
+    color: white;
+    background: #47a1dd;
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 14px;
+    margin: 2px 2px 0 0;
+}
+
+.custom-select .tag span {
+    display: inline-block;
+    background: white;
+    position: relative;
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.custom-select .tag span:before,
+.custom-select .tag span:after{
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 2px;
+    background-color: #47a1dd;
+    border-radius: 2px;
+    top: 5px;
+    box-shadow: 0 0 2px 0 #ccc;
+}
+
+.custom-select .tag span:before{
+    -webkit-transform:rotate(45deg);
+    -moz-transform:rotate(45deg);
+    transform:rotate(45deg);
+    left:2px;
+}
+
+.custom-select .tag span:after{
+    -webkit-transform:rotate(-45deg);
+    -moz-transform:rotate(-45deg);
+    transform:rotate(-45deg);
+    right:2px;
 }
 
 .custom-select input {
-	position: absolute;
 	width: 100%;
-	border: none;
+	position: relative;
 	background: none;
-	height: 92.5%;
 	padding: 0px 20px;
 	font-family: roboto-light;
 	font-size: 16px;
 	box-sizing: border-box;
 }
 
+.custom-select input:focus {    
+    border: none;
+}
+
 .custom-select svg {
-	height: 30%;
+	height: 12px;
 	position: absolute;
-	top: 30%;
+	top: 11px;
 	right: 5%;
 	transform: rotate(90deg);
 	-webkit-transform: rotate(90deg);
@@ -2267,7 +2307,6 @@ h1 {
 
 .custom-select ul {
 	position: absolute;
-	top: 96.5%;
 	left: 0;
 	right: 0;
 	background: #ffffff;
@@ -2292,6 +2331,10 @@ h1 {
 	padding: 10px 0 10px 45px;
 	cursor: pointer;
 	color: #495b69;
+}
+
+.custom-select li.selected {
+    background: #d6dee8;
 }
 
 .custom-select li:hover {

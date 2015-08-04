@@ -1,36 +1,18 @@
-<div class="content fullsize" ng-show="!isLoggedIn && !isUserUpdating">
-    <div class="error-message">Для просмотра данной страницы необходимо войти на сайт через Steam.</div>
-</div>
-
-<div class="content fullsize" ng-show="isLoggedIn">
+<div class="content fullsize">
 
 	<div class="content-top lots">
-        <button type="button" ng-class="{'invert': selectedTab == 'history'}" ng-click="selectedTab = 'current'">Текущие</button>
-        <button type="button" ng-class="{'invert': selectedTab != 'history'}" ng-click="selectedTab = 'history'">История</button>
+        <button type="button" ng-class="{'invert': selectedTab == 'history'}" ng-click="initOffers(true)">Текущие</button>
+        <button type="button" ng-class="{'invert': selectedTab != 'history'}" ng-click="initOffers(false)">История</button>
     </div>
     
-    <div class="content-block lots" ng-hide="selectedTab == 'history'">
-        <img src="">
-        <div class="item">Название предмета</div>
-        <button type="button" class="red">Снять лот</button>
-        <div class="date">21 декабря 2012 15:00</div>
-        <div class="price">Цена <span>500</span></div>
-    </div>
-    
-    <div class="content-block lots" ng-show="selectedTab == 'history'">
-        <img src="">
-        <div class="item">Название предмета</div>
-        <div class="status red">Снят</div>
-        <div class="date">20 декабря 2012 16:00</div>
-        <div class="price">Цена <span>500</span></div>
-    </div>
-    
-    <div class="content-block lots" ng-show="selectedTab == 'history'">
-        <img src="">
-        <div class="item">Название пениса</div>
-        <div class="status">Продан</div>
-        <div class="date">19 декабря 2012 12:00</div>
-        <div class="price">Цена <span>500</span></div>
+    <div class="content-block lots" ng-repeat="offer in offers">
+        <img ng-src="{{applicationUtils.imageURL(offer.item.icon_url_large, 300)}}">
+        <div class="item">{{offer.item.name}}</div>
+        <button type="button" class="red" ng-show="offer.status_offer == 'opening'" ng-click="deleteOfferById(offer.id)">Снять лот</button>
+        <div class="status red" ng-show="offer.status_offer == 'canceled'">Снят</div>
+        <div class="status" ng-show="offer.status_offer == 'closing'">Продан</div>
+        <div class="date">{{offer.human_time}}</div>
+        <div class="price">Цена <span>{{offer.price / 100}}</span></div>
     </div>
     
 </div>

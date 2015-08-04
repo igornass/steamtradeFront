@@ -9,8 +9,8 @@
 		
 		<div class="search" ng-show="selectedGame">
 			<h1>Поиск по названию</h1>
-			<input type="text" class="default" ng-model="search.description.market_name" placeholder="Введите название" ng-focus="filterBlock = true">
-			<button type="button" class="filter-button" ng-click="getOffers(selectedGame, null, null, search.price.from * 100 + '', search.price.to * 100 + '', search.description.market_name, null, null, null )">Подобрать</button>
+			<input type="text" class="default" ng-model="search.description.market_name" placeholder="Введите название" ng-focus="filterBlock = true" ng-keyup="$event.keyCode == 13 && getOffersBtn()">
+			<button type="button" class="filter-button" ng-click="getOffersBtn()">Подобрать</button>
 			<div class="filter" ng-click="selectedGame ? filterBlock = !filterBlock : null"><ng-include src="'resources/svg/filter.svg'"></ng-include></div>
 			<div class="filter-block buy" ng-show="filterBlock">
 				<div>
@@ -19,56 +19,19 @@
 						<span>От</span><input class="default price" type="text" ng-model="search.price.from">
 						<span>до</span><input class="default price" type="text" ng-model="search.price.to">
 					</div>
-					<div ng-show="selectedGame == 570 || selectedGame == 730">
-						<h1>Тип</h1>
-						<div class="custom-select">
-							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
-							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.Type" ng-focus="search.tags.Type = ''; selectType = true" ng-blur="selectType = false">
-							<ul ng-class="{ 'visible': selectType == true }">
-								<li ng-repeat="query in filters.Type | orderBy:query | filter:search.tags.Type" ng-click="$parent.search.tags.Type = query; $parent.selectType = false">{{query}}</li>
-							</ul>
-						</div>
-					</div>
-					<div ng-show="selectedGame == 570">
-						<h1>Герой</h1>
-						<div class="custom-select">
-							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
-							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.Hero" ng-focus="search.tags.Hero = ''; selectHero = true" ng-blur="selectHero = false">
-							<ul ng-class="{ 'visible': selectHero == true }">
-								<li ng-repeat="query in filters.Hero | orderBy:query | filter:search.tags.Hero" ng-click="$parent.search.tags.Hero = query; $parent.selectHero = false">{{query}}</li>
-							</ul>
-						</div>
-					</div>
-					<div ng-show="selectedGame == 730">
-						<h1>Коллекция</h1>
-						<div class="custom-select">
-							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
-							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.ItemSet" ng-focus="search.tags.ItemSet = ''; selectItemSet = true" ng-blur="selectItemSet = false">
-							<ul ng-class="{ 'visible': selectItemSet == true }">
-								<li ng-repeat="query in filters.ItemSet | orderBy:query | filter:search.tags.ItemSet" ng-click="$parent.search.tags.ItemSet = query; $parent.selectItemSet = false">{{query}}</li>
-							</ul>
-						</div>
-					</div>
-					<div ng-show="selectedGame == 570 || selectedGame == 730">
-						<h1>Редкость</h1>
-						<div class="custom-select">
-							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
-							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.Rarity" ng-focus="search.tags.Rarity = ''; selectRarity = true" ng-blur="selectRarity = false">
-							<ul ng-class="{ 'visible': selectRarity == true }">
-								<li ng-repeat="query in filters.Rarity | orderBy:query | filter:search.tags.Rarity" ng-click="$parent.search.tags.Rarity = query; $parent.selectRarity = false">{{query}}</li>
-							</ul>
-						</div>
-					</div> 
-					<div ng-show="selectedGame == 570 || selectedGame == 730">
-						<h1>Качество</h1>
-						<div class="custom-select">
-							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
-							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.Quality" ng-focus="search.tags.Quality = ''; selectQuality = true" ng-blur="selectQuality = false">
-							<ul ng-class="{ 'visible': selectQuality == true }">
-								<li ng-repeat="query in filters.Quality | orderBy:query | filter:search.tags.Quality" ng-click="$parent.search.tags.Quality = query; $parent.selectQuality = false">{{query}}</li>
-							</ul>
-						</div>
-					</div>
+                    <div ng-repeat="filter in tagsProps[selectedGame].filters">
+                        <h1>{{tagsProps[selectedGame].properties[language][filter.property]}}</h1>
+                        <div class="custom-select">
+                            <ng-include src="'resources/svg/arrow.svg'"></ng-include>
+                            <input type="text" class="default" placeholder="Выберите/введите" ng-model="gameFilters.customSelect[filter.property].val" ng-focus="gameFilters.onFocus(filter.property)" ng-blur="gameFilters.onBlur(filter.property)" ng-keydown="gameFilters.navigateList($event, filter.property)">
+                            <ul id="{{filter.property}}" ng-class="{ 'visible': gameFilters.customSelect[filter.property].show == true }">
+                                <li ng-class="{ 'selected': $index == gameFilters.customSelect[filter.property].selected }" ng-attr-id="{{ filter.property + '-' + $index }}" ng-repeat="tag in (gameFilters.customSelect[filter.property].list = (filter.tags | filter: gameFilters.typeAhead(gameFilters.customSelect[filter.property].val) | orderBy: gameFilters.alphabeticalSort(filter.alphabetic, filter.tags)))" ng-click="gameFilters.onSelect(filter.property, tag)">
+                                    {{tagsProps[selectedGame].tags[language][tag]}}
+                                </li>
+                            </ul>
+                            <div ng-show="filter.multiple" class="tag" ng-repeat="tag in gameFilters.tags[filter.property]">{{tagsProps[selectedGame].tags[language][tag]}} <span ng-click="gameFilters.subtractFilter(filter.property, $index);"></span></div>
+                        </div>
+                    </div>
 				</div>
 			</div>
 		</div>

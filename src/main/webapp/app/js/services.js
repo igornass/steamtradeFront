@@ -47,6 +47,155 @@ commonServices.service('HttpConnectionService',['$http', '$rootScope', function(
     
 }]);
 
+commonServices.service('GameFilters', ['$rootScope', function($rootScope){
+
+    var that = this;
+	  
+      that.selectedGame = 570;
+	  that.tags = {};
+	  that.customSelect = {'Type': {selected: -1, list: [], show: false, val: ''},
+			  		  'Hero': {selected: -1, list: [], show: false, val: ''},
+			  		  'Class': {selected: -1, list: [], show: false, val: ''},
+			  		  'ItemSet': {selected: -1, list: [], show: false, val: ''},
+			  		  'Rarity': {selected: -1, list: [], show: false, val: ''},
+			  		  'Quality': {selected: -1, list: [], show: false, val: ''},
+			  		  'Exterior': {selected: -1, list: [], show: false, val: ''}
+			  		}
+	  
+	  that.onFocus = function(list) {
+		  
+		  that.customSelect[list].val = '';
+		  that.customSelect[list].show = true; 
+		  that.customSelect[list].selected = -1
+		  
+		  for (var i = 0; i < $rootScope.tagsProps[that.selectedGame].filters.length; i++) {
+			  if ($rootScope.tagsProps[that.selectedGame].filters[i].property == list) break;
+		  }
+		  
+		  if (!$rootScope.tagsProps[that.selectedGame].filters[i].multiple) {
+			  that.removeFilter(list); 
+		  }
+	  };
+	  
+	  that.onBlur = function(list) {
+		  that.customSelect[list].show = false;
+	  };	  
+	  
+	  that.onSelect = function(list, tag) {
+		  that.customSelect.Type.show = false; 
+		  
+		  for (var i = 0; i < $rootScope.tagsProps[that.selectedGame].filters.length; i++) {
+			  if ($rootScope.tagsProps[that.selectedGame].filters[i].property == list) break;
+		  }
+		  
+		  if ($rootScope.tagsProps[that.selectedGame].filters[i].multiple) {
+			  that.appendFilter(list, tag)
+		  } else {			  
+			  that.customSelect[list].val = $rootScope.tagsProps[that.selectedGame].tags[$rootScope.language][tag]; 
+			  that.addFilter(list, tag) 			  
+		  }
+	  };
+	  
+	  that.navigateList = function(keyEvent, list) {
+		  var activeElement = document.activeElement;
+		  
+	      if (keyEvent.which === 13) {
+	    	  if (that.customSelect[list].selected > -1) {
+	    		  for (var i = 0; i < $rootScope.tagsProps[that.selectedGame].filters.length; i++) {
+	    			  if ($rootScope.tagsProps[that.selectedGame].filters[i].property == list) break;
+	    		  }
+	    		  
+	    		  if ($rootScope.tagsProps[that.selectedGame].filters[i].multiple) {
+		    		  that.customSelect[list].show = false;
+		    		  that.appendFilter(list, that.customSelect[list].list[that.customSelect[list].selected]);
+	    		  } else {
+		    		  that.customSelect[list].val = $rootScope.tagsProps[that.selectedGame].tags[$rootScope.language][that.customSelect[list].list[that.customSelect[list].selected]]; 
+		    		  that.customSelect[list].show = false;
+		    		  that.addFilter(list, that.customSelect[list].list[that.customSelect[list].selected]);
+	    		  }
+
+	    		  if (activeElement) {
+	    		      activeElement.blur();
+	    		  }
+	    	  }
+	      } else if (keyEvent.which === 38) {
+	    	  if (that.customSelect[list].selected > 0) {
+	    		  that.customSelect[list].selected--;
+		    	  var myElement = document.getElementById(list + '-' + that.customSelect[list].selected);
+		    	  if (myElement.offsetTop - document.getElementById(list).scrollTop < 0)
+		    		  document.getElementById(list).scrollTop = myElement.offsetTop;
+
+	    	  }
+	      } else if (keyEvent.which === 40) {
+	    	  if (that.customSelect[list].selected < that.customSelect[list].list.length - 1) that.customSelect[list].selected++;
+	    	  var myElement = document.getElementById(list + '-' + that.customSelect[list].selected);
+	    	  if (myElement.offsetTop - document.getElementById(list).scrollTop > myElement.offsetHeight * 3)
+	    		  document.getElementById(list).scrollTop = myElement.offsetTop - myElement.offsetHeight * 3;
+	      }
+	  }
+	  
+	  that.addFilter = function(tag, value) {
+		  that.tags[tag] = [];
+		  that.tags[tag].push(value);
+	  };
+	  
+	  that.appendFilter = function(tag, value) {
+		  if (that.tags[tag]) {
+			  if (that.tags[tag].indexOf(value) == -1) that.tags[tag].push(value);
+		  } else {
+			  that.tags[tag] = [];
+			  that.tags[tag].push(value);
+		  }
+	  };
+	  
+	  that.subtractFilter = function(tag, index) {
+		  if (that.tags[tag] && index >= 0) {
+			  that.tags[tag].splice(index, 1);
+		  }
+		  
+		  if (that.tags[tag].length == 0) delete that.tags[tag];
+	  };
+	  
+	  that.removeFilter = function(tag) {
+		  delete that.tags[tag];
+	  };
+	  
+	  that.clearFilters = function() {
+		  that.tags = {};
+	  };
+	  
+	  that.filterByTags = function() {
+	      return function(item) {
+	    	  var match = true;
+	    	  
+	    	  for (var i = 0; i < item.description.tags.length; i++) {
+	    		  if (that.tags[item.description.tags[i].category_name] && that.tags[item.description.tags[i].category_name].indexOf(item.description.tags[i].internal_name) == -1) {
+	    			  match = false;
+	    			  break;
+	    		  }
+	      	  }
+	    	  
+	          return match;
+	      }
+	  };
+	  
+	  that.typeAhead = function(query) {
+	      return function(tag) {	    	  
+	    	  if ($rootScope.tagsProps[that.selectedGame].tags[$rootScope.language][tag].indexOf(query) == -1) return false;	    	  
+	    	  return true;
+	      }	      
+	  };
+	  
+	  that.alphabeticalSort = function(perform, tags) {
+	      return function(tag) {
+	    	  if (!perform) return tags.indexOf(tag);
+	    	  
+	    	  return $rootScope.tagsProps[that.selectedGame].tags[$rootScope.language][tag];
+	      }
+	  };
+    
+}]);
+
 commonServices.service('ApplicationUtils', ['$rootScope', function($rootScope){
 
     var that = this;

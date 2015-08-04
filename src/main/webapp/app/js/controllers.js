@@ -15,6 +15,11 @@ function($scope, $rootScope, $state, AuthService, ApplicationUtils, $window) {
    
    $scope.menuMaximized = false;
    
+   $rootScope.tagsProps = {'440': { filters: {}, properties: {}, tags: {} },
+   						   '570': { filters: {}, properties: {}, tags: {} },
+   						   '730': { filters: {}, properties: {}, tags: {} }};
+   $rootScope.language = 'ru';
+   
    $scope.$watch( AuthService.isLoggedIn, function ( isLoggedIn ) {
 	      $scope.currentUser = AuthService.getCurrentUser();
 	      $scope.isLoggedIn = isLoggedIn;
@@ -23,6 +28,44 @@ function($scope, $rootScope, $state, AuthService, ApplicationUtils, $window) {
    $scope.$watch( AuthService.isUserUpdating, function ( isUserUpdating ) {
 	      $scope.isUserUpdating = isUserUpdating;
    });
+   
+   $scope.getTagProps = function() {
+	   $.getJSON("resources/json/440_filters.json", function(data) {
+		   $rootScope.tagsProps['440'].filters = data;
+	   });
+	   
+	   $.getJSON("resources/json/440_properties_ru.json", function(data) {
+		   $rootScope.tagsProps['440'].properties.ru = data;
+	   });
+	   
+	   $.getJSON("resources/json/440_tags_ru.json", function(data) {
+		   $rootScope.tagsProps['440'].tags.ru = data;
+	   });
+	   
+	   $.getJSON("resources/json/570_filters.json", function(data) {
+		   $rootScope.tagsProps['570'].filters = data;
+	   });
+	   
+	   $.getJSON("resources/json/570_properties_ru.json", function(data) {
+		   $rootScope.tagsProps['570'].properties.ru = data;
+	   });
+	   
+	   $.getJSON("resources/json/570_tags_ru.json", function(data) {
+		   $rootScope.tagsProps['570'].tags.ru = data;
+	   });
+	   
+	   $.getJSON("resources/json/730_filters.json", function(data) {
+		   $rootScope.tagsProps['730'].filters = data;
+	   });
+	   
+	   $.getJSON("resources/json/730_properties_ru.json", function(data) {
+		   $rootScope.tagsProps['730'].properties.ru = data;
+	   });
+	   
+	   $.getJSON("resources/json/730_tags_ru.json", function(data) {
+		   $rootScope.tagsProps['730'].tags.ru = data;
+	   });
+   };
    
    $scope.loginHandler = function() {
 	   $rootScope.isLoading = true;
@@ -36,6 +79,9 @@ function($scope, $rootScope, $state, AuthService, ApplicationUtils, $window) {
    $scope.toggleMenu = function() {
  	  $scope.menuMaximized = !$scope.menuMaximized;
    };
+   
+   $scope.getTagProps();
+   
 }]);
  
 

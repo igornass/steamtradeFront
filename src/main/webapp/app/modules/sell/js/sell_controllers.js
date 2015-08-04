@@ -1,7 +1,7 @@
 var sellControllers = angular.module('Sell.controllers', []);
 
-sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout', '$window', '$interval', 'InventoryService', 'ApplicationUtils', 'AuthService',
-   function($scope, $rootScope, $timeout, $window, $interval, InventoryService, ApplicationUtils, AuthService)
+sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout', '$window', '$interval', 'InventoryService', 'SettingsService', 'ApplicationUtils', 'GameFilters', 'AuthService',
+   function($scope, $rootScope, $timeout, $window, $interval, InventoryService, SettingsService, ApplicationUtils, GameFilters, AuthService)
    {
 	  var ctrl = this;
 	  
@@ -17,12 +17,14 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 	  $scope.activeSell = false;
 	  $scope.secondStep = false;
 	  $scope.counter = 0;
+	  $scope.gameFilters = GameFilters;	  
+	  
 	   
 	  $scope.$watch( AuthService.isLoggedIn, function () {
 	      $scope.user = AuthService.getCurrentUser();
 	  });
 	  
-	  $scope.adjustGrid = function() {		  
+	  $scope.adjustGrid = function() {
 		  	if ($window.innerWidth <= 400)
 	    		$scope.columns = 1;
 	    	else if ((($window.innerWidth > 400) && ($window.innerWidth <= 650)) ||
@@ -37,7 +39,7 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 	    		$scope.columns = 3;
 	    	else
 	    		$scope.columns = 4;
-	  }
+	  };
 	  
 	  angular.element($window).bind('resize', function() {
 		    $scope.$apply(function() {
@@ -46,12 +48,16 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 		});
 	  
 	  $scope.selectGame = function(gameId) {
-
+		  console.log('Tags:');
+		  console.log($rootScope.tagsProps);
+		  $scope.gameFilters.clearFilters();
     	 var cachedInventory = InventoryService.getCachedInventory(); 
 
     	 if (cachedInventory && cachedInventory[0] && cachedInventory[0].description.appid == gameId && !$scope.selectedGame) {
     		 $scope.selectedGame = gameId;
+    		 $scope.gameFilters.selectedGame = gameId;
     		 $scope.inventory = cachedInventory;
+    		 console.log($scope.inventory);
     		 $scope.filters = InventoryService.getCachedFilters();
         	 $scope.search = {};
 
@@ -72,6 +78,7 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
     	  $scope.steamUnavailable = false;
     	  
     	  $scope.selectedGame = gameId;
+ 		  $scope.gameFilters.selectedGame = gameId;
     	  InventoryService.clearCachedInventory();
     	  InventoryService.clearCachedFilters();
     	  InventoryService.getUserInventory(gameId, cb_get_inventory_success, cb_get_inventory_error);
@@ -153,8 +160,13 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 		  
 	  }
 	  
+	  $scope.confirmTradeLink = function(tradeLink) {
+    	  $rootScope.isLoading = true;
+    	  var json = {'link_trade' : tradeLink };
+    	  SettingsService.setTradeLink(json, $scope.sellSelectedItems, ApplicationUtils.cb_error_handler);
+      };
+	  
 	  $scope.sellSelectedItems = function() {
-		  $rootScope.isLoading = true;
 		  var selectedItemsJson = [];
 		  for (var index = 0; index < $scope.selectedItems.length; index++) {
 			   var itemJson = {
@@ -272,7 +284,6 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 
       var cb_trade_status_success = function(data) {
     	  var response = angular.fromJson(data);
-    	  console.log(response);
     	  
     	  if(response.status_trade == 'created') {
     		  $scope.stopCheck();
@@ -304,8 +315,6 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
           $scope.inventory = [];
           $scope.search = '';
           $scope.filters = [];
-          
-          console.log(response);
           
           for (var itemObject in inventoryObject) {        	  
         	  for (var itemDescription in descriptionsObject) {
@@ -354,6 +363,7 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
         	  $scope.inventoryUnavailable = true;
           }
           
+          console.log($scope.inventory);
           console.log($scope.filters);
       };
       

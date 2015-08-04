@@ -31,6 +31,12 @@ lotsControllers.controller('LotsContentCtrl', ['$scope', '$rootScope', '$window'
      ctrl.cb_init_offers_success = function(data) {
 		 $rootScope.isLoading = false;
     	 $scope.offers = angular.fromJson(data);
+    	 
+    	 for (i = 0; i < $scope.offers.length; i++) {
+    		 var date = new Date($scope.offers[i].opening_time);
+    		 if (!$scope.offers[i].opening_time) date = new Date($scope.offers[i].closing_time);
+    		 $scope.offers[i].human_time = date.getDate() + ' ' + MONTH[date.getMonth()] + ' ' + date.getFullYear() + ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
+    	 }
 
     	 console.log($scope.offers);
      };

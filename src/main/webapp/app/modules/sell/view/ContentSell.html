@@ -1,8 +1,4 @@
-<div class="content fullsize" ng-show="!isLoggedIn && !isUserUpdating">
-    <div class="error-message">Для просмотра данной страницы необходимо войти на сайт через Steam.</div>
-</div>
-
-<div class="inventory-screen" ng-show="isLoggedIn && !activeSell">
+<div class="inventory-screen" ng-show="!activeSell">
     <div class="content columns-{{columns}}">
     
     	<div class="content-top">
@@ -17,60 +13,21 @@
     			<h1>Поиск по названию</h1>
     			<input type="text" class="default" ng-model="search.description.market_name" placeholder="Введите название">
     			<div class="filter" ng-click="selectedGame ? filterBlock = !filterBlock : null"><ng-include src="'resources/svg/filter.svg'"></ng-include></div>
-    			<div class="filter-block" ng-show="filterBlock">
+    			<div class="filter-block buy" ng-show="filterBlock">
     				<div>
-    					<div ng-show="selectedGame == 570 || selectedGame == 730">
-    						<h1>Тип</h1>
-    						<div class="custom-select">
-    							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
-    							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.Type" ng-focus="search.tags.Type = ''; selectType = true" ng-blur="selectType = false">
-    							<ul ng-class="{ 'visible': selectType == true }">
-    								<li ng-repeat="query in filters.Type | orderBy:query | filter:search.tags.Type" ng-click="$parent.search.tags.Type = query; $parent.selectType = false">{{query}}</li>
-    							</ul>
-    						</div>
-    					</div>
-    					<div ng-show="selectedGame == 570">
-    						<h1>Герой</h1>
-    						<div class="custom-select">
-    							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
-    							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.Hero" ng-focus="search.tags.Hero = ''; selectHero = true" ng-blur="selectHero = false">
-    							<ul ng-class="{ 'visible': selectHero == true }">
-    								<li ng-repeat="query in filters.Hero | orderBy:query | filter:search.tags.Hero" ng-click="$parent.search.tags.Hero = query; $parent.selectHero = false">{{query}}</li>
-    							</ul>
-    						</div>
-    					</div>
-    					<div ng-show="selectedGame == 730">
-    						<h1>Коллекция</h1>
-    						<div class="custom-select">
-    							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
-    							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.ItemSet" ng-focus="search.tags.ItemSet = ''; selectItemSet = true" ng-blur="selectItemSet = false">
-    							<ul ng-class="{ 'visible': selectItemSet == true }">
-    								<li ng-repeat="query in filters.ItemSet | orderBy:query | filter:search.tags.ItemSet" ng-click="$parent.search.tags.ItemSet = query; $parent.selectItemSet = false">{{query}}</li>
-    							</ul>
-    						</div>
-    					</div>
-    				</div>
-    				<div>
-    					<div ng-show="selectedGame == 570 || selectedGame == 730">
-    						<h1>Редкость</h1>
-    						<div class="custom-select">
-    							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
-    							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.Rarity" ng-focus="search.tags.Rarity = ''; selectRarity = true" ng-blur="selectRarity = false">
-    							<ul ng-class="{ 'visible': selectRarity == true }">
-    								<li ng-repeat="query in filters.Rarity | orderBy:query | filter:search.tags.Rarity" ng-click="$parent.search.tags.Rarity = query; $parent.selectRarity = false">{{query}}</li>
-    							</ul>
-    						</div>
-    					</div> 
-    					<div ng-show="selectedGame == 570 || selectedGame == 730">
-    						<h1>Качество</h1>
-    						<div class="custom-select">
-    							<ng-include src="'resources/svg/arrow.svg'"></ng-include>
-    							<input type="text" class="default" placeholder="Выберите/введите" ng-model="search.tags.Quality" ng-focus="search.tags.Quality = ''; selectQuality = true" ng-blur="selectQuality = false">
-    							<ul ng-class="{ 'visible': selectQuality == true }">
-    								<li ng-repeat="query in filters.Quality | orderBy:query | filter:search.tags.Quality" ng-click="$parent.search.tags.Quality = query; $parent.selectQuality = false">{{query}}</li>
-    							</ul>
-    						</div>
-    					</div>
+                        <div ng-repeat="filter in tagsProps[selectedGame].filters">
+                            <h1>{{tagsProps[selectedGame].properties[language][filter.property]}}</h1>
+                            <div class="custom-select">
+                                <ng-include src="'resources/svg/arrow.svg'"></ng-include>
+                                <input type="text" class="default" placeholder="Выберите/введите" ng-model="gameFilters.customSelect[filter.property].val" ng-focus="gameFilters.onFocus(filter.property)" ng-blur="gameFilters.onBlur(filter.property)" ng-keydown="gameFilters.navigateList($event, filter.property)">
+                                <ul id="{{filter.property}}" ng-class="{ 'visible': gameFilters.customSelect[filter.property].show == true }">
+                                    <li ng-class="{ 'selected': $index == gameFilters.customSelect[filter.property].selected }" ng-attr-id="{{ filter.property + '-' + $index }}" ng-repeat="tag in (gameFilters.customSelect[filter.property].list = (filter.tags | filter: gameFilters.typeAhead(gameFilters.customSelect[filter.property].val) | orderBy: gameFilters.alphabeticalSort(filter.alphabetic, filter.tags)))" ng-click="gameFilters.onSelect(filter.property, tag)">
+                                        {{tagsProps[selectedGame].tags[language][tag]}}
+                                    </li>
+                                </ul>
+                                <div ng-show="filter.multiple" class="tag" ng-repeat="tag in gameFilters.tags[filter.property]">{{tagsProps[selectedGame].tags[language][tag]}} <span ng-click="gameFilters.subtractFilter(filter.property, $index);"></span></div>
+                            </div>
+                        </div>
     				</div>
     			</div>
     		</div>
@@ -78,7 +35,7 @@
     	
     	<div ui-draggable="true" drag="item" ng-dblclick="addItem(item)" ng-click="detailedView(item)"
     		 on-drop-success="dropSuccessHandler($event, item, inventory)"
-    		 dir-paginate="item in inventory | filter:search | itemsPerPage: 12" class="content-block" ng-class="{ 'detailed': detailedItem == item.id }">
+    		 dir-paginate="item in inventory | filter:search | filter:gameFilters.filterByTags() | itemsPerPage: 12" class="content-block" ng-class="{ 'detailed': detailedItem == item.id }">
     		<div class="brief-view">
     			<img draggable="false" ng-src="{{applicationUtils.imageURL(item.description.icon_url_large, 300)}}">
     			<div class="title">{{item.description.market_name}}</div>
@@ -148,7 +105,7 @@
     </div>
 </div>
 
-<div class="sell-step" ng-show="isLoggedIn && activeSell">
+<div class="sell-step" ng-show="activeSell">
     <div class="content">
     
         <div class="content-top sell" ng-class="{ 'disabled': secondStep } ">
@@ -167,7 +124,7 @@
             </div>
             
             <div class="content-top-wrapper" ng-class="{ 'transparent': instruction } ">
-                <button type="button" ng-disabled="!user.link_trade || secondStep" ng-class="{ 'disabled': !user.link_trade } " ng-click="sellSelectedItems()">Следующий шаг</button>
+                <button type="button" ng-disabled="!user.link_trade || secondStep" ng-class="{ 'disabled': !user.link_trade } " ng-click="confirmTradeLink(user.link_trade)">Следующий шаг</button>
                 <div class="instruction-trigger" ng-click="instruction = !instruction" ng-show="instruction">Скрыть инструкцию</div>
                 <div class="instruction-trigger" ng-click="instruction = !instruction" ng-hide="instruction">Показать инструкцию</div>
             </div>

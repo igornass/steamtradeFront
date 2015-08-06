@@ -10,6 +10,7 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
 	 $scope.applicationUtils.setPath('Купить');
 	 $scope.applicationUtils.setStep(0, 0);
 	  $scope.gameFilters = GameFilters;	
+	  $scope.gameFilters.clearFilters();
 	  
 	  $scope.getOffersBtn = function() {
 		  var startingPrice = null;
@@ -42,13 +43,11 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
     		 $scope.columns = 1;
     	 else if ((($window.innerWidth > 400) && ($window.innerWidth <= 650)) ||
     			 (($window.innerWidth > 720) && ($window.innerWidth <= 850)) ||
-    			 (($window.innerWidth > 940) && ($window.innerWidth <= 1050)) ||
-    			 (($window.innerWidth > 1150) && ($window.innerWidth <= 1250)))
+    			 (($window.innerWidth > 940) && ($window.innerWidth <= 1050)))
     		 $scope.columns = 2;
     	 else if ((($window.innerWidth > 650) && ($window.innerWidth <= 720)) ||
     			 (($window.innerWidth > 850) && ($window.innerWidth <= 940)) ||
-    			 (($window.innerWidth > 1050) && ($window.innerWidth <= 1150)) ||
-    			 (($window.innerWidth > 1250) && ($window.innerWidth <= 1580)))
+    			 (($window.innerWidth > 1050) && ($window.innerWidth <= 1150)))
     		 $scope.columns = 3;
     	 else
     		 $scope.columns = 4;
@@ -77,6 +76,7 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
     	 
     	 $scope.selectedGame = app_id;
     	 $scope.gameFilters.selectedGame = app_id;
+		 $scope.gameFilters.clearFilters();
     	 $scope.offers = [];
     	 $scope.search = {};
     	 
@@ -186,7 +186,7 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
     	 $rootScope.isLoading = false;
     	 var response = angular.fromJson(data);
     	 title = 'Предмет успешно куплен.';
-		 body = 'Мы отправили обмен на ваш аккаунт. Статус обменов вы можете посмотреть <a href="#/exchange">здесь</a>'
+		 body = 'Мы отправили обмен на ваш аккаунт. Статус обменов вы можете посмотреть <a href="#/trades">здесь</a>'
 			 
 		 $scope.applicationUtils.raisePopup(title, body);
      };
@@ -286,7 +286,7 @@ buyControllers.controller('ItemDetailsCtrl', ['$scope', '$rootScope', '$sce', 'O
     	 $rootScope.isLoading = false;
     	 var response = angular.fromJson(data);
     	 title = 'Предмет успешно куплен.';
-		 body = 'Мы отправили обмен на ваш аккаунт. Статус обменов вы можете посмотреть <a href="#/exchange">здесь</a>'
+		 body = 'Мы отправили обмен на ваш аккаунт. Статус обменов вы можете посмотреть <a href="#/trades">здесь</a>'
 			 
 		 $scope.applicationUtils.raisePopup(title, body);
      };

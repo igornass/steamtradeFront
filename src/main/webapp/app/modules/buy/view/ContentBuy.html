@@ -9,8 +9,9 @@
 		
 		<div class="search" ng-show="selectedGame">
 			<h1>Поиск по названию</h1>
-			<input type="text" class="default" ng-model="search.description.market_name" placeholder="Введите название" ng-focus="filterBlock = true" ng-keyup="$event.keyCode == 13 && getOffersBtn()">
-			<button type="button" class="filter-button" ng-click="getOffersBtn()">Подобрать</button>
+			<input type="text" class="default name-filter" ng-model="search.description.market_name" placeholder="Введите название" ng-keyup="$event.keyCode == 13 && getOffersBtn()">
+			<button type="button" ng-hide="filterBlock" class="filter-button" ng-click="getOffersBtn()">Подобрать</button>
+            <button type="button" ng-hide="filterBlock" class="filter-button-small" ng-click="getOffersBtn()"></button>
 			<div class="filter" ng-click="selectedGame ? filterBlock = !filterBlock : null"><ng-include src="'resources/svg/filter.svg'"></ng-include></div>
 			<div class="filter-block buy" ng-show="filterBlock">
 				<div>
@@ -33,25 +34,32 @@
                         </div>
                     </div>
 				</div>
+                <div class="centered">
+                    <button type="button" class="filter-button" ng-click="getOffersBtn()">Подобрать</button>
+                </div>
 			</div>
 		</div>
 	</div>
 	
-	<div ng-repeat="offer in offers" class="content-block buy">
-		<a ui-sref="buy_item_state({game: selectedGame, item: offer.item.name})">
+	<div ng-repeat="offer in offers" class="content-block buy" ng-class="{ 'transparent': filterBlock == true }">
+		<div class="offer-block" ui-sref="buy_item_state({game: selectedGame, item: offer.item.name})">
             <img draggable="false" ng-src="{{applicationUtils.imageURL(offer.item.icon_url_large, 300)}}">
     		<div class="info-1">
-    			<span class="title">{{offer.item.name}}</span>
+    			<div class="title">{{offer.item.name}}</div>
     			<div>Количество: <span>{{offer.count}}</span></div>
     			<div>Цена: <span class="price">{{offer.price / 100}}</span></div>
     			<div>Цена в Steam: <span class="steam-price">{{offer.price / 100}}</span></div>			
     		</div>
     		<div class="info-2">
-    			<div ng-show="selectedGame == 570"><b>Герой:</b> {{offer.tags.Hero}}</div>
-    			<div ng-show="selectedGame == 570 || selectedGame == 730"><b>Редкость:</b> {{offer.tags.Rarity}}</div>
-    			<div ng-show="selectedGame == 570"><b>Слот:</b> {{offer.tags.Slot}}</div>
+    			<div ng-show="offer.tags.Hero"><b>Герой: </b>{{tagsProps[selectedGame].tags[language][offer.tags.Hero]}}</div>
+                <div ng-show="offer.tags.Quality"><b>Качество: </b>{{tagsProps[selectedGame].tags[language][offer.tags.Quality]}}</div>
+                <div ng-show="offer.tags.Rarity"><b>Редкость: </b>{{tagsProps[selectedGame].tags[language][offer.tags.Rarity]}}</div>
+                <div ng-show="offer.tags.Slot"><b>Слот: </b>{{tagsProps[selectedGame].tags[language][offer.tags.Slot]}}</div>
+                <div ng-show="offer.tags.Type"><b>Тип: </b>{{tagsProps[selectedGame].tags[language][offer.tags.Type]}}</div>
+                <div ng-show="offer.tags.Weapon"><b>Оружие: </b>{{tagsProps[selectedGame].tags[language][offer.tags.Weapon]}}</div>
+                <div ng-show="offer.tags.ItemSet"><b>Коллекция: </b>{{tagsProps[selectedGame].tags[language][offer.tags.ItemSet]}}</div>
     		</div>
-        </a>
+        </div>
         <div class="info-3">
             <button type="button" ng-click="buyButton(offer.id, offer.price / 100, offer.item.name)">Купить</button>
         </div>

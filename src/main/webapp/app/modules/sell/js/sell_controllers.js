@@ -17,7 +17,8 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 	  $scope.activeSell = false;
 	  $scope.secondStep = false;
 	  $scope.counter = 0;
-	  $scope.gameFilters = GameFilters;	  
+	  $scope.gameFilters = GameFilters;	
+	  $scope.gameFilters.clearFilters();  
 	  
 	   
 	  $scope.$watch( AuthService.isLoggedIn, function () {
@@ -48,14 +49,12 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 		});
 	  
 	  $scope.selectGame = function(gameId) {
-		  console.log('Tags:');
-		  console.log($rootScope.tagsProps);
-		  $scope.gameFilters.clearFilters();
+ 		 $scope.gameFilters.selectedGame = gameId;
+		 $scope.gameFilters.clearFilters();
     	 var cachedInventory = InventoryService.getCachedInventory(); 
 
     	 if (cachedInventory && cachedInventory[0] && cachedInventory[0].description.appid == gameId && !$scope.selectedGame) {
     		 $scope.selectedGame = gameId;
-    		 $scope.gameFilters.selectedGame = gameId;
     		 $scope.inventory = cachedInventory;
     		 console.log($scope.inventory);
     		 $scope.filters = InventoryService.getCachedFilters();
@@ -322,12 +321,12 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
         			  inventoryObject[itemObject].description = descriptionsObject[itemDescription];
         			  inventoryObject[itemObject].tags = {};
         			  for (var itemTag in descriptionsObject[itemDescription].tags) {
-        				  inventoryObject[itemObject].tags[descriptionsObject[itemDescription].tags[itemTag].category] = descriptionsObject[itemDescription].tags[itemTag].name;
+        				  inventoryObject[itemObject].tags[descriptionsObject[itemDescription].tags[itemTag].category] = descriptionsObject[itemDescription].tags[itemTag].internal_name;
         				  
         				  if (inventoryObject[itemObject].description.tradable == 1) {
 	        				  if ($scope.filters.indexOf(descriptionsObject[itemDescription].tags[itemTag].category) > -1) {
-	        					  if ($scope.filters[descriptionsObject[itemDescription].tags[itemTag].category].indexOf(descriptionsObject[itemDescription].tags[itemTag].name) == -1) {
-	        						  $scope.filters[descriptionsObject[itemDescription].tags[itemTag].category].push(descriptionsObject[itemDescription].tags[itemTag].name);
+	        					  if ($scope.filters[descriptionsObject[itemDescription].tags[itemTag].category].indexOf(descriptionsObject[itemDescription].tags[itemTag].internal_name) == -1) {
+	        						  $scope.filters[descriptionsObject[itemDescription].tags[itemTag].category].push(descriptionsObject[itemDescription].tags[itemTag].internal_name);
 	        					  }        					  
 	        				  } else {
 	        					  $scope.filters.push(descriptionsObject[itemDescription].tags[itemTag].category);

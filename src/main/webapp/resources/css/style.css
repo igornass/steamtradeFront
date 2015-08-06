@@ -71,6 +71,19 @@ b {
 	font-family: roboto-black;
 }
 
+a {
+    color: #47a1dd;
+}
+
+a:hover {
+    color: #5ab2ed;
+}
+
+a:active,
+a:visited {
+    color: #3d92cb;
+}
+
 button,
 .button {
     text-decoration: none;
@@ -192,6 +205,7 @@ button.red {
 	color: #47a1dd;
 	font-size: 22px;
 	box-shadow: inset 320px 0px 0px 0px rgba(255,255,255,1);
+	z-index: 1;
 }
 
 .menu {
@@ -203,6 +217,7 @@ button.red {
 	top: 0;
 	bottom: 0;
 	transition: left 0.5s ease;
+	z-index: 1;
 }
 
 .menu-wrapper {
@@ -779,6 +794,10 @@ button.red {
     cursor: default;
 }
 
+.content .content-block.buy.transparent {
+    opacity: 0.5;
+}
+
 .content .content-block.buy a {
     text-decoration: none;
     color: #495b69;
@@ -956,6 +975,7 @@ button.red {
     font-size: 14px;
     padding: 15px;
     vertical-align: top;
+    max-width: 400px;
 }
 
 .content .content-block.exchange .result {
@@ -1039,7 +1059,7 @@ button.red {
 
 .content .content-block.exchange .date {    
     font-family: roboto-black;
-    width: 150px;
+    width: 120px;
 }
 
 .content .content-block.exchange .body .type {
@@ -1099,6 +1119,7 @@ button.red {
 
 .content-block .info-1 .title {
 	padding: 0px;
+	text-align: left;
 }
 
 .content-block .info-1 .price {
@@ -1121,6 +1142,9 @@ button.red {
 .content-block .info-1 > div,
 .content-block .info-2 > div {
 	margin: 5px 0;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .content-block .info-3 {
@@ -1200,8 +1224,12 @@ button.red {
 
 .content .content-top .filter-button {
   padding: 8px 20px;
-  margin: 10px 0 0 20px;
+  margin: 10px 10px 0 10px;
   vertical-align: bottom;
+}
+
+.content .content-top .filter-button-small {
+  display: none;
 }
 
 .content .content-top .game {
@@ -1262,9 +1290,9 @@ button.red {
 	color: #d6dee8;
 	position: absolute;
 	top: 20px;
-	right: 20px;
-	width: 36px;
-	height: 36px;
+	right: 15px;
+    width: 33px;
+    height: 33px;
 	fill: currentColor;
 	cursor: pointer;
 }
@@ -1289,6 +1317,7 @@ button.red {
 	background: #f8f9fa;
 	padding: 15px;
 	font-size: 16px;
+	z-index: 1;
 }
 
 .content .content-top .search .filter-block .price-block {
@@ -1429,6 +1458,9 @@ button.red {
 
 .content .content-top.balance .controls a {
 	float: left;
+	font-family: roboto-black;
+    font-size: 11px;
+    text-transform: uppercase;
 }
 
 .content .content-top::after {
@@ -1619,6 +1651,10 @@ button.red {
 
 .content .content-bottom div:last-child {
 	float: right;
+}
+
+.offer-block {
+    cursor: pointer;
 }
 
 /*	Sidebar elements	*/
@@ -1961,9 +1997,13 @@ h1 {
        display: block;
        margin: 0 auto;
 	}
+    
+    .content .content-block.exchange .body {
+       max-width: 200px;
+    }
 }
 
-@media screen and (max-width: 940px) {
+@media screen and (max-width: 935px) {
 	h1 {
 		font-size: 13px;
 	}
@@ -2007,6 +2047,10 @@ h1 {
 	.sidebar .dnd-socket {
 		padding: 200px 110px;
 	}
+    
+    .content .content-block.exchange .body {
+       max-width: 400px;
+    }
 }
 
 @media screen and (max-width: 730px) {
@@ -2086,6 +2130,10 @@ h1 {
 		right: 0;
 		box-shadow: 0px 0px 0px 1000px rgba(0, 0, 0, 0.7);
 	}
+	
+	.content .content-block.exchange .body {
+	   max-width: 200px;
+	}
 }
 
 
@@ -2123,17 +2171,43 @@ h1 {
         position: initial;
         width: 100%%;
     }
+    
+    .content .content-block.exchange .body {
+        display: block;
+        padding: 2px 15px;
+        max-width: initial;
+    }
+    
+    .content .content-block.lots, 
+    .content .content-block.exchange {    
+        padding-bottom: 10px;
+    }
+    
+    .content .content-block.exchange .completed,
+    .content .content-block.exchange .button {
+        display: block;
+        float: none;
+        margin: 0 auto;
+    }
 }
 
 @media screen and (max-width: 500px) {	
 	body {
 		border-top: 112px solid transparent;
 	}
+    
+    .content {
+        padding: 0;
+    }
+	
+	.content .content-top .search {
+	    padding: 15px;
+	}
 	
 	.content .content-top .game {
 	  display: block;
 	  margin: 0 auto;
-	  width: 50%;
+	  width: 60%;
 	  text-align: center;
 	}
     
@@ -2176,6 +2250,66 @@ h1 {
 }
 
 @media screen and (max-width: 400px) {
+ 
+    .header .account span {
+        margin: 0px 3px;
+    }
+    
+    .header .account .logout {
+        margin-right: 5px;
+    }    
+    
+    .content .content-top .name-filter {
+        width: 160px;
+    }
+    
+    .content .content-top .filter-button {
+      display: none;
+    }   
+    
+    .content .content-top .filter-block .filter-button {
+        display: inline-block;
+    } 
+    
+    .content .content-top .filter-button {
+      display: none;
+    }      
+
+    .content .content-top .filter-button-small {
+      display: inline-block;
+      padding: 8px;
+      margin-left: 5px;
+      vertical-align: bottom;
+    }
+
+    .content .content-top .filter-button-small::before {
+      content: '';
+      display: block;
+      background: url('../svg/search.svg') no-repeat center;
+      background-size: 100%;
+      height: 16px;
+      width: 16px;
+    }
+    
+    .content .content-top.lots, 
+    .content .content-top.exchange {
+        margin: 10px 0px;        
+    }
+    
+    .content .content-top.lots button, 
+    .content .content-top.exchange button {
+        font-size: 11px;
+    }
+    
+    .content .content-block {
+        margin: 5px 10px;
+    }
+    
+    .content .content-block.lots, 
+    .content .content-block.exchange {
+        margin: 10px 0;
+    }
+    
 	.content .content-block .detailed-view img,
 	.content .content-block .detailed-view .info {
 		width: 100%;
@@ -2207,6 +2341,11 @@ h1 {
 	display: inline-block;
 	height: 100%;
 	vertical-align: middle;
+	margin: 0!important;
+}
+
+.centered {
+    text-align: center;
 }
 
 .custom-select {
@@ -2348,7 +2487,8 @@ h1 {
 	left: 0;
 	right: 0;
 	background: rgba(0, 0, 0, 0.5);
-	color: white
+	color: white;
+	z-index: 1;
 }
 
 .overlay::before {

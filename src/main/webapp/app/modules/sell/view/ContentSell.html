@@ -45,16 +45,16 @@
     			<div class="info">
     				<b>{{item.description.market_name}}</b>
     				<div class="description">
-    					<div ng-repeat="line in item.description.descriptions">{{line.value.charAt(0) == '<' ? "" : line.value }}</div>
+    					<div ng-repeat="line in item.description.descriptions">{{line.value.charCodeAt(0) == '60' ? "" : line.value }}</div>
     				</div>
     				<div class="tags">
-    					<div ng-show="item.tags.Hero" class="tag"><b>Герой: </b>{{item.tags.Hero}}</div>
-    					<div ng-show="item.tags.Quality" class="tag"><b>Качество: </b>{{item.tags.Quality}}</div>
-    					<div ng-show="item.tags.Rarity" class="tag"><b>Редкость: </b>{{item.tags.Rarity}}</div>
-    					<div ng-show="item.tags.Slot" class="tag"><b>Слот: </b>{{item.tags.Slot}}</div>
-    					<div ng-show="item.tags.Type" class="tag"><b>Тип: </b>{{item.tags.Type}}</div>
-    					<div ng-show="item.tags.Weapon" class="tag"><b>Оружие: </b>{{item.tags.Weapon}}</div>
-    					<div ng-show="item.tags.ItemSet" class="tag"><b>Коллекция: </b>{{item.tags.ItemSet}}</div>
+    					<div ng-show="item.tags.Hero" class="tag"><b>Герой: </b>{{tagsProps[selectedGame].tags[language][item.tags.Hero]}}</div>
+    					<div ng-show="item.tags.Quality" class="tag"><b>Качество: </b>{{tagsProps[selectedGame].tags[language][item.tags.Quality]}}</div>
+    					<div ng-show="item.tags.Rarity" class="tag"><b>Редкость: </b>{{tagsProps[selectedGame].tags[language][item.tags.Rarity]}}</div>
+    					<div ng-show="item.tags.Slot" class="tag"><b>Слот: </b>{{tagsProps[selectedGame].tags[language][item.tags.Slot]}}</div>
+    					<div ng-show="item.tags.Type" class="tag"><b>Тип: </b>{{tagsProps[selectedGame].tags[language][item.tags.Type]}}</div>
+    					<div ng-show="item.tags.Weapon" class="tag"><b>Оружие: </b>{{tagsProps[selectedGame].tags[language][item.tags.Weapon]}}</div>
+    					<div ng-show="item.tags.ItemSet" class="tag"><b>Коллекция: </b>{{tagsProps[selectedGame].tags[language][item.tags.ItemSet]}}</div>
     				</div>
     				<button type="button" ng-click="addItem(item)">Продать</button>
     			</div>			
@@ -79,8 +79,8 @@
     			<div class="description">
     				<div ng-click="removeItem(item)"><ng-include src="'resources/svg/delete.svg'"></ng-include></div>
     				<div class="title">{{item.description.market_name}}</div>
-    				<div class="tag"><b>Герой: </b>{{item.tags.Hero}}</div>
-    				<div class="tag"><b>Редкость: </b>{{item.tags.Rarity}}</div>
+    				<div class="tag"><b>Герой: </b>{{tagsProps[selectedGame].tags[language][item.tags.Hero]}}</div>
+    				<div class="tag"><b>Редкость: </b>{{tagsProps[selectedGame].tags[language][item.tags.Rarity]}}</div>
     			</div>
     			<div class="money">
     				<div class="tag">Рекоммендованная цена: <span class="price"></span></div>

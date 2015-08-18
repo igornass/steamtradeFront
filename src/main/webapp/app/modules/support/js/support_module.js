@@ -2,5 +2,6 @@
 
 // angular module
 angular.module('SteamShop.Support', [
-	'Support.controllers'
+	'Support.controllers',
+	'Support.services'
    ]);

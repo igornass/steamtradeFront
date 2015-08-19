@@ -7,13 +7,13 @@
                 <div class="description-entity" style="color: #{{description.color}}" ng-repeat="description in item.descriptionsArray" ng-bind-html="description.value"></div>
             </div>
             <div class="item-tags">
-                <div class="tag" ng-repeat="tag in item.tags"><b>{{tag.category}}:</b> {{tag.name}}</div>
+                <div class="tag" ng-repeat="tag in item.tags"><b>{{tagsProps[offers[0].item.app_id].properties[language][tag.category]}}:</b> {{tagsProps[offers[0].item.app_id].tags[language][tag.internal_name]}}</div>
                 <div class="price"><b>Цена: </b>{{offers[0].price / 100}}</div>
                 <button type="button" ng-click="buyButton(offers[0].id, offers[0].price / 100, item.market_hash_name)">Купить</button>
             </div>
         </div>
         <div class="item-tags">
-            <div class="tag" ng-repeat="tag in item.tags"><b>{{tag.category}}:</b> {{tag.name}}</div>
+            <div class="tag" ng-repeat="tag in item.tags"><b>{{tag.category}}:</b> {{tag.internal_name}}</div>
             <div class="price"><b>Цена: </b>{{offers[0].price / 100}}</div>
             <button type="button" ng-click="buyButton(offers[0].id, offers[0].price / 100, item.market_hash_name)">Купить</button>
         </div>
@@ -40,6 +40,8 @@
                 <button type="button" ng-click="buyButton(offer.id, offer.price / 100, item.market_hash_name);">Купить</button>
             </div>
         </div>
+        
+        <div ng-if="offers.length == 1">Другие предложения по данному предмету отсутствуют.</div>
         
     </div>
     

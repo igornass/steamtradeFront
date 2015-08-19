@@ -146,22 +146,16 @@
 <div ng-class="{ 'maximized': sidebarMaximized == true }" class="sidebar" ng-show="isLoggedIn" ng-click="$event.stopPropagation();">
 	<div class="scroller fullsize">
 		<h1>История операций</h1>
-		<div class="balance-history positive">
-			<div class="date">21.12.12</div>
-			<div class="action">Продажа Item name</div>
-			<div class="money">Цена: <span class="price">80</span></div>
-		</div>
-		
-		<div class="balance-history positive">
-			<div class="date">21.12.12</div>
-			<div class="action">Продажа Item name</div>
-			<div class="money">Цена: <span class="price">80</span></div>
-		</div>
-		
-		<div class="balance-history negative">
-			<div class="date">21.12.12</div>
-			<div class="action">Продажа Item name</div>
-			<div class="money">Цена: <span class="price">80</span></div>
+		<div class="balance-history" ng-class="{'positive' : item.type == 'sale' || item.type == 'enter_money', 'negative' : item.type == 'buy' || item.type == 'withdraw'}" ng-repeat="item in paymentHistory">
+			<div class="date">{{item.human_time}}</div>
+			<div class="action">
+                <span ng-if="item.type == 'buy'">Покупка</span>
+                <span ng-if="item.type == 'sale'">Продажа</span>
+                <span ng-if="item.type == 'enter_money'">Пополнение средств</span>
+                <span ng-if="item.type == 'withdraw'">Снятие средств</span>
+                {{item.item_name}}
+            </div>
+			<div class="money">Сумма: <span class="price">{{item.sum / 100}}</span></div>
 		</div>
 	</div>
 </div>

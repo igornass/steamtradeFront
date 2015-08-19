@@ -11,6 +11,7 @@ balanceControllers.controller('BalanceContentCtrl', ['$scope', '$rootScope', '$w
 	  $scope.applicationUtils = ApplicationUtils;
 	  $scope.applicationUtils.setPath('Баланс');
 	  $scope.applicationUtils.setStep(0, 0);
+	  $scope.paymentHistory = {};
 	  
 	  $scope.selectMethod = function(methodId) {
 		  $scope.selectedMethod = methodId;
@@ -41,7 +42,13 @@ balanceControllers.controller('BalanceContentCtrl', ['$scope', '$rootScope', '$w
 	  ctrl.cb_cash_history_success = function(data) {
 		  $rootScope.isLoading = false;
 		  response = angular.fromJson(data);
-		  //TODO
+		  console.log(response)
+		  $scope.paymentHistory = response;
+		  
+		  for (i = 0; i < $scope.paymentHistory.length; i++) {
+    		 var date = new Date($scope.paymentHistory[i].time);
+    		 $scope.paymentHistory[i].human_time = date.getDate() + ' ' + MONTH[date.getMonth()] + ' ' + date.getFullYear();
+    	  }
 	  };
 	  
 	  
@@ -49,6 +56,8 @@ balanceControllers.controller('BalanceContentCtrl', ['$scope', '$rootScope', '$w
 		  var regex  = /^\d+(?:\.{0,1}\d{0,2})$/;
 		  return regex.test(sum)
 	  }
+	  
+	  $scope.initCashHistory();
    },
 
 ]);

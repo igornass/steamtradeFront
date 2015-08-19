@@ -6,12 +6,12 @@
 			<ng-include src="'resources/svg/arrow.svg'"></ng-include>
 			<input readonly type="text" class="default" placeholder="Выберите тему" ng-model="theme" ng-focus="selectTheme = true" ng-blur="selectTheme = false">
 			<ul ng-class="{ 'visible': selectTheme == true }">
-				<li ng-repeat="item in ['Покупка', 'Вывод средств']" ng-click="$parent.theme = item; $parent.selectTheme = false">{{item}}</li>
+				<li ng-repeat="item in ticketSubjects" ng-click="$parent.theme = item; $parent.selectTheme = false">{{item}}</li>
 			</ul>
 		</div>
 		<h1>Ваш вопрос</h1>
 		<textarea class="default" placeholder="Опишите свою проблему"></textarea>
-		<div class="controls"><button type="button">Создать тикет</button></div>
+		<div class="controls"><button type="button" ng-click="createTicket('1', 'message')">Создать тикет</button></div>
 	</div>
 	
 	<div class="content-top support">

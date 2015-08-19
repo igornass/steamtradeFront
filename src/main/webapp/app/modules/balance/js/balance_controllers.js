@@ -1,7 +1,7 @@
 var balanceControllers = angular.module('Balance.controllers', []);
 
-balanceControllers.controller('BalanceContentCtrl', ['$scope', '$rootScope', '$window', 'BalanceService', 'ApplicationUtils',
-   function($scope, $rootScope, $window, BalanceService, ApplicationUtils)
+balanceControllers.controller('BalanceContentCtrl', ['$scope', '$rootScope', '$window', 'BalanceService', 'ApplicationUtils', '$stateParams', '$state', 
+   function($scope, $rootScope, $window, BalanceService, ApplicationUtils, $stateParams, $state )
    {
 	  var ctrl = this;
 	  
@@ -11,6 +11,22 @@ balanceControllers.controller('BalanceContentCtrl', ['$scope', '$rootScope', '$w
 	  $scope.applicationUtils = ApplicationUtils;
 	  $scope.applicationUtils.setPath('Баланс');
 	  $scope.applicationUtils.setStep(0, 0);
+	  
+	 if ($stateParams.state)
+	 {
+		 title = 'Статус операции';
+		 body = $stateParams.sum + ' успешно списано!';
+		 buttons = [{ text: 'Оk', func: function() {
+			  $scope.applicationUtils.closePopup();
+			  $state.go( STATE_BALANCE );
+		  }}];
+		 if ($stateParams.state == "fail")
+		 {
+		   body = 'Не удалось списать ' + $stateParams.sum;
+		 }
+		  
+		 $scope.applicationUtils.raisePopup(title, body, buttons);
+	 }
 	  
 	  $scope.selectMethod = function(methodId) {
 		  $scope.selectedMethod = methodId;

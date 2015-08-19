@@ -49,6 +49,7 @@ var STATE_SELL = 'sell_state';
 var STATE_LOTS = 'lots_state';
 var STATE_TRADES = 'trades_state';
 var STATE_BALANCE = 'balance_state';
+var STATE_BALANCE_PARAMETERIZED = 'balance_parameterized_state';
 var STATE_SETTINGS = 'settings_state';
 var STATE_AGREEMENT = 'agreement_state';
 var STATE_CONTRACT = 'contract_state';

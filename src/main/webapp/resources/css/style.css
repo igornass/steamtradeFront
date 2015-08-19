@@ -151,6 +151,10 @@ button.disabled {
   z-index: 1;
 }
 
+.popup button {
+  font-size: 13px;
+}
+
 .popup h1 {
   margin: 0;
   font-size: 14px;
@@ -1214,6 +1218,11 @@ button.red {
     padding: 20px;
 }
 
+.content .content-top.settings button {
+    padding: 10px 0;
+    width: 230px;
+}
+
 .content .content-top.settings input {
     margin: 0 10px 10px 0;
 }
@@ -2169,7 +2178,7 @@ h1 {
     
     .content .content-top .item-tags {
         position: initial;
-        width: 100%%;
+        width: 100%;
     }
     
     .content .content-block.exchange .body {
@@ -2250,6 +2259,10 @@ h1 {
 }
 
 @media screen and (max-width: 400px) {
+
+    .popup {
+        width: 290px;
+    }
  
     .header .account span {
         margin: 0px 3px;
@@ -2316,11 +2329,14 @@ h1 {
 	}
 	
 	.content .content-top.offer {
-	   margin: 0 -10px;
+	    margin: 0;
+        margin-top: 10px;
 	}
 	
     .content .content-top.prices {
-        margin: 10px -10px -10px -10px;
+        margin: 0;
+        margin-top: 10px;
+        padding: 10px;
     }
     
     .content .content-top .item-image-small {

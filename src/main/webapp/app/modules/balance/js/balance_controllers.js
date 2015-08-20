@@ -13,22 +13,6 @@ balanceControllers.controller('BalanceContentCtrl', ['$scope', '$rootScope', '$w
 	  $scope.applicationUtils.setStep(0, 0);
 	  $scope.paymentHistory = {};
 	  
-	 if ($stateParams.state)
-	 {
-		 title = 'Статус операции';
-		 body = $stateParams.sum + ' успешно списано!';
-		 buttons = [{ text: 'Оk', func: function() {
-			  $scope.applicationUtils.closePopup();
-			  $state.go( STATE_BALANCE );
-		  }}];
-		 if ($stateParams.state == "fail")
-		 {
-		   body = 'Не удалось списать ' + $stateParams.sum;
-		 }
-		  
-		 $scope.applicationUtils.raisePopup(title, body, buttons);
-	 }
-	  
 	  $scope.selectMethod = function(methodId) {
 		  $scope.selectedMethod = methodId;
 	  };
@@ -73,7 +57,25 @@ balanceControllers.controller('BalanceContentCtrl', ['$scope', '$rootScope', '$w
 		  return regex.test(sum)
 	  }
 	  
-	  $scope.initCashHistory();
+	  if ($stateParams.state)
+	  {
+			 title = 'Статус операции';
+			 body = $stateParams.sum + ' успешно списано!';
+			 buttons = [{ text: 'Оk', func: function() {
+				  $scope.applicationUtils.closePopup();
+				  $state.go( STATE_BALANCE );
+			  }}];
+			 if ($stateParams.state == "fail")
+			 {
+			   body = 'Не удалось выполнить платеж';
+			 }
+			  
+			 $scope.applicationUtils.raisePopup(title, body, buttons);
+	  }
+	  else
+	  {
+	     $scope.initCashHistory();  
+	  }
    },
 
 ]);

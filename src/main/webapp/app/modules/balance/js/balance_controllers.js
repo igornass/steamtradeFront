@@ -46,8 +46,7 @@ balanceControllers.controller('BalanceContentCtrl', ['$scope', '$rootScope', '$w
 		  $scope.paymentHistory = response;
 		  
 		  for (i = 0; i < $scope.paymentHistory.length; i++) {
-    		 var date = new Date($scope.paymentHistory[i].time);
-    		 $scope.paymentHistory[i].human_time = date.getDate() + ' ' + MONTH[date.getMonth()] + ' ' + date.getFullYear();
+    		 $scope.paymentHistory[i].human_time = $scope.applicationUtils.humanTime($scope.paymentHistory[i].time);
     	  }
 	  };
 	  

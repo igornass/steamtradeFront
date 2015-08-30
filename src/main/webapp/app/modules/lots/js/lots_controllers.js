@@ -9,6 +9,8 @@ lotsControllers.controller('LotsContentCtrl', ['$scope', '$rootScope', '$window'
 	 $scope.applicationUtils.setStep(0, 0);
 	 
 	 $scope.initOffers = function(openedOffers) {
+		 $scope.applicationUtils.closePopup();
+		 
 		 $scope.openedOffers = openedOffers;
 		 $scope.lots = [];
 		 $rootScope.isLoading = true;
@@ -33,9 +35,9 @@ lotsControllers.controller('LotsContentCtrl', ['$scope', '$rootScope', '$window'
     	 $scope.offers = angular.fromJson(data);
     	 
     	 for (i = 0; i < $scope.offers.length; i++) {
-    		 var date = new Date($scope.offers[i].opening_time);
-    		 if (!$scope.offers[i].opening_time) date = new Date($scope.offers[i].closing_time);
-    		 $scope.offers[i].human_time = date.getDate() + ' ' + MONTH[date.getMonth()] + ' ' + date.getFullYear() + ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
+    		 var timestamp = $scope.offers[i].opening_time;
+    		 if (!$scope.offers[i].opening_time) timestamp = $scope.offers[i].closing_time;
+    		 $scope.offers[i].human_time = $scope.applicationUtils.humanTime(timestamp, true);
     	 }
 
     	 console.log($scope.offers);
@@ -43,7 +45,16 @@ lotsControllers.controller('LotsContentCtrl', ['$scope', '$rootScope', '$window'
      
      ctrl.cb_delete_offer_success = function(data) {
 		 $rootScope.isLoading = false;
-		 ApplicationUtils.raisePopup('Снятие лота', 'Лот успешно снят.');
+		 title = 'Снятие лота';
+    	 body = 'Лот успешно снят.';
+    	 
+    	 buttons = [
+    	            { text: 'ОК', func: $scope.initOffers}
+    	            ];
+    	 
+    	 args = true;
+    	 
+    	 $scope.applicationUtils.raisePopup(title, body, buttons, args);
      };
      
      //Inin opened offers

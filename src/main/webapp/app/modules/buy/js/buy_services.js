@@ -83,6 +83,12 @@ buyServices.service('OffersService', ['HttpConnectionService', 'AuthService', 'A
        HttpConnectionService.raiseGetHttpRequest(url, '', cb_success, cb_error);
     };
     
+    this.getItemOffers = function(app_id, market_hash_name, cb_success, cb_error)
+    {
+       var url = OFFERS_REST_WS_URL + '/' + app_id + '/' + market_hash_name;
+       HttpConnectionService.raiseGetHttpRequest(url, '', cb_success, cb_error);
+    };
+    
     this.saveCachedOffers = function(offers)
     {
     	LocalStorageService.updateCachedOffers(offers);

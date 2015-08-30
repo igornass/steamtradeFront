@@ -1,28 +1,36 @@
-<div class="content">
+<div class="content" ng-show="!isLoggedIn && !isUserUpdating">
+    <div class="error-message">Для создания тикетов технической поддержки необходимо войти на сайт через Steam.</div>
+</div>
+
+<div class="content" ng-show="isLoggedIn">
 	<div class="content-top support">
 		<div><b>Создать новый тикет</b></div>
 		<h1>Тема вопроса</h1>		
 		<div class="custom-select">
 			<ng-include src="'resources/svg/arrow.svg'"></ng-include>
-			<input readonly type="text" class="default" placeholder="Выберите тему" ng-model="theme" ng-focus="selectTheme = true" ng-blur="selectTheme = false">
+			<input readonly type="text" class="default" placeholder="Выберите тему" ng-model="theme.value" ng-focus="selectTheme = true" ng-blur="selectTheme = false">
 			<ul ng-class="{ 'visible': selectTheme == true }">
-				<li ng-repeat="item in ticketSubjects" ng-click="$parent.theme = item; $parent.selectTheme = false">{{item}}</li>
+				<li ng-repeat="(key, value) in ticketSubjects" ng-click="$parent.theme.value = value; $parent.theme.id = key; $parent.selectTheme = false">{{value}}</li>
 			</ul>
 		</div>
 		<h1>Ваш вопрос</h1>
-		<textarea class="default" placeholder="Опишите свою проблему"></textarea>
-		<div class="controls"><button type="button" ng-click="createTicket('1', 'message')">Создать тикет</button></div>
+		<textarea class="default" ng-model="ticketBody" placeholder="Опишите свою проблему"></textarea>
+		<div class="controls"><button ng-disabled="!theme.id || !ticketBody" type="button" ng-click="createTicket(theme.id, ticketBody)">Создать тикет</button></div>
 	</div>
 	
-	<div class="content-top support">
-		<div>12.21.2015</div>
-		<b>Тема: Обмен</b>		
-		<div class="question">
-			Steam — сервис цифрового распространения компьютерных игр и программ, принадлежащий компании Valve, известному разработчику компьютерных игр.
+	<div class="content-top ticket" ng-class="{ 'closed' : ticket.is_closed}" ng-repeat="ticket in tickets">
+		<div class="subject">Тема: {{ticket.subject}} <i ng-if="ticket.is_closed">(Закрыта)</i></div>		
+		<div class="{{message.author}}" ng-repeat="message in ticket.messages">
+            <div class="author" ng-if="message.author == 'user'"><b>Вы</b> ({{message.human_time}}):</div>
+            <div class="author" ng-if="message.author == 'agent'"><b>Агент поддержки</b> ({{message.human_time}}):</div>
+			{{message.message}}
 		</div>
-		<div class="answer">
-			Первоначально распространялись только игры, трейлеры и модификации к ним, однако в Valve несколько раз заявляли, что в дальнейшем планируют расширить специализацию сервиса, начав распространение через него музыки и полнометражных фильмов
-		</div>
+        <textarea id="reply-{{ticket.id}}" class="default" ng-show="ticket.reply" ng-model="ticket.replyText" ng-keydown="$event.keyCode === 27 ? ticket.reply =  false : return" placeholder="Введите сообщение"></textarea>
+        <div ng-if="!ticket.is_closed" class="controls">
+            <button type="button" ng-click="closeTicketBtn(ticket.id)">Закрыть тикет</button>
+            <button ng-if="!ticket.reply" type="button" ng-click="ticket.replyText = ''; ticket.reply = true; setFocus('reply-' + ticket.id);">Написать сообщение</button>
+            <button ng-if="ticket.reply" ng-disabled="!ticket.replyText" type="button" ng-click="addMessageToTicket(ticket.id, ticket.replyText)">Отправить сообщение</button>
+        </div>
 	</div>
 </div>
 
@@ -44,4 +52,5 @@
 			<div class="body">Появление Steam сильно повлияло на разработки инди-игр, разработчики которых зачастую не могли найти себе издателя. Распространение нестандартных игр на дисках с точки зрения издателей — рискованный шаг, ведь заранее неизвестно, как отнесутся к игре покупатели. Метод цифровой дистрибуции, позволяющий отказаться от затрат на печать дисков, документации и коробок, а также от издержек на продажу через торговые сети, позволяет издавать такие игры с меньшим финансовым риском.</div>
 		</div>
 	</div>
+    <div class="sidebar-toggle" ng-click="toggleSidebar(); $event.stopPropagation()"><ng-include src="'resources/svg/help.svg'"></ng-include></div>
 </div>

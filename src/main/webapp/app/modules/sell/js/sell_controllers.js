@@ -113,14 +113,16 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 	  };
 	  
 	  $scope.removeItem = function(item) {
-		  $scope.inventory.push(item);
-		  $scope.detailedItem = '';
+		  if (item.description.appid == $scope.selectedGame) {
+			  $scope.inventory.push(item);
+			  $scope.detailedItem = '';
+			  
+			  $scope.inventory = $scope.inventory.sort(function(a, b) {
+				  return (a.description.market_name > b.description.market_name) ? 1 : ((a.description.market_name < b.description.market_name) ? -1 : 0);
+			  });
+		  }
 		  
-		  $scope.inventory = $scope.inventory.sort(function(a, b) {
-			  return (a.description.market_name > b.description.market_name) ? 1 : ((a.description.market_name < b.description.market_name) ? -1 : 0);
-		  });
-		  
-		 var index = $scope.selectedItems.indexOf(item);
+		  var index = $scope.selectedItems.indexOf(item);
 		  
 		  if (index > -1) {
 			  $scope.selectedItems.splice(index, 1);

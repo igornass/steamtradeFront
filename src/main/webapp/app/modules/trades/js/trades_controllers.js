@@ -22,6 +22,7 @@ tradesControllers.controller('TradesContentCtrl', ['$scope', '$rootScope', '$win
 	 };
 	 
 	 $scope.initTrades = function(completedTrades) {
+		 $scope.applicationUtils.closePopup();
 		 $scope.completedTrades = completedTrades;
 		 $scope.trades = [];
 		 $rootScope.isLoading = true;
@@ -39,13 +40,31 @@ tradesControllers.controller('TradesContentCtrl', ['$scope', '$rootScope', '$win
      ctrl.cb_confirm_trade_success = function(data) {
     	 $rootScope.isLoading = false;
     	 
-    	 ApplicationUtils.raisePopup('Подтверждение обмена', 'Обмен успешно подтвержден.');
+    	 title = 'Подтверждение обмена';
+    	 body = 'Обмен успешно подтвержден.';
+    	 
+    	 buttons = [
+    	            { text: 'ОК', func: $scope.initTrades}
+    	            ];
+    	 
+    	 args = false;
+    	 
+    	 $scope.applicationUtils.raisePopup(title, body, buttons, args);
      };
      
      ctrl.cb_retry_trade_success = function(data) {
     	 $rootScope.isLoading = false;
     	 
-    	 ApplicationUtils.raisePopup('Повтор обмена', 'Обмен успешно повторён.');
+    	 title = 'Повтор обмена';
+    	 body = 'Обмен успешно повторён.';
+    	 
+    	 buttons = [
+    	            { text: 'ОК', func: $scope.initTrades}
+    	            ];
+    	 
+    	 args = true;
+    	 
+    	 $scope.applicationUtils.raisePopup(title, body, buttons, args);
      };
      
      ctrl.cb_init_trades_success = function(data) {
@@ -53,8 +72,7 @@ tradesControllers.controller('TradesContentCtrl', ['$scope', '$rootScope', '$win
     	 $scope.trades = angular.fromJson(data);
     	 
     	 for (i = 0; i < $scope.trades.length; i++) {
-    		 var date = new Date($scope.trades[i].creating_time);
-    		 $scope.trades[i].human_time = date.getDate() + ' ' + MONTH[date.getMonth()] + ' ' + date.getFullYear();
+    		 $scope.trades[i].human_time = $scope.applicationUtils.humanTime($scope.trades[i].creating_time);
     	 }
     	 
     	 console.log($scope.trades);

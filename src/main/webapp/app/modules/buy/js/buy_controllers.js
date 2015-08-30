@@ -17,6 +17,17 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
 		  var endingPrice = null;
 		  var name = null
 		  var tags = [];
+		  var sort = null;
+		  var order = null;
+		  
+		  if ($scope.sort && $scope.sort.id == 1) {
+			  sort = 'price';
+		  }
+		  
+		  if ($scope.sort && $scope.sort.id == 2) {
+			  sort = 'price';
+			  order = 'desc';
+		  }
 		  
 		  if ($scope.search.price) {
 			  startingPrice = $scope.search.price.from * 100 + '';
@@ -35,7 +46,7 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
 			  }
 		  }
 		  
-		  $scope.getOffers($scope.selectedGame, null, null, startingPrice, endingPrice, name, null, null, tags );
+		  $scope.getOffers($scope.selectedGame, null, null, startingPrice, endingPrice, name, sort, order, tags);
 	  };
      
      $scope.adjustGrid = function() {		  
@@ -66,7 +77,7 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
      $scope.selectGame = function(app_id) {
     	 var cachedOffers = OffersService.getCachedOffers(); 
     	 
-    	 if (cachedOffers && cachedOffers[0] && cachedOffers[0].item.app_id == app_id) {
+    	 if (cachedOffers && cachedOffers[0] && cachedOffers[0].app_id == app_id) {
     		 $scope.selectedGame = app_id;
     		 $scope.gameFilters.selectedGame = app_id;
     		 $scope.offers = cachedOffers;
@@ -80,7 +91,19 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
     	 $scope.offers = [];
     	 $scope.search = {};
     	 
-    	 $scope.getOffers($scope.selectedGame, null, null, null, null, null, null, null, null);
+		  var sort = null;
+		  var order = null;
+		  
+		  if ($scope.sort && $scope.sort.id == 1) {
+			  sort = 'price';
+		  }
+		  
+		  if ($scope.sort && $scope.sort.id == 2) {
+			  sort = 'price';
+			  order = 'desc';
+		  }
+    	 
+    	 $scope.getOffers($scope.selectedGame, null, null, null, null, null, sort, order, null);
      };
 	 
      $scope.getOfferDetails = function(offerId) {
@@ -104,38 +127,7 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
     	 $scope.offers = [];
     	 response = angular.fromJson(data);
     	 console.log(response);
-
-    	 for (var offer in response) {  
-    		 response[offer].tags = {};
-    		 for (var itemTag in response[offer].item.tags) {
-    			 response[offer].tags[response[offer].item.tags[itemTag].category] = response[offer].item.tags[itemTag].internal_name;
-    		 }
-    		 
-    		 if ($scope.offers.length == 0) {
-    			 response[offer].count = 0;
-				 $scope.offers.push(response[offer]);
-    		 }
-    		 
-    		 listedAt = -1;
-    		 
-    		 for (var groupedOffer in $scope.offers) {
-    			 if ($scope.offers[groupedOffer].item.name == response[offer].item.name) {
-    				 listedAt = groupedOffer;
-    			 }
-    		 }
-    		 
-    		 if (listedAt >= 0) {
-				 $scope.offers[listedAt].count = $scope.offers[listedAt].count + 1;
-				 if ($scope.offers[listedAt].price > response[offer].price) {
-					 $scope.offers[listedAt].price = response[offer].price;
-					 $scope.offers[listedAt].id = response[offer].id;
-				 }
-    		 } else {
-    			 response[offer].count = 1;
-				 $scope.offers.push(response[offer]);
-    		 }
-
-    	 }
+    	 $scope.offers = response;
     	 
     	 OffersService.saveCachedOffers($scope.offers);
     	 console.log($scope.offers);
@@ -292,8 +284,7 @@ buyControllers.controller('ItemDetailsCtrl', ['$scope', '$rootScope', '$sce', 'O
      };
 	 
      $rootScope.isLoading = true;
-	 OffersService.getOffers(itemDetails.game, null, null, null, null, itemDetails.item,
-			 null, null, null, ctrl.cb_get_offers_success, ApplicationUtils.cb_error_handler);
+	 OffersService.getItemOffers(itemDetails.game, itemDetails.item, ctrl.cb_get_offers_success, ApplicationUtils.cb_error_handler);
 	 $scope.applicationUtils.setPath([{text: 'Купить'}, {text: GAMES[itemDetails.game], link: '#/buy/' + itemDetails.game}, {text: itemDetails.item}]);
 	 
   }

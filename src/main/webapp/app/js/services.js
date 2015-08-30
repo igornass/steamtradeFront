@@ -162,6 +162,14 @@ commonServices.service('GameFilters', ['$rootScope', function($rootScope){
 	  
 	  that.clearFilters = function() {
 		  that.tags = {};
+		  that.customSelect = {'Type': {selected: -1, list: [], show: false, val: ''},
+		  		  'Hero': {selected: -1, list: [], show: false, val: ''},
+		  		  'Class': {selected: -1, list: [], show: false, val: ''},
+		  		  'ItemSet': {selected: -1, list: [], show: false, val: ''},
+		  		  'Rarity': {selected: -1, list: [], show: false, val: ''},
+		  		  'Quality': {selected: -1, list: [], show: false, val: ''},
+		  		  'Exterior': {selected: -1, list: [], show: false, val: ''}
+		  		}
 	  };
 	  
 	  that.filterByTags = function() {
@@ -216,11 +224,21 @@ commonServices.service('ApplicationUtils', ['$rootScope', function($rootScope){
 	  }
     };
     
-    this.raisePopup = function(title, body, buttons) {
+    this.humanTime = function(timestamp, withTime) {
+		 var date = new Date(timestamp);
+		 
+		 if (!withTime)
+		 	return date.getDate() + ' ' + MONTH[date.getMonth()] + ' ' + date.getFullYear();
+		 
+		 return date.getDate() + ' ' + MONTH[date.getMonth()] + ' ' + date.getFullYear() + ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
+    };
+    
+    this.raisePopup = function(title, body, buttons, args) {
     	$rootScope.popup = {
 			title: title,
-			body: body, 			
-			buttons: buttons
+			body: body,
+			buttons: buttons,
+			args: args
 	    };
     };
     
@@ -368,7 +386,7 @@ commonServices.factory('AuthService', [ 'HttpConnectionService', 'LocalStorageSe
       },
       
       getAuthToken: function() {
-    	  return $cookieStore.get(AUTH_TOKEN);
+    	  return '88rpgf5nr3fuhmc6fvvgb7gf2q3s7t';
       },
       
       getTempAuthToken: function() {

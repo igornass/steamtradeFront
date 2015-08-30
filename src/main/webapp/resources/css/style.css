@@ -94,7 +94,7 @@ button,
 	font-family: roboto-medium;
 	text-transform: uppercase;
 	border-radius: 5px;
-	padding: 10px 70px;
+	padding: 10px 30px;
 	font-size: 14px;
 	cursor: pointer;
 }
@@ -111,7 +111,8 @@ button:active {
 	background: #3d92cb;
 }
 
-button.disabled {
+button.disabled,
+button[disabled=disabled] {
 	background: #e4e9ec;
 	outline: none;
 	cursor: default;
@@ -189,7 +190,7 @@ button.red {
   padding: 0px 20px;
   font-family: roboto-light;
   font-size: 16px;
-  box-sizing: content-box;
+  box-sizing: border-box;
 }
 
 .default:focus {
@@ -515,36 +516,6 @@ button.red {
 	background: #495b69;
 }
 
-.header .social {
-	display: inline-block;
-	vertical-align: middle;
-	margin-left: 150px;
-}
-
-.header .social div {
-	display: inline-block;
-	margin: 0px 10px;
-	cursor: pointer;
-}
-
-.header .social div:hover {
-	color: #5ab2ed;
-}
-
-.header .social div:active {
-	color: #3d92cb;
-}
-
-.header .social svg {
-	width: 25px;
-	height: 25px;
-}
-
-.header .social svg * {
-	stroke: none;
-	fill: currentColor;
-}
-
 .header .account {
 	float: right;
 	height: 100%;
@@ -651,6 +622,67 @@ button.red {
 	font-family: roboto-medium;
 	color: #495b69;
 	cursor: default;
+    width: calc(100% - 900px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+.social-networks {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.social-networks a {
+    text-decoration: none;
+    vertical-align: bottom;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.social-networks a.email {
+    font-size: 28px;
+    font-family: 'roboto black';
+    margin-right: 10px;
+}
+
+.social-networks svg {
+    width: 24px;
+    height: 24px;
+}
+
+.social-networks svg * {
+    stroke: transparent;
+    fill: currentColor; 
+}
+
+@media screen and (max-width: 1300px) {
+  .header .page-title {
+     width: calc(100% - 700px);
+  }
+}
+
+@media screen and (max-width: 935px) {
+    .header .social-networks {
+        display: none;
+    }
+    
+    .header .page-title {
+       width: calc(100% - 450px);
+    }
+}
+
+@media screen and (max-width: 730px) {
+    .header .page-title {
+       width: calc(100% - 350px);
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .header .page-title {
+       width: 100%;
+    }
 }
 
 .header .page-title a {
@@ -680,6 +712,8 @@ button.red {
     height: 20px;
     text-align: center;
     font-size: 0.9em;
+    vertical-align: middle;
+    line-height: initial;
 }
 
 .header .page-title .step.current {
@@ -955,6 +989,7 @@ button.red {
     width: 140px;
     height: auto;
     vertical-align: top;
+    margin: 15px;
 }
 
 .content .content-block.lots button {
@@ -1203,7 +1238,6 @@ button.red {
 .content .content-top {
 	background: #f8f9fa;
 	margin: 10px;
-	min-height: 124px;
 }
 
 .content .content-top.agreement {
@@ -1232,9 +1266,56 @@ button.red {
 }
 
 .content .content-top .filter-button {
-  padding: 8px 20px;
-  margin: 10px 10px 0 10px;
+  padding: 8px 12px;
+  margin: 10px 0 0 10px;
   vertical-align: bottom;
+}
+
+@media screen and (max-width: 1300px) {
+  .content .content-top .filter-button {
+    margin: 10px 0 0 190px;
+  }
+}
+
+@media screen and (max-width: 1072px) {
+  .content .content-top .filter-button {
+    margin: 10px 0 0 10px;
+  }
+}
+
+@media screen and (max-width: 935px) {
+  .content .content-top .filter-button {
+    margin: 10px 0 0 190px;
+  }
+}
+
+@media screen and (max-width: 832px) {
+  .content .content-top .filter-button {
+    margin: 10px 0 0 10px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .content .content-top .filter-button {
+    margin: 10px 0 0 70px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .content .content-top .filter-button {
+    margin: 10px 0 0 10px;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .content .content-top .filter-button {
+    margin: 10px 0 0 70px;
+  }
+}
+
+.content .content-top .filter-block .filter-button {
+    vertical-align: initial;
+    margin: 10px 10px 0 10px;
 }
 
 .content .content-top .filter-button-small {
@@ -1251,10 +1332,10 @@ button.red {
 }
 
 .content .content-top .game div {
-	width: 4vw;
-	height: 4vw;
-	max-width: 50px;
-	max-height: 50px;
+	width: 20%;
+	height: auto;
+	max-width: 45px;
+	max-height: 45px;
 	margin: 2px;
 	padding: 5px;
 	display: inline-block;
@@ -1286,11 +1367,10 @@ button.red {
 .content .content-top .search {	
 	background: #ffffff;
 	width: 67%;
-	height: 100%;
+	min-height: 120px;
 	display: inline-block;
 	vertical-align: top;
 	padding: 15px;
-	padding-bottom: 35px;
 	box-sizing: border-box;
 	position: relative;
 }
@@ -1298,7 +1378,7 @@ button.red {
 .content .content-top .search .filter {
 	color: #d6dee8;
 	position: absolute;
-	top: 20px;
+	top: 15px;
 	right: 15px;
     width: 33px;
     height: 33px;
@@ -1353,6 +1433,35 @@ button.red {
 	width: 33%;
 }
 
+.content .content-top.ticket { 
+    background: white;
+    font-size: 14px;
+    font-family: roboto-regular;
+    min-height: 0;
+}
+
+.content .content-top.ticket.closed {
+    opacity: 0.7;
+}
+
+.content .content-top.ticket .subject { 
+    padding: 10px;
+    font-family: roboto-black;
+}
+
+.content .content-top.ticket .user,
+.content .content-top.ticket .agent { 
+    padding: 10px 10px 10px 40px;
+}
+
+.content .content-top.ticket .agent { 
+    background: #f8f9fa;
+}
+
+.content .content-top.ticket .author {
+    text-indent: -20px;
+}
+
 .content .content-top.balance,
 .content .content-top.deposit,
 .content .content-top.support {
@@ -1385,12 +1494,27 @@ button.red {
 	margin-top: 10px;
 }
 
-.content .content-top.support .question::before,
-.content .content-top.support .answer::before {
-	content: 'Р’РѕРїСЂРѕСЃ';
-	display: block;
-	margin: 10px 0;
-	font-family: roboto-medium;
+.content .content-top.ticket .controls {
+    text-align: center;
+    padding: 0 10px 10px 10px;
+}
+
+.content .content-top.support .controls button,
+.content .content-top.ticket .controls button {
+    padding: 10px 0;
+    width: 230px; 
+}
+
+.content .content-top.ticket .controls button {
+    margin-top: 10px; 
+}
+
+.content .content-top.ticket textarea {
+    width: calc(100% - 40px);
+    margin: 10px 20px 0 20px;
+    box-sizing: border-box;
+    height: 100px;
+    padding: 5px 10px;
 }
 
 .content .content-top.support .answer::before {
@@ -1437,7 +1561,7 @@ button.red {
 .content .content-top.balance svg { 
 	width: 48px;
 	height: 48px;
-    margin: 20px 5px 0px 0px;
+    margin: 5px 5px 0px 0px;
 }
 
 .content .content-top.balance path {
@@ -1470,6 +1594,7 @@ button.red {
 	font-family: roboto-black;
     font-size: 11px;
     text-transform: uppercase;
+    margin: 10px;
 }
 
 .content .content-top::after {
@@ -1667,6 +1792,30 @@ button.red {
 }
 
 /*	Sidebar elements	*/
+
+.sidebar .sidebar-toggle {
+    width: 22px;
+    height: 22px;
+    background: inherit;
+    padding: 4px;
+    position: absolute;
+    left: -30px;
+    top: calc(50% - 15px);
+    cursor: pointer;
+    display: none;
+}
+
+.sidebar .sidebar-toggle svg * {
+    stroke: #47a1dd;
+}
+
+.sidebar .sidebar-toggle:hover svg * {
+    stroke: #5ab2ed;
+}
+
+.sidebar .sidebar-toggle:active svg * {
+    stroke: #3d92cb;
+}
 
 .sidebar .sell {
 	text-align: center;
@@ -2085,11 +2234,6 @@ h1 {
 	
 	.header .page-title {
 	  margin-left: 20px;
-	  max-width: 40%;
-	  white-space: nowrap;
-	  overflow: hidden;
-	  text-overflow: ellipsis;
-	  vertical-align: middle;
 	}
 	
 	.menu {
@@ -2140,16 +2284,17 @@ h1 {
 		box-shadow: 0px 0px 0px 1000px rgba(0, 0, 0, 0.7);
 	}
 	
+    .sidebar .sidebar-toggle {
+        display: block;
+    }
+	
 	.content .content-block.exchange .body {
 	   max-width: 200px;
 	}
 }
 
 
-@media screen and (max-width: 650px) {	
-	.header .page-title {
-	  max-width: 25%;
-	}
+@media screen and (max-width: 650px) {
     
     .menu {
         left: -240px;
@@ -2157,6 +2302,10 @@ h1 {
     
     .menu .menu-toggle {
         display: none;
+    }
+
+    .content .content-top.balance input {
+        min-width: 190px;
     }
     
     .content .content-top.settings .trade-link {
@@ -2270,38 +2419,6 @@ h1 {
     
     .header .account .logout {
         margin-right: 5px;
-    }    
-    
-    .content .content-top .name-filter {
-        width: 160px;
-    }
-    
-    .content .content-top .filter-button {
-      display: none;
-    }   
-    
-    .content .content-top .filter-block .filter-button {
-        display: inline-block;
-    } 
-    
-    .content .content-top .filter-button {
-      display: none;
-    }      
-
-    .content .content-top .filter-button-small {
-      display: inline-block;
-      padding: 8px;
-      margin-left: 5px;
-      vertical-align: bottom;
-    }
-
-    .content .content-top .filter-button-small::before {
-      content: '';
-      display: block;
-      background: url('../svg/search.svg') no-repeat center;
-      background-size: 100%;
-      height: 16px;
-      width: 16px;
     }
     
     .content .content-top.lots, 
@@ -2319,10 +2436,12 @@ h1 {
     }
     
     .content .content-block.lots, 
-    .content .content-block.exchange {
+    .content .content-block.exchange,
+    .content .content-top.ticket,
+    .content .content-top.support {
         margin: 10px 0;
     }
-    
+        
 	.content .content-block .detailed-view img,
 	.content .content-block .detailed-view .info {
 		width: 100%;
@@ -2362,6 +2481,18 @@ h1 {
 
 .centered {
     text-align: center;
+}
+
+.search-block {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 10px;
+}
+
+.search-block .custom-select,
+.search-block .name-filter {
+    width: 240px;
+    box-sizing: border-box;
 }
 
 .custom-select {
@@ -2462,13 +2593,14 @@ h1 {
 
 .custom-select ul {
 	position: absolute;
+	font-size: 16px;
 	left: 0;
 	right: 0;
 	background: #ffffff;
     list-style: none;
     margin: 0;
     padding: 0;
-    max-height: 10.6em;
+    max-height: 15.6em;
     overflow-y: auto;
     box-shadow: 0px 3px 0px 0px #df6e60, 0px -2px white, 0px 0px 1px 1px #47a1dd;
     opacity: 0;
@@ -2483,7 +2615,7 @@ h1 {
 }
 
 .custom-select li {
-	padding: 10px 0 10px 45px;
+	padding: 10px 0 10px 20px;
 	cursor: pointer;
 	color: #495b69;
 }

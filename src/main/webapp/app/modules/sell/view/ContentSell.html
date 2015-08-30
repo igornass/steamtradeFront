@@ -1,4 +1,8 @@
-<div class="inventory-screen" ng-show="!activeSell">
+<div class="content fullsize" ng-show="!isLoggedIn && !isUserUpdating">
+    <div class="error-message">Для просмотра данной страницы необходимо войти на сайт через Steam.</div>
+</div>
+
+<div class="inventory-screen" ng-show="!activeSell && isLoggedIn">
     <div class="content columns-{{columns}}">
     
     	<div class="content-top">
@@ -100,12 +104,13 @@
     	</div>
     	
     	<div class="sell">
-    		<button type="button" ng-click="beginTrade()" ng-disabled="!validateSelectedItems()" ng-class="{ 'disabled': !validateSelectedItems() }">Продать</button>
+    		<button type="button" ng-click="toggleSidebar(); beginTrade()" ng-disabled="!validateSelectedItems()" ng-class="{ 'disabled': !validateSelectedItems() }">Продать</button>
     	</div>
+        <div class="sidebar-toggle" ng-click="toggleSidebar(); $event.stopPropagation()"><ng-include src="'resources/svg/sell.svg'"></ng-include></div>
     </div>
 </div>
 
-<div class="sell-step" ng-show="activeSell">
+<div class="sell-step" ng-show="activeSell && isLoggedIn">
     <div class="content">
     
         <div class="content-top sell" ng-class="{ 'disabled': secondStep } ">
@@ -162,6 +167,7 @@
         <div class="sell">
             <button type="button" class="red" ng-click="cancelTrade()">Отменить продажу</button>
         </div>
+        <div class="sidebar-toggle" ng-click="toggleSidebar(); $event.stopPropagation()"><ng-include src="'resources/svg/sell.svg'"></ng-include></div>
         
     </div>
 </div>

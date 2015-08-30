@@ -14,6 +14,7 @@ function($scope, $rootScope, $state, AuthService, ApplicationUtils, $window) {
    $scope.isUserUpdating = false;
    
    $scope.menuMaximized = false;
+   $scope.sidebarMaximized = false;
    
    $rootScope.tagsProps = {'440': { filters: {}, properties: {}, tags: {} },
    						   '570': { filters: {}, properties: {}, tags: {} },
@@ -77,7 +78,13 @@ function($scope, $rootScope, $state, AuthService, ApplicationUtils, $window) {
    };
    
    $scope.toggleMenu = function() {
+	  $scope.sidebarMaximized = false;
  	  $scope.menuMaximized = !$scope.menuMaximized;
+   };
+   
+   $scope.toggleSidebar = function() {
+	  $scope.menuMaximized = false;
+ 	  $scope.sidebarMaximized = !$scope.sidebarMaximized;
    };
    
    $scope.getTagProps();

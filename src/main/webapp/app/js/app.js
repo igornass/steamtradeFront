@@ -71,9 +71,14 @@ app.config(function(paginationTemplateProvider, $urlRouterProvider, $stateProvid
         templateUrl: 'app/modules/trades/view/ContentTrades.html',
         controller: 'TradesContentCtrl'
     })
+    .state(STATE_BALANCE_PARAMETERIZED, {
+    	url: '/balance?state&sum',
+        templateUrl: 'app/modules/balance/view/ContentBalance.html',        
+        controller: 'BalanceContentCtrl',
+    })
     .state(STATE_BALANCE, {
     	url: '/balance',
-        templateUrl: 'app/modules/balance/view/ContentBalance.html',        
+    	templateUrl: 'app/modules/balance/view/ContentBalance.html',        
         controller: 'BalanceContentCtrl'     
     })
     .state(STATE_SETTINGS, {

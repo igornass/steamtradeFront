@@ -59,14 +59,14 @@ balanceControllers.controller('BalanceContentCtrl', ['$scope', '$rootScope', '$w
 	  if ($stateParams.state)
 	  {
 			 title = 'Статус операции';
-			 body = $stateParams.sum + ' успешно списано!';
+			 body = 'На ваш баланс успешно зачислено ' + $stateParams.sum + 'руб.';
 			 buttons = [{ text: 'Оk', func: function() {
 				  $scope.applicationUtils.closePopup();
 				  $state.go( STATE_BALANCE );
 			  }}];
 			 if ($stateParams.state == "fail")
 			 {
-			   body = 'Не удалось выполнить платеж';
+			   body = 'Произошла ошибка при списании средств.';
 			 }
 			  
 			 $scope.applicationUtils.raisePopup(title, body, buttons);

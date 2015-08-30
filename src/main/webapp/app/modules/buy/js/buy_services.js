@@ -85,7 +85,7 @@ buyServices.service('OffersService', ['HttpConnectionService', 'AuthService', 'A
     
     this.getItemOffers = function(app_id, market_hash_name, cb_success, cb_error)
     {
-       var url = OFFERS_REST_WS_URL + '/' + app_id + '/' + market_hash_name;
+       var url = OFFERS_REST_WS_URL + app_id + '/' + market_hash_name;
        HttpConnectionService.raiseGetHttpRequest(url, '', cb_success, cb_error);
     };
     

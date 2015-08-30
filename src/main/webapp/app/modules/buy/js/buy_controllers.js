@@ -134,7 +134,20 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
 
      };
      
-     $scope.buyButton = function(id, price, name) {    	 
+     
+     $scope.buyButton = function(name) {
+    	 $rootScope.isLoading = true;
+    	 OffersService.getItemOffers($scope.selectedGame, name, $scope.buyButtonCallback, ApplicationUtils.cb_error_handler);
+     };
+     
+     $scope.buyButtonCallback = function(data) { 
+    	 $rootScope.isLoading = false;
+    	 response = angular.fromJson(data);
+    	 
+    	 id = response[0].id;
+    	 price = response[0].price;
+    	 name = response[0].item.name;
+
     	 var title = "";
     	 var body = "";
     	 var buttons = [];
@@ -171,6 +184,7 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
      
      $scope.buySelectedOffer = function() {
     	 $rootScope.isLoading = true;
+    	 ApplicationUtils.closePopup();
     	 OffersService.buyItem($scope.selectedOffer, ctrl.cb_buy_item_success, ApplicationUtils.cb_error_handler);    	 
 	 };
      
@@ -271,6 +285,7 @@ buyControllers.controller('ItemDetailsCtrl', ['$scope', '$rootScope', '$sce', 'O
      
      $scope.buySelectedOffer = function() {
     	 $rootScope.isLoading = true;
+    	 $scope.applicationUtils.closePopup();
     	 OffersService.buyItem($scope.selectedOffer, ctrl.cb_buy_item_success, ApplicationUtils.cb_error_handler);    	 
 	 };
      

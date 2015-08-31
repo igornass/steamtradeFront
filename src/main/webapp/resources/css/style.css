@@ -657,34 +657,6 @@ button.red {
     fill: currentColor; 
 }
 
-@media screen and (max-width: 1300px) {
-  .header .page-title {
-     width: calc(100% - 700px);
-  }
-}
-
-@media screen and (max-width: 935px) {
-    .header .social-networks {
-        display: none;
-    }
-    
-    .header .page-title {
-       width: calc(100% - 450px);
-    }
-}
-
-@media screen and (max-width: 730px) {
-    .header .page-title {
-       width: calc(100% - 350px);
-    }
-}
-
-@media screen and (max-width: 500px) {
-    .header .page-title {
-       width: 100%;
-    }
-}
-
 .header .page-title a {
     text-decoration: none;
     color: inherit;
@@ -1269,48 +1241,6 @@ button.red {
   padding: 8px 12px;
   margin: 10px 0 0 10px;
   vertical-align: bottom;
-}
-
-@media screen and (max-width: 1300px) {
-  .content .content-top .filter-button {
-    margin: 10px 0 0 190px;
-  }
-}
-
-@media screen and (max-width: 1072px) {
-  .content .content-top .filter-button {
-    margin: 10px 0 0 10px;
-  }
-}
-
-@media screen and (max-width: 935px) {
-  .content .content-top .filter-button {
-    margin: 10px 0 0 190px;
-  }
-}
-
-@media screen and (max-width: 832px) {
-  .content .content-top .filter-button {
-    margin: 10px 0 0 10px;
-  }
-}
-
-@media screen and (max-width: 650px) {
-  .content .content-top .filter-button {
-    margin: 10px 0 0 70px;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .content .content-top .filter-button {
-    margin: 10px 0 0 10px;
-  }
-}
-
-@media screen and (max-width: 430px) {
-  .content .content-top .filter-button {
-    margin: 10px 0 0 70px;
-  }
 }
 
 .content .content-top .filter-block .filter-button {
@@ -2056,7 +1986,8 @@ h1 {
     text-transform: none;
 }
 
-@media screen and (max-width: 1580px) {
+@media only screen and (max-width: 1580px),
+@media only screen and (max-device-width: 1580px) {
 	body {
 		border-top: 66px solid transparent;
 	}
@@ -2105,7 +2036,19 @@ h1 {
 	}
 }
 
-@media screen and (max-width: 1150px) {
+@media only screen and (max-width: 1300px),
+@media only screen and (max-device-width: 1300px) {
+  .header .page-title {
+     width: calc(100% - 700px);
+  }  
+  
+  .content .content-top .filter-button {
+    margin: 10px 0 0 190px;
+  }
+}
+
+@media only screen and (max-width: 1150px),
+@media only screen and (max-device-width: 1150px) {
 	body {
 		border-top: 56px solid transparent;
 	}
@@ -2161,7 +2104,15 @@ h1 {
     }
 }
 
-@media screen and (max-width: 935px) {
+@media only screen and (max-width: 1072px),
+@media only screen and (max-device-width: 1072px) {
+  .content .content-top .filter-button {
+    margin: 10px 0 0 10px;
+  }
+}
+
+@media only screen and (max-width: 935px),
+@media only screen and (max-device-width: 935px) {
 	h1 {
 		font-size: 13px;
 	}
@@ -2180,7 +2131,12 @@ h1 {
 	
 	.header .page-title {
 	  margin-left: 35px;
-	}
+	  width: calc(100% - 450px);
+	}    
+	
+	.header .social-networks {
+        display: none;
+    }
 	
 	.menu {
 		left: -235px;
@@ -2196,7 +2152,11 @@ h1 {
 	
 	.content {
 		margin: 0px 260px 0px 0px;
-	}
+	}  
+	
+	.content .content-top .filter-button {
+        margin: 10px 0 0 190px;
+    }
 	
 	.sidebar {
 		width: 260px;
@@ -2211,7 +2171,15 @@ h1 {
     }
 }
 
-@media screen and (max-width: 730px) {
+@media only screen and (max-width: 832px),
+@media only screen and (max-device-width: 832px) {
+  .content .content-top .filter-button {
+    margin: 10px 0 0 10px;
+  }
+}
+
+@media only screen and (max-width: 730px),
+@media only screen and (max-device-width: 730px) {
 	.header {
 		background: #ffffff;
 	}
@@ -2233,7 +2201,8 @@ h1 {
 	}	
 	
 	.header .page-title {
-	  margin-left: 20px;
+	    margin-left: 20px;
+        width: calc(100% - 350px);
 	}
 	
 	.menu {
@@ -2294,7 +2263,8 @@ h1 {
 }
 
 
-@media screen and (max-width: 650px) {
+@media only screen and (max-width: 650px),
+@media only screen and (max-device-width: 650px) {
     
     .menu {
         left: -240px;
@@ -2303,7 +2273,11 @@ h1 {
     .menu .menu-toggle {
         display: none;
     }
-
+    
+    .content .content-top .filter-button {
+      margin: 10px 0 0 70px;
+    }
+    
     .content .content-top.balance input {
         min-width: 190px;
     }
@@ -2349,10 +2323,15 @@ h1 {
     }
 }
 
-@media screen and (max-width: 500px) {	
+@media only screen and (max-width: 500px),
+@media only screen and (max-device-width: 500px) {	
 	body {
 		border-top: 112px solid transparent;
-	}
+	}    
+	
+	.header .page-title {
+       width: 100%;
+    }
     
     .content {
         padding: 0;
@@ -2360,7 +2339,11 @@ h1 {
 	
 	.content .content-top .search {
 	    padding: 15px;
-	}
+	}  
+	
+	.content .content-top .filter-button {
+        margin: 10px 0 0 10px;
+    }
 	
 	.content .content-top .game {
 	  display: block;
@@ -2407,7 +2390,15 @@ h1 {
 	}
 }
 
-@media screen and (max-width: 400px) {
+@media only screen and (max-width: 430px),
+@media only screen and (max-device-width: 430px) {
+  .content .content-top .filter-button {
+    margin: 10px 0 0 70px;
+  }
+}
+
+@media only screen and (max-width: 400px),
+@media only screen and (max-device-width: 400px) {
 
     .popup {
         width: 290px;

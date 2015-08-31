@@ -77,6 +77,7 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
     	  $scope.steamUnavailable = false;
     	  
     	  $scope.selectedGame = gameId;
+    	  $scope.inventory = [];
  		  $scope.gameFilters.selectedGame = gameId;
     	  InventoryService.clearCachedInventory();
     	  InventoryService.clearCachedFilters();

@@ -42,7 +42,7 @@
 
 @font-face {
     font-family: rouble;
-    src: local(rouble), url('../fonts/rouble.otf') format('opentype');
+    src: local(rouble), url('../fonts/rouble-webfont.eot') format('opentype'), url('../fonts/rouble.otf') format('opentype');
 }
 
 html, body {		
@@ -138,7 +138,7 @@ button[disabled=disabled] {
 
 .popup {
   width: 320px;
-  box-shadow: inset 0 0 0 100vw white;
+  box-shadow: inset 0 0 0 1000px white;
   position: fixed;
   top: 0;
   border-top: calc(50vh - 100px) solid rgba(0, 0, 0, 0.5);
@@ -185,6 +185,7 @@ button.red {
 .default {
   border: none;
   border-bottom: 3px solid #47a1dd;
+  border-radius: 0;
   background: none;
   height: 40px;
   padding: 0px 20px;
@@ -629,34 +630,6 @@ button.red {
     vertical-align: middle;
 }
 
-.social-networks {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.social-networks a {
-    text-decoration: none;
-    vertical-align: bottom;
-    display: inline-block;
-    margin-right: 15px;
-}
-
-.social-networks a.email {
-    font-size: 28px;
-    font-family: 'roboto black';
-    margin-right: 10px;
-}
-
-.social-networks svg {
-    width: 24px;
-    height: 24px;
-}
-
-.social-networks svg * {
-    stroke: transparent;
-    fill: currentColor; 
-}
-
 .header .page-title a {
     text-decoration: none;
     color: inherit;
@@ -697,6 +670,37 @@ button.red {
 .menu label,
 .menu a {
 	display: block;
+}
+
+.menu .social-networks {
+    text-align: center;
+    background: #677c9f;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 5px 0 2px 0;
+}
+
+.menu .social-networks a {
+    width: 34px;
+    height: 34px;
+    padding: 7px;
+    color: white;
+    box-sizing: border-box;
+    text-decoration: none;
+    display: inline-block !important;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.menu .social-networks svg {
+    width: 16px;
+    height: 16px;
+}
+
+.menu .social-networks svg * {
+    stroke: transparent;
+    fill: currentColor; 
 }
 
 .menu label {
@@ -785,6 +789,42 @@ button.red {
 }
 
 /*	Content elements	*/
+
+.content .social-networks {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.content .social-networks a {
+    text-decoration: none;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 8px 12px 8px 0;
+    height: 25px;
+    padding-right: 8px;
+    font-family: 'roboto black';
+    font-size: 16px;
+}
+
+.content .social-networks a.icon {
+    border-right: 1px solid;    
+}
+
+.content .social-networks a.email {
+    font-size: 28px;
+    line-height: 17px;
+    width: 24px;
+}
+
+.content .social-networks svg {
+    width: 24px;
+    height: 24px;
+}
+
+.content .social-networks svg * {
+    stroke: transparent;
+    fill: currentColor; 
+}
 
 .content .error-message {
 	font-size: 16px;
@@ -1262,8 +1302,8 @@ button.red {
 }
 
 .content .content-top .game div {
-	width: 20%;
-	height: auto;
+	width: 4vw;
+    height: 4vw;
 	max-width: 45px;
 	max-height: 45px;
 	margin: 2px;
@@ -2132,11 +2172,7 @@ h1 {
 	.header .page-title {
 	  margin-left: 35px;
 	  width: calc(100% - 450px);
-	}    
-	
-	.header .social-networks {
-        display: none;
-    }
+	}
 	
 	.menu {
 		left: -235px;
@@ -2329,6 +2365,10 @@ h1 {
 		border-top: 112px solid transparent;
 	}    
 	
+	.social-networks a {
+        font-size: 11px;
+    }
+	
 	.header .page-title {
        width: 100%;
     }
@@ -2461,6 +2501,13 @@ h1 {
     }
 }
 
+@media only screen and (min-height: 730px),
+@media only screen and (min-device-height: 730px) {
+    .menu .social-networks {
+        position: absolute;
+    }
+}
+
 /*	Helping classes		*/
 
 .vertical-aligner {
@@ -2565,9 +2612,10 @@ h1 {
 
 .custom-select svg {
 	height: 12px;
+	width: 12px;
 	position: absolute;
 	top: 11px;
-	right: 5%;
+	right: 11px;
 	transform: rotate(90deg);
 	-webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);

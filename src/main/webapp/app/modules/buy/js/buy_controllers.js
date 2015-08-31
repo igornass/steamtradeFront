@@ -118,13 +118,13 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
      
      $scope.getOffers = function(app_id, page_size, page, start_price, finish_price, market_hash_name, sort_by, type_sort, tags) {
     	 $rootScope.isLoading = true;
+    	 $scope.offers = [];
     	 OffersService.getOffers(app_id, page_size, page, start_price, finish_price, market_hash_name,
     			 sort_by, type_sort, tags, ctrl.cb_get_offers_success, ApplicationUtils.cb_error_handler);
      };
       
      ctrl.cb_get_offers_success = function(data) {
     	 $rootScope.isLoading = false;
-    	 $scope.offers = [];
     	 response = angular.fromJson(data);
     	 console.log(response);
     	 $scope.offers = response;
@@ -145,7 +145,7 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
     	 response = angular.fromJson(data);
     	 
     	 id = response[0].id;
-    	 price = response[0].price;
+    	 price = response[0].price / 100;
     	 name = response[0].item.name;
 
     	 var title = "";

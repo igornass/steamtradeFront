@@ -2,7 +2,7 @@
 <html ng-app="SteamShop">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1">
   
 		<!-- javascript libraries -->
 		<script src="resources/lib/angularjs/angular.js"></script>
@@ -99,11 +99,7 @@
 			</div>
 			
 			<div class="page-title"><a class="path" ng-href="{{item.link}}" ng-repeat="item in path">{{item.text}}</a><span class="step" ng-class="{ 'current': $index + 1 == step.current }" ng-repeat="item in step.total">{{$index + 1}}</span></div>
-            <div class="social-networks">
-                <a href="https://www.facebook.com/groups/SteamTrade.net"><ng-include src="'resources/svg/facebook.svg'"></ng-include></a>
-                <a href="https://twitter.com/SteamTrade_net"><ng-include src="'resources/svg/twitter.svg'"></ng-include></a>
-                <a href="https://vk.com/steamtrade_net"><ng-include src="'resources/svg/vkontakte.svg'"></ng-include></a>
-            </div>
+            
 		</div>
   
         <div class="popup" ng-show="popup">

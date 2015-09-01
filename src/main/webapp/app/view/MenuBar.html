@@ -3,20 +3,20 @@
 		<div class="menu-scroller">
 			<label>Основное меню</label>
 			
-			<a class="menu-link" ui-sref="buy_state" ui-sref-active="current" ng-class="{ current: $state.includes('buy_item_state') }"><ng-include src="'resources/svg/buy.svg'"></ng-include><span>Купить</span></a>
-			<a class="menu-link" ui-sref="sell_state" ui-sref-active="current"><ng-include src="'resources/svg/sell.svg'"></ng-include><span>Продать</span></a>
-			<a class="menu-link" ui-sref="lots_state" ui-sref-active="current"><ng-include src="'resources/svg/lots.svg'"></ng-include><span>Лоты</span></a>
-			<a class="menu-link" ui-sref="trades_state" ui-sref-active="current"><ng-include src="'resources/svg/exchange.svg'"></ng-include><span>Обмены</span></a>
-			<a class="menu-link" ui-sref="balance_state" ui-sref-active="current"><ng-include src="'resources/svg/balance.svg'"></ng-include><span>Баланс</span></a>
-			<a class="menu-link" ui-sref="settings_state" ui-sref-active="current"><ng-include src="'resources/svg/settings.svg'"></ng-include><span>Настройки</span></a>
+			<a class="menu-link" ui-sref="buy_state" ng-click="closeMenu();" ui-sref-active="current" ng-class="{ current: $state.includes('buy_item_state') }"><ng-include src="'resources/svg/buy.svg'"></ng-include><span>Купить</span></a>
+			<a class="menu-link" ui-sref="sell_state" ng-click="closeMenu();" ui-sref-active="current"><ng-include src="'resources/svg/sell.svg'"></ng-include><span>Продать</span></a>
+			<a class="menu-link" ui-sref="lots_state" ng-click="closeMenu();" ui-sref-active="current"><ng-include src="'resources/svg/lots.svg'"></ng-include><span>Лоты</span></a>
+			<a class="menu-link" ui-sref="trades_state" ng-click="closeMenu();" ui-sref-active="current"><ng-include src="'resources/svg/exchange.svg'"></ng-include><span>Обмены</span></a>
+			<a class="menu-link" ui-sref="balance_state" ng-click="closeMenu();" ui-sref-active="current"><ng-include src="'resources/svg/balance.svg'"></ng-include><span>Баланс</span></a>
+			<a class="menu-link" ui-sref="settings_state" ng-click="closeMenu();" ui-sref-active="current"><ng-include src="'resources/svg/settings.svg'"></ng-include><span>Настройки</span></a>
 			
 			<label>Информация</label>
 			
 			<div class="sub-menu">
-				<a class="menu-link" ui-sref="agreement_state" ui-sref-active="current">Пользовательское соглашение</a>
-				<a class="menu-link" ui-sref="contract_state" ui-sref-active="current">Агентский договор</a>
-				<a class="menu-link" ui-sref="contacts_state" ui-sref-active="current">Контакты</a>
-				<a class="menu-link" ui-sref="support_state" ui-sref-active="current">Поддержка</a>
+				<a class="menu-link" ui-sref="agreement_state" ng-click="closeMenu();" ui-sref-active="current">Пользовательское соглашение</a>
+				<a class="menu-link" ui-sref="contract_state" ng-click="closeMenu();" ui-sref-active="current">Агентский договор</a>
+				<a class="menu-link" ui-sref="contacts_state" ng-click="closeMenu();" ui-sref-active="current">Контакты</a>
+				<a class="menu-link" ui-sref="support_state" ng-click="closeMenu();" ui-sref-active="current">Поддержка</a>
 			</div>
 			
 			<label>Платежные системы<br />
@@ -36,5 +36,5 @@
             </div>
 		</div>
 	</div>
-	<div class="menu-toggle" ng-click="toggleMenu(); $event.stopPropagation()"><ng-include src="'resources/svg/menu.svg'"></ng-include></div>		
+	<div class="menu-toggle" ng-click="toggleMenu();"><ng-include src="'resources/svg/menu.svg'"></ng-include></div>		
 </div>

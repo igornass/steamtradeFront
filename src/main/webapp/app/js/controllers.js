@@ -82,6 +82,10 @@ function($scope, $rootScope, $state, AuthService, ApplicationUtils, $window) {
  	  $scope.menuMaximized = !$scope.menuMaximized;
    };
    
+   $scope.closeMenu = function() {
+	   $scope.menuMaximized = false;
+   };
+   
    $scope.toggleSidebar = function() {
 	  $scope.menuMaximized = false;
  	  $scope.sidebarMaximized = !$scope.sidebarMaximized;

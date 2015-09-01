@@ -71,7 +71,9 @@
     	<dir-pagination-controls></dir-pagination-controls>
     </div>
     
-    <div ng-class="{ 'maximized': sidebarMaximized == true && menuMaximized == false }" class="sidebar" ui-on-Drop="onDrop($event, $data, selectedItems)" ng-click="$event.stopPropagation();">
+    <div class="clear-sidebar" ng-show="sidebarMaximized" ng-click="$rootScope.menuMaximized = false; $rootScope.sidebarMaximized = false"></div>
+    
+    <div ng-class="{ 'maximized': sidebarMaximized == true && menuMaximized == false }" class="sidebar" ui-on-Drop="onDrop($event, $data, selectedItems)">
     	<div class="scroller">
     		<h1>Выбранный инвентарь</h1>
     		<div ng-hide="selectedItems.length != 0">Перетащите сюда инвентарь, который Вы хотите продать, либо кликните по объекту два раза.</div>
@@ -106,7 +108,7 @@
     	<div class="sell">
     		<button type="button" ng-click="toggleSidebar(); beginTrade()" ng-disabled="!validateSelectedItems()" ng-class="{ 'disabled': !validateSelectedItems() }">Продать</button>
     	</div>
-        <div class="sidebar-toggle" ng-click="toggleSidebar(); $event.stopPropagation()"><ng-include src="'resources/svg/sell.svg'"></ng-include></div>
+        <div class="sidebar-toggle" ng-click="toggleSidebar();"><ng-include src="'resources/svg/sell.svg'"></ng-include></div>
     </div>
 </div>
 
@@ -150,7 +152,9 @@
         
     </div>
     
-    <div ng-class="{ 'maximized': sidebarMaximized == true && menuMaximized == false }" class="sidebar sell" ng-click="$event.stopPropagation();">
+    <div class="clear-sidebar" ng-show="sidebarMaximized" ng-click="$rootScope.menuMaximized = false; $rootScope.sidebarMaximized = false"></div>
+    
+    <div ng-class="{ 'maximized': sidebarMaximized == true && menuMaximized == false }" class="sidebar sell">
         <div class="scroller">
             <h1>Выбранный инвентарь</h1>
             
@@ -167,7 +171,7 @@
         <div class="sell">
             <button type="button" class="red" ng-click="cancelTrade()">Отменить продажу</button>
         </div>
-        <div class="sidebar-toggle" ng-click="toggleSidebar(); $event.stopPropagation()"><ng-include src="'resources/svg/sell.svg'"></ng-include></div>
+        <div class="sidebar-toggle" ng-click="toggleSidebar();"><ng-include src="'resources/svg/sell.svg'"></ng-include></div>
         
     </div>
 </div>

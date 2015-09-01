@@ -26,7 +26,9 @@
 	
 </div>
 
-<div ng-class="{ 'maximized': sidebarMaximized == true && menuMaximized == false }" class="sidebar buy" ng-click="$event.stopPropagation();">
+<div class="clear-sidebar" ng-show="sidebarMaximized" ng-click="$rootScope.menuMaximized = false; $rootScope.sidebarMaximized = false"></div>
+
+<div ng-class="{ 'maximized': sidebarMaximized == true && menuMaximized == false }" class="sidebar buy">
     <div class="scroller">
         <h1>Другие предложения</h1>
  
@@ -42,7 +44,7 @@
         </div>
         
         <div ng-if="offers.length == 1">Другие предложения по данному предмету отсутствуют.</div>
-        
+        <div class="sidebar-toggle" ng-click="toggleSidebar();"><ng-include src="'resources/svg/buy.svg'"></ng-include></div>
     </div>
     
 </div>

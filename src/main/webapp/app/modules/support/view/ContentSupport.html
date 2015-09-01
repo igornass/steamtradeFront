@@ -34,7 +34,9 @@
 	</div>
 </div>
 
-<div ng-class="{ 'maximized': sidebarMaximized == true }" class="sidebar" ng-click="$event.stopPropagation();">
+<div class="clear-sidebar" ng-show="sidebarMaximized" ng-click="toggleSidebar();"></div>
+
+<div ng-class="{ 'maximized': sidebarMaximized == true }" class="sidebar">
 	<div class="scroller fullsize">
 		<h1>FAQ</h1>
 		<div class="faq" id="1" ng-click="selectedFAQ == 1 ? selectedFAQ = '' : selectedFAQ = 1" ng-class="{ 'current': selectedFAQ == 1 }">
@@ -52,5 +54,5 @@
 			<div class="body">Появление Steam сильно повлияло на разработки инди-игр, разработчики которых зачастую не могли найти себе издателя. Распространение нестандартных игр на дисках с точки зрения издателей — рискованный шаг, ведь заранее неизвестно, как отнесутся к игре покупатели. Метод цифровой дистрибуции, позволяющий отказаться от затрат на печать дисков, документации и коробок, а также от издержек на продажу через торговые сети, позволяет издавать такие игры с меньшим финансовым риском.</div>
 		</div>
 	</div>
-    <div class="sidebar-toggle" ng-click="toggleSidebar(); $event.stopPropagation()"><ng-include src="'resources/svg/help.svg'"></ng-include></div>
+    <div class="sidebar-toggle" ng-click="toggleSidebar();"><ng-include src="'resources/svg/help.svg'"></ng-include></div>
 </div>

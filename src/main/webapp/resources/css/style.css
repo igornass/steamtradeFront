@@ -265,6 +265,7 @@ button.red {
 	right: 0;
 	top: 0;
 	bottom: 0;
+	z-index: 1;
 }
 
 .sidebar .scroller {
@@ -623,7 +624,7 @@ button.red {
 	font-family: roboto-medium;
 	color: #495b69;
 	cursor: default;
-    width: calc(100% - 350px);
+    width: 1000px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2041,6 +2042,10 @@ h1 {
 		margin-left: 0;
 	}
 	
+	.header .page-title {
+        width: calc(100% - 400px);
+    }	
+	
 	.header .social {	
 		margin-left: 60px;
 	}
@@ -2647,6 +2652,15 @@ h1 {
 
 .custom-select li:hover {
 	color: #df6e60;
+}
+
+.clear-sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
 }
 
 .overlay {

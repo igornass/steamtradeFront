@@ -67,9 +67,11 @@
 		<title>Steamtrade Platform</title>
 	</head>
   
-	<body ng-class="{ 'overlayed': isLoading == true }" ng-controller="mainCtrl" ng-click="menuMaximized = false; sidebarMaximized = false" ng-swipe-disable-mouse ng-swipe-left="sidebarMaximized = true" ng-swipe-right="menuMaximized = true">
+	<body ng-class="{ 'overlayed': isLoading == true }" ng-controller="mainCtrl" ng-swipe-disable-mouse ng-swipe-left="sidebarMaximized = true; menuMaximized = false;" ng-swipe-right="menuMaximized = true; sidebarMaximized = false">
 
-    	<div ui-view></div>    
+    	<div ui-view></div> 
+     
+        <div class="clear-sidebar" ng-show="menuMaximized" ng-click="menuMaximized = false; sidebarMaximized = false"></div>  
         
         <div class="overlay" ng-show="isLoading"></div> 
     	
@@ -79,7 +81,7 @@
     	<!--  Header -->
     	<div class="header">
 			<span class="vertical-aligner"></span>
-			<div class="menu-toggle" ng-click="toggleMenu(); $event.stopPropagation()"><ng-include src="'resources/svg/menu.svg'"></ng-include></div>		
+			<div class="menu-toggle" ng-click="toggleMenu();"><ng-include src="'resources/svg/menu.svg'"></ng-include></div>		
 			<div class="logo">				
 				<label>Steam</label>Trade <span>Network</span>
 			</div>
@@ -106,8 +108,8 @@
             <h1>{{popup.title}}</h1>
             <p ng-bind-html="popup.body"></p>
             <div>
-                <button type="button" ng-repeat="button in popup.buttons" ng-class="button.red" ng-click="button.func(popup.args); $event.stopPropagation();">{{button.text}}</button>
-                <button type="button" ng-show="!popup.buttons" ng-click="applicationUtils.closePopup(); $event.stopPropagation();">ОК</button>
+                <button type="button" ng-repeat="button in popup.buttons" ng-class="button.red" ng-click="button.func(popup.args);">{{button.text}}</button>
+                <button type="button" ng-show="!popup.buttons" ng-click="applicationUtils.closePopup();">ОК</button>
             </div>
         </div>
 		

@@ -143,7 +143,9 @@
 	</div>
 </div>
 
-<div ng-class="{ 'maximized': sidebarMaximized == true }" class="sidebar" ng-show="isLoggedIn" ng-click="$event.stopPropagation();">
+<div class="clear-sidebar" ng-show="sidebarMaximized" ng-click="$rootScope.menuMaximized = false; $rootScope.sidebarMaximized = false"></div>
+
+<div ng-class="{ 'maximized': sidebarMaximized == true }" class="sidebar" ng-show="isLoggedIn">
 	<div class="scroller fullsize">
 		<h1>История операций</h1>
 		<div class="balance-history" ng-class="{'positive' : item.type == 'sale' || item.type == 'enter_money', 'negative' : item.type == 'buy' || item.type == 'withdraw'}" ng-repeat="item in paymentHistory">
@@ -158,5 +160,5 @@
 			<div class="money">Сумма: <span class="price">{{item.sum / 100}}</span></div>
 		</div>
 	</div>
-    <div class="sidebar-toggle" ng-click="toggleSidebar(); $event.stopPropagation()"><ng-include src="'resources/svg/history.svg'"></ng-include></div>
+    <div class="sidebar-toggle" ng-click="toggleSidebar();"><ng-include src="'resources/svg/history.svg'"></ng-include></div>
 </div>

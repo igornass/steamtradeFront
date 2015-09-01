@@ -386,7 +386,7 @@ commonServices.factory('AuthService', [ 'HttpConnectionService', 'LocalStorageSe
       },
       
       getAuthToken: function() {
-    	  return '88rpgf5nr3fuhmc6fvvgb7gf2q3s7t';
+    	  return $cookieStore.get(AUTH_TOKEN);
       },
       
       getTempAuthToken: function() {

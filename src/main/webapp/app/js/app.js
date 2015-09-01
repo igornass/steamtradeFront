@@ -112,7 +112,7 @@ app.config(function(paginationTemplateProvider, $urlRouterProvider, $stateProvid
         controller: 'ValidateLoginCtrl'
     });
     
-    $urlRouterProvider.otherwise('/buy/');
+    $urlRouterProvider.otherwise('/buy/570/1');
 });
 
 app.run(function(AuthService) {

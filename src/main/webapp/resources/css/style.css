@@ -623,7 +623,7 @@ button.red {
 	font-family: roboto-medium;
 	color: #495b69;
 	cursor: default;
-    width: calc(100% - 900px);
+    width: calc(100% - 350px);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2026,8 +2026,7 @@ h1 {
     text-transform: none;
 }
 
-@media only screen and (max-width: 1580px),
-@media only screen and (max-device-width: 1580px) {
+@media only screen and (max-width: 1580px) {
 	body {
 		border-top: 66px solid transparent;
 	}
@@ -2076,19 +2075,13 @@ h1 {
 	}
 }
 
-@media only screen and (max-width: 1300px),
-@media only screen and (max-device-width: 1300px) {
-  .header .page-title {
-     width: calc(100% - 700px);
-  }  
-  
+@media only screen and (max-width: 1300px) {  
   .content .content-top .filter-button {
     margin: 10px 0 0 190px;
   }
 }
 
-@media only screen and (max-width: 1150px),
-@media only screen and (max-device-width: 1150px) {
+@media only screen and (max-width: 1150px) {
 	body {
 		border-top: 56px solid transparent;
 	}
@@ -2144,15 +2137,13 @@ h1 {
     }
 }
 
-@media only screen and (max-width: 1072px),
-@media only screen and (max-device-width: 1072px) {
+@media only screen and (max-width: 1072px) {
   .content .content-top .filter-button {
     margin: 10px 0 0 10px;
   }
 }
 
-@media only screen and (max-width: 935px),
-@media only screen and (max-device-width: 935px) {
+@media only screen and (max-width: 935px) {
 	h1 {
 		font-size: 13px;
 	}
@@ -2171,7 +2162,6 @@ h1 {
 	
 	.header .page-title {
 	  margin-left: 35px;
-	  width: calc(100% - 450px);
 	}
 	
 	.menu {
@@ -2207,15 +2197,13 @@ h1 {
     }
 }
 
-@media only screen and (max-width: 832px),
-@media only screen and (max-device-width: 832px) {
+@media only screen and (max-width: 832px) {
   .content .content-top .filter-button {
     margin: 10px 0 0 10px;
   }
 }
 
-@media only screen and (max-width: 730px),
-@media only screen and (max-device-width: 730px) {
+@media only screen and (max-width: 730px) {
 	.header {
 		background: #ffffff;
 	}
@@ -2238,7 +2226,6 @@ h1 {
 	
 	.header .page-title {
 	    margin-left: 20px;
-        width: calc(100% - 350px);
 	}
 	
 	.menu {
@@ -2299,8 +2286,7 @@ h1 {
 }
 
 
-@media only screen and (max-width: 650px),
-@media only screen and (max-device-width: 650px) {
+@media only screen and (max-width: 650px) {
     
     .menu {
         left: -240px;
@@ -2359,8 +2345,7 @@ h1 {
     }
 }
 
-@media only screen and (max-width: 500px),
-@media only screen and (max-device-width: 500px) {	
+@media only screen and (max-width: 500px) {	
 	body {
 		border-top: 112px solid transparent;
 	}    
@@ -2430,15 +2415,13 @@ h1 {
 	}
 }
 
-@media only screen and (max-width: 430px),
-@media only screen and (max-device-width: 430px) {
+@media only screen and (max-width: 430px) {
   .content .content-top .filter-button {
     margin: 10px 0 0 70px;
   }
 }
 
-@media only screen and (max-width: 400px),
-@media only screen and (max-device-width: 400px) {
+@media only screen and (max-width: 400px) {
 
     .popup {
         width: 290px;
@@ -2501,8 +2484,7 @@ h1 {
     }
 }
 
-@media only screen and (min-height: 730px),
-@media only screen and (min-device-height: 730px) {
+@media only screen and (min-height: 730px) {
     .menu .social-networks {
         position: absolute;
     }

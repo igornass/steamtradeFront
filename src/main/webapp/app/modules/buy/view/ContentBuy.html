@@ -54,7 +54,7 @@
 		</div>
 	</div>
 	
-	<div ng-repeat="offer in offers" class="content-block buy" ng-class="{ 'transparent': filterBlock == true }">
+	<div ng-repeat="offer in offers.offers" class="content-block buy" ng-class="{ 'transparent': filterBlock == true }">
 		<div class="offer-block" ui-sref="buy_item_state({game: selectedGame, item: offer.name})">
             <img draggable="false" ng-src="{{applicationUtils.imageURL(offer.icon_url_large, 300)}}">
     		<div class="info-1">
@@ -77,5 +77,23 @@
             <button type="button" ng-click="buyButton(offer.name)">Купить</button>
         </div>
 	</div>
+ 
+    <ul class="content-bottom" ng-if="offers.total_count > 12">
+        <li ng-if="currentPage.page != 1">
+            <a ui-sref="buy_state({game: selectedGame, page: 1})" ng-click="clearCachedOffers()">&laquo;</a>
+        </li>
+        <li ng-if="currentPage.page != 1">
+            <a ui-sref="buy_state({game: selectedGame, page: currentPage.page})" ng-click="clearCachedOffers()">&lsaquo;</a>
+        </li>
+        <li class="pages" ng-repeat="pageNumber in totalPages track by $index" ng-class="{ active : currentPage.page == pageNumber, disabled : pageNumber == '...' }">
+            <a ui-sref="pageNumber == '...' ? '' : buy_state({game: selectedGame, page: pageNumber})" ng-click="clearCachedOffers()">{{ pageNumber }}</a>
+        </li>
+        <li ng-if="currentPage.page != Math.ceil(offers.total_count/12)">
+            <a ui-sref="buy_state({game: selectedGame, page: currentPage.page + 1})" ng-click="clearCachedOffers()">&rsaquo;</a>
+        </li>
+        <li ng-if="currentPage.page != Math.ceil(offers.total_count/12)">
+            <a ui-sref="buy_state({game: selectedGame, page: Math.ceil(offers.total_count/12)})" ng-click="clearCachedOffers()">&raquo;</a>
+        </li>
+    </ul>
 	
 </div>

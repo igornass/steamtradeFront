@@ -1,16 +1,20 @@
 var buyControllers = angular.module('Buy.controllers', []);
 
-buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 'OffersService', 'ApplicationUtils', 'GameFilters', 'selectedGame',
-   function($scope, $rootScope, $window, OffersService, ApplicationUtils, GameFilters, selectedGame)
+buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 'OffersService', 'ApplicationUtils', 'GameFilters', 'currentPage', '$state',
+   function($scope, $rootScope, $window, OffersService, ApplicationUtils, GameFilters, currentPage, $state)
    {
 	 var ctrl = this;
-	 $scope.offers = [];
+	 $scope.offers = {};
 	 $scope.search = {};
+	 $scope.Math = window.Math;
 	 $scope.applicationUtils = ApplicationUtils;
 	 $scope.applicationUtils.setPath('Купить');
 	 $scope.applicationUtils.setStep(0, 0);
 	  $scope.gameFilters = GameFilters;	
 	  $scope.gameFilters.clearFilters();
+	  $scope.currentPage = currentPage;
+	  $scope.currentPage.page = parseInt($scope.currentPage.page);
+	  $scope.totalPages = [];
 	  
 	  $scope.getOffersBtn = function() {
 		  var startingPrice = null;
@@ -46,7 +50,7 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
 			  }
 		  }
 		  
-		  $scope.getOffers($scope.selectedGame, null, null, startingPrice, endingPrice, name, sort, order, tags);
+		  $scope.getOffers($scope.selectedGame, null, $scope.currentPage.page, startingPrice, endingPrice, name, sort, order, tags);
 	  };
      
      $scope.adjustGrid = function() {		  
@@ -82,13 +86,26 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
     		 $scope.gameFilters.selectedGame = app_id;
     		 $scope.offers = cachedOffers;
         	 $scope.search = {};
+        	 
+        	 $scope.totalPages = ["1"];
+        	 
+        	 if ($scope.currentPage.page < 4) {
+        		 for (i = 2; i < $scope.currentPage.page + 1; i++) {
+        			 $scope.totalPages.push(i);
+        		 }
+        	 } else {
+        		 $scope.totalPages.push('...');
+        		 $scope.totalPages.push($scope.currentPage.page - 1);
+        		 $scope.totalPages.push($scope.currentPage.page);
+        	 }
+        	 
         	 return;
     	 }
     	 
     	 $scope.selectedGame = app_id;
     	 $scope.gameFilters.selectedGame = app_id;
 		 $scope.gameFilters.clearFilters();
-    	 $scope.offers = [];
+    	 $scope.offers = {};
     	 $scope.search = {};
     	 
 		  var sort = null;
@@ -118,7 +135,7 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
      
      $scope.getOffers = function(app_id, page_size, page, start_price, finish_price, market_hash_name, sort_by, type_sort, tags) {
     	 $rootScope.isLoading = true;
-    	 $scope.offers = [];
+    	 $scope.offers = {};
     	 OffersService.getOffers(app_id, page_size, page, start_price, finish_price, market_hash_name,
     			 sort_by, type_sort, tags, ctrl.cb_get_offers_success, ApplicationUtils.cb_error_handler);
      };
@@ -128,6 +145,32 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
     	 response = angular.fromJson(data);
     	 console.log(response);
     	 $scope.offers = response;
+
+    	 if ($scope.currentPage.page > Math.ceil($scope.offers.total_count/12)) {
+    		 $state.go(STATE_BUY, {game: $scope.selectedGame, page: 1});
+    	 }
+    	 
+    	 $scope.totalPages = ["1"]
+    	 
+    	 if ($scope.currentPage.page < 4) {
+    		 for (i = 2; i < $scope.currentPage.page + 1; i++) {
+    			 $scope.totalPages.push(i);
+    		 }
+    	 } else {
+    		 $scope.totalPages.push('...');
+    		 $scope.totalPages.push($scope.currentPage.page - 1);
+    		 $scope.totalPages.push($scope.currentPage.page);
+    	 }
+    	 
+    	 if ($scope.currentPage.page + 2 < Math.ceil(100/12)) {
+    		 $scope.totalPages.push($scope.currentPage.page + 1);
+    		 $scope.totalPages.push('...');
+    		 $scope.totalPages.push(Math.ceil(100/12));
+    	 } else {
+    		 for (i = $scope.currentPage.page + 1; i < Math.ceil($scope.offers.total_count/12) + 1; i++) {
+    			 $scope.totalPages.push(i);
+    		 }
+    	 }    	 
     	 
     	 OffersService.saveCachedOffers($scope.offers);
     	 console.log($scope.offers);
@@ -197,13 +240,8 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
 		 $scope.applicationUtils.raisePopup(title, body);
      };
        
-     $scope.adjustGrid();
-
-	 if (selectedGame) {
-		 $scope.selectGame(selectedGame);
-	 } else {
-		 $scope.selectGame(570);
-	 }
+     $scope.adjustGrid();     
+	 $scope.selectGame($scope.currentPage.game);
    }
 ]);
 
@@ -214,7 +252,7 @@ buyControllers.controller('ItemDetailsCtrl', ['$scope', '$rootScope', '$sce', 'O
 	 $scope.applicationUtils = ApplicationUtils;
 	 
 	 $scope.item = undefined;
-	 $scope.offers = {};
+	 $scope.offers = [];
 	 $scope.selectedOffer = undefined;
 	 
 	 ctrl.cb_get_offers_success = function(data) {

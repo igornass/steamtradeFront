@@ -1689,14 +1689,19 @@ button.red {
 }
 
 .content .content-bottom {
-	background: #f8f9fa;
-	margin: 10px;
-	margin-bottom: -10px;
-	padding: 14px;
-	text-align: center;
-	list-style-type: none;
-	font-family: roboto-black;
-	font-size: 15px;
+    background: #f8f9fa;
+    margin: 10px;
+    margin-bottom: -10px;
+    height: 41px;
+    text-align: center;
+    list-style-type: none;
+    font-family: roboto-black;
+    font-size: 22px;
+    line-height: 25px;
+}
+
+.content .content-bottom .pages {
+    font-size: 16px;
 }
 
 .content .content-bottom li {

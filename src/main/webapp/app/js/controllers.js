@@ -116,7 +116,7 @@ commonControllers.controller('ValidateLoginCtrl', ['$scope', '$rootScope', '$sta
     	 AuthService.setAuthToken(validateLoginResponse.token);
     	 AuthService.updateUserDetails();
     	 $rootScope.isLoading = false;
-   	     $state.go( STATE_BUY );
+    	 $state.go(STATE_BUY, {game: 570, page: 1});
       };
       
       ctrl.validateLogin();

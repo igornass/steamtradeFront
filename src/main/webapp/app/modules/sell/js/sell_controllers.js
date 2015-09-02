@@ -265,7 +265,8 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 		  $scope.applicationUtils.setPath('Продать');
 		  $scope.applicationUtils.setStep(0, 0);
 		  InventoryService.clearSelectedItemsHistory();
-		  if ($scope.inventory.length == 0) $scope.getInventory(570);
+		  $scope.selectedItems = [];
+		  $scope.getInventory($scope.selectedGame);
       };
       
       //CALL BACKS

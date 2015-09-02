@@ -91,6 +91,16 @@ function($scope, $rootScope, $state, AuthService, ApplicationUtils, $window) {
  	  $scope.sidebarMaximized = !$scope.sidebarMaximized;
    };
    
+   $scope.swipeToggle = function(direction) {
+	 if (direction == 'left') {
+		 if (!$scope.menuMaximized) $scope.sidebarMaximized = true;
+		 $scope.menuMaximized = false;
+	 } else {
+		 if (!$scope.sidebarMaximized) $scope.menuMaximized = true; 
+		 $scope.sidebarMaximized = false;
+	 }
+   };
+   
    $scope.getTagProps();
    
 }]);

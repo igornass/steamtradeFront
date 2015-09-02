@@ -136,6 +136,17 @@ button[disabled=disabled] {
 	color: currentColor;
 }
 
+.clear-sidebar,
+.clear-menu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    display: none;
+}
+
 .popup {
   width: 320px;
   box-shadow: inset 0 0 0 1000px white;
@@ -236,6 +247,7 @@ button.red {
 	width: 110%;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	-webkit-overflow-scrolling: touch;
 }
 
 .content {
@@ -2158,6 +2170,10 @@ h1 {
 		font-size: 13px;
 	}
 	
+	.clear-menu {
+	   display: block;
+	}
+	
 	.header {
 		box-shadow: inset 140px 0px 0px 0px #ffffff;
 	}
@@ -2217,6 +2233,10 @@ h1 {
 	.header {
 		background: #ffffff;
 	}
+    
+    .clear-sidebar {
+       display: block;
+    }
 	
 	.header .logo {
 		padding-left: 0;
@@ -2657,15 +2677,6 @@ h1 {
 
 .custom-select li:hover {
 	color: #df6e60;
-}
-
-.clear-sidebar {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
 }
 
 .overlay {

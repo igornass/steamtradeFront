@@ -67,11 +67,11 @@
 		<title>Steamtrade Platform</title>
 	</head>
   
-	<body ng-class="{ 'overlayed': isLoading == true }" ng-controller="mainCtrl" ng-swipe-disable-mouse ng-swipe-left="sidebarMaximized = true; menuMaximized = false;" ng-swipe-right="menuMaximized = true; sidebarMaximized = false">
+	<body ng-class="{ 'overlayed': isLoading == true }" ng-controller="mainCtrl" ng-swipe-disable-mouse ng-swipe-left="swipeToggle('left')" ng-swipe-right="swipeToggle('right')">
 
     	<div ui-view></div> 
      
-        <div class="clear-sidebar" ng-show="menuMaximized" ng-click="menuMaximized = false; sidebarMaximized = false"></div>  
+        <div class="clear-menu" ng-show="menuMaximized" ng-click="toggleMenu();"></div>  
         
         <div class="overlay" ng-show="isLoading"></div> 
     	

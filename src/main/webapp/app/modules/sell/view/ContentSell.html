@@ -71,7 +71,7 @@
     	<dir-pagination-controls></dir-pagination-controls>
     </div>
     
-    <div class="clear-sidebar" ng-show="sidebarMaximized" ng-click="$rootScope.menuMaximized = false; $rootScope.sidebarMaximized = false"></div>
+    <div class="clear-sidebar" ng-show="sidebarMaximized" ng-click="toggleSidebar();"></div>
     
     <div ng-class="{ 'maximized': sidebarMaximized == true && menuMaximized == false }" class="sidebar" ui-on-Drop="onDrop($event, $data, selectedItems)">
     	<div class="scroller">
@@ -152,7 +152,7 @@
         
     </div>
     
-    <div class="clear-sidebar" ng-show="sidebarMaximized" ng-click="$rootScope.menuMaximized = false; $rootScope.sidebarMaximized = false"></div>
+    <div class="clear-sidebar" ng-show="sidebarMaximized" ng-click="toggleSidebar();"></div>
     
     <div ng-class="{ 'maximized': sidebarMaximized == true && menuMaximized == false }" class="sidebar sell">
         <div class="scroller">

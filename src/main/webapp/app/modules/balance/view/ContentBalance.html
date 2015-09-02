@@ -143,7 +143,7 @@
 	</div>
 </div>
 
-<div class="clear-sidebar" ng-show="sidebarMaximized" ng-click="$rootScope.menuMaximized = false; $rootScope.sidebarMaximized = false"></div>
+<div class="clear-sidebar" ng-show="sidebarMaximized" ng-click="toggleSidebar();"></div>
 
 <div ng-class="{ 'maximized': sidebarMaximized == true }" class="sidebar" ng-show="isLoggedIn">
 	<div class="scroller fullsize">

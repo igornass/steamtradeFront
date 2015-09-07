@@ -58,7 +58,7 @@
 		<div class="offer-block" ui-sref="buy_item_state({game: selectedGame, item: offer.name})">
             <img draggable="false" ng-src="{{applicationUtils.imageURL(offer.icon_url_large, 300)}}">
     		<div class="info-1">
-    			<div class="title">{{offer.name}}</div>
+    			<div class="title">{{offer.market_name}}</div>
     			<div>Количество: <span>{{offer.count}}</span></div>
     			<div>Цена: <span class="price">{{offer.min_price / 100}}</span></div>
     			<div>Цена в Steam: <span class="steam-price">{{offer.min_price / 100}}</span></div>			

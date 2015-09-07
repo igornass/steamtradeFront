@@ -3,7 +3,7 @@
         <div class="offer-wrapper">
             <img class="item-image" ng-src="{{item.icon_url_large ? applicationUtils.imageURL(item.icon_url_large, 783) : applicationUtils.imageURL(item.icon_url, 783)}}">
             <div class="item-description">
-                <div class="description-title">{{item.market_hash_name}}</div>
+                <div class="description-title">{{item.market_name}}</div>
                 <div class="description-entity" style="color: #{{description.color}}" ng-repeat="description in item.descriptionsArray" ng-bind-html="description.value"></div>
             </div>
             <div class="item-tags">
@@ -20,7 +20,7 @@
 	</div>
  
     <div class="content-top prices">
-        <div class="title">Динамика цен на {{item.market_hash_name}}</div>
+        <div class="title">Динамика цен на {{item.market_name}}</div>
         <div>Данные не доступны</div>
     </div>
 	
@@ -35,7 +35,7 @@
         <div class="buy-item" ng-repeat="offer in offers" ng-if="$index > 0">
             <img class="item-image-sidebar" ng-src="{{item.icon_url_large ? applicationUtils.imageURL(item.icon_url_large, 250) : applicationUtils.imageURL(item.icon_url, 250)}}">
             <div class="item-description-sidebar">
-                <div class="item-name">{{item.market_hash_name}}</div>
+                <div class="item-name">{{item.market_name}}</div>
                 <div class="item-owner"><b>Владелец: </b>{{offer.owner_name}}</div>
                 <div class="item-number"><b>Количество: </b>1</div>
                 <div class="price"><b>Цена: </b>{{offer.price / 100}}</div>

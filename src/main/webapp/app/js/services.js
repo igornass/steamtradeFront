@@ -7,6 +7,11 @@ commonServices.service('HttpConnectionService',['$http', '$rootScope', function(
     	this.sendHttpRequestWithToken( 'GET', url, authToken, null, cb_success, cb_error );
     };
     
+    this.raisePatchHttpRequest = function(url, authToken, cb_success, cb_error)
+    {
+    	this.sendHttpRequestWithToken( 'PATCH', url, authToken, null, cb_success, cb_error );
+    };
+    
     this.raiseDeleteHttpRequest = function(url, authToken, cb_success, cb_error)
     {
        this.sendHttpRequestWithToken( 'DELETE', url, authToken, null, cb_success, cb_error );

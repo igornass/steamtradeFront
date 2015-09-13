@@ -45,7 +45,7 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
 		  for (var tag in $scope.gameFilters.tags) {
 			  if ($scope.gameFilters.tags[tag]) {
 				  for (var i = 0; i < $scope.gameFilters.tags[tag].length; i++) {
-					  tags.push($scope.gameFilters.tags[tag][i]);
+					  tags.push('tags[' + tag + '][]=' + $scope.gameFilters.tags[tag][i]);
 				  }
 			  }
 		  }
@@ -199,14 +199,6 @@ buyControllers.controller('BuyContentCtrl', ['$scope', '$rootScope', '$window', 
     		 title = 'Вы не авторизованы';
     		 body = 'Для покупки предметов необходимо войти через Steam'
     		 
-    		 $scope.applicationUtils.raisePopup(title, body);
-    		 return;
-    	 }
-    	 
-    	 if (!$scope.currentUser.trader) {
-    		 title = 'Вы не можете покупать предметы';
-    		 body = 'Для подключения возможности покупки предметов подтвердите свой аккаунт с помощью мобильного телефона в <a href="#/settings">Настройках</a>'
-    			 
     		 $scope.applicationUtils.raisePopup(title, body);
     		 return;
     	 }

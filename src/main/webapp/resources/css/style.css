@@ -42,7 +42,14 @@
 
 @font-face {
     font-family: rouble;
-    src: local(rouble), url('../fonts/rouble-webfont.eot') format('opentype'), url('../fonts/rouble.otf') format('opentype');
+    src: local(rouble), url('../fonts/rouble.otf') format('opentype');
+}
+
+@media screen\0 {
+    @font-face {
+        font-family: rouble;
+        src: local(rouble), url('../fonts/rouble-webfont.eot') format('opentype'), url('../fonts/rouble.otf') format('opentype');
+    }
 }
 
 html, body {		
@@ -1288,6 +1295,12 @@ button.red {
     
 .content .content-top.settings .trade-link {
     min-width: 50%;
+}
+
+.content .content-top .refresh-button {
+  padding: 8px 12px;
+  margin: 10px 0 0 10px;
+  vertical-align: bottom;
 }
 
 .content .content-top .filter-button {

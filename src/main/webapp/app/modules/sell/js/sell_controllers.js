@@ -70,6 +70,11 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
     	 
     	 $scope.getInventory(gameId);
 	  };
+	  
+	  $scope.refreshInventory = function() {
+		  $rootScope.isLoading = true;
+		  InventoryService.refreshUserInventory($scope.selectedGame, cb_get_inventory_success, ApplicationUtils.cb_error_handler);
+	  };
       
       $scope.getInventory = function(gameId) {
     	  $rootScope.isLoading = true;
@@ -266,6 +271,7 @@ sellControllers.controller('SellContentCtrl', ['$scope', '$rootScope', '$timeout
 		  $scope.applicationUtils.setStep(0, 0);
 		  InventoryService.clearSelectedItemsHistory();
 		  $scope.selectedItems = [];
+		  if (!$scope.selectedGame) $scope.selectedGame = 570;
 		  $scope.getInventory($scope.selectedGame);
       };
       

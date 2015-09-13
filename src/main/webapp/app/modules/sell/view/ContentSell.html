@@ -16,6 +16,7 @@
     		<div class="search">
     			<h1>Поиск по названию</h1>
     			<input type="text" class="default" ng-model="search.description.market_name" placeholder="Введите название">
+                <button type="button" class="refresh-button" ng-click="refreshInventory()">Обновить инвентарь</button>
     			<div class="filter" ng-click="selectedGame ? filterBlock = !filterBlock : null"><ng-include src="'resources/svg/filter.svg'"></ng-include></div>
     			<div class="filter-block buy" ng-show="filterBlock">
     				<div>
@@ -41,11 +42,11 @@
     		 on-drop-success="dropSuccessHandler($event, item, inventory)"
     		 dir-paginate="item in inventory | filter:search | filter:gameFilters.filterByTags() | itemsPerPage: 12" class="content-block" ng-class="{ 'detailed': detailedItem == item.id }">
     		<div class="brief-view">
-    			<img draggable="false" ng-src="{{applicationUtils.imageURL(item.description.icon_url_large, 300)}}">
+    			<img draggable="false" ng-src="{{item.description.icon_url_large ? applicationUtils.imageURL(item.description.icon_url_large, 300) : applicationUtils.imageURL(item.description.icon_url, 300)}}">
     			<div class="title">{{item.description.market_name}}</div>
     		</div>
     		<div class="detailed-view">
-    			<img draggable="false" ng-src="{{applicationUtils.imageURL(item.description.icon_url_large, 300)}}">
+    			<img draggable="false" ng-src="{{item.description.icon_url_large ? applicationUtils.imageURL(item.description.icon_url_large, 300) : applicationUtils.imageURL(item.description.icon_url, 300)}}">
     			<div class="info">
     				<b>{{item.description.market_name}}</b>
     				<div class="description">
@@ -81,7 +82,7 @@
     		<div on-drop-success="dropSuccessHandler($event, $index, selectedItems)"
     			 ng-repeat="item in selectedItems"
     			 class="selected-item">
-    			<img draggable="false" ng-src="{{applicationUtils.imageURL(item.description.icon_url_large, 300)}}">
+    			<img draggable="false" ng-src="{{item.description.icon_url_large ? applicationUtils.imageURL(item.description.icon_url_large, 300) : applicationUtils.imageURL(item.description.icon_url, 300)}}">
     			<div class="description">
     				<div ng-click="removeItem(item)"><ng-include src="'resources/svg/delete.svg'"></ng-include></div>
     				<div class="title">{{item.description.market_name}}</div>
@@ -159,7 +160,7 @@
             <h1>Выбранный инвентарь</h1>
             
             <div class="sell-item" ng-repeat="item in selectedItems">
-                <img draggable="false" ng-src="{{applicationUtils.imageURL(item.description.icon_url_large, 300)}}">
+                <img draggable="false" ng-src="{{item.description.icon_url_large ? applicationUtils.imageURL(item.description.icon_url_large, 300) : applicationUtils.imageURL(item.description.icon_url, 300)}}">
                 <div class="item-info">
                     <div class="title">{{item.description.market_name}}</div>
                     <div class="price">Ваша цена: <b>{{item.price}}</b></div>

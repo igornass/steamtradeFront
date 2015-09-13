@@ -55,8 +55,8 @@
 	</div>
 	
 	<div ng-repeat="offer in offers.offers" class="content-block buy" ng-class="{ 'transparent': filterBlock == true }">
-		<div class="offer-block" ui-sref="buy_item_state({game: selectedGame, item: offer.name})">
-            <img draggable="false" ng-src="{{applicationUtils.imageURL(offer.icon_url_large, 300)}}">
+		<div class="offer-block" ui-sref="buy_item_state({game: selectedGame, item: offer.market_hash_name})">
+            <img draggable="false" ng-src="{{offer.icon_url_large ? applicationUtils.imageURL(offer.icon_url_large, 300) : applicationUtils.imageURL(offer.icon_url, 300)}}">
     		<div class="info-1">
     			<div class="title">{{offer.market_name}}</div>
     			<div>Количество: <span>{{offer.count}}</span></div>
@@ -74,7 +74,7 @@
     		</div>
         </div>
         <div class="info-3">
-            <button type="button" ng-click="buyButton(offer.name)">Купить</button>
+            <button type="button" ng-click="buyButton(offer.market_hash_name)">Купить</button>
         </div>
 	</div>
  

@@ -8,6 +8,12 @@ sellServices.service('InventoryService', ['HttpConnectionService', 'AuthService'
        HttpConnectionService.raiseGetHttpRequest(url, AuthService.getAuthToken(), cb_success, cb_error);
     };
     
+    this.refreshUserInventory = function(gameId, cb_success, cb_error)
+    {
+       var url = CURRENT_USER_INVENTORY_REST_WS_URL + gameId;
+       HttpConnectionService.raisePatchHttpRequest(url, AuthService.getAuthToken(), cb_success, cb_error);
+    };
+    
     this.sellSelectedItems = function(selectedItemsJson, cb_success, cb_error)
     {
        HttpConnectionService.raisePostHttpRequest(OFFERS_REST_WS_URL, AuthService.getAuthToken(), selectedItemsJson, cb_success, cb_error);

@@ -76,7 +76,7 @@ buyServices.service('OffersService', ['HttpConnectionService', 'AuthService', 'A
        {
           for (var i=0 ; i < tags.length ; i++)
           {
-             attr.push(URL_ATTR_OFFER_TAGS + '=' + tags[i]);
+             attr.push(tags[i]);
           }
        }
        var url = ApplicationUtils.addUrlAttrs( OFFERS_REST_WS_URL, attr );

@@ -643,7 +643,7 @@ button.red {
 	font-family: roboto-medium;
 	color: #495b69;
 	cursor: default;
-    width: 1000px;
+    max-width: 1000px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2073,7 +2073,7 @@ h1 {
 	}
 	
 	.header .page-title {
-        width: calc(100% - 550px);
+        max-width: calc(100% - 550px);
     }	
 	
 	.header .social {	
@@ -2201,7 +2201,7 @@ h1 {
 	
 	.header .page-title {
 	  margin-left: 35px;
-	  width: calc(100% - 450px);
+	  max-width: calc(100% - 450px);
 	}
 	
 	.menu {
@@ -2270,7 +2270,7 @@ h1 {
 	
 	.header .page-title {
 	    margin-left: 20px;
-        width: calc(100% - 370px);
+        max-width: calc(100% - 370px);
 	}
 	
 	.menu {
@@ -2406,6 +2406,7 @@ h1 {
 	
 	.header .page-title {
        width: 100%;
+       max-width: 100%;
     }
     
     .content {

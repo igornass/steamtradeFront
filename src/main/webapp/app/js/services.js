@@ -182,7 +182,7 @@ commonServices.service('GameFilters', ['$rootScope', function($rootScope){
 	    	  var match = true;
 	    	  
 	    	  for (var i = 0; i < item.description.tags.length; i++) {
-	    		  if (that.tags[item.description.tags[i].category_name] && that.tags[item.description.tags[i].category_name].indexOf(item.description.tags[i].internal_name) == -1) {
+	    		  if (that.tags[item.description.tags[i].category] && that.tags[item.description.tags[i].category].indexOf(item.description.tags[i].internal_name) == -1) {
 	    			  match = false;
 	    			  break;
 	    		  }

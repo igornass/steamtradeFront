@@ -19,7 +19,13 @@ settingsControllers.controller('SettingsContentCtrl', ['$scope', '$rootScope', '
      ctrl.cb_get_user_details_success = function(data) {
     	 $rootScope.isLoading = false;
     	 $scope.user = angular.fromJson(data);
+    	 SettingsService.getOperations(ctrl.cb_get_operations_success, ApplicationUtils.cb_error_handler);
      };
+     
+     ctrl.cb_get_operations_success = function(data) {
+    	 $rootScope.isLoading = false;
+    	 console.log(data);
+     }
      
      $scope.setTradeLink = function(tradeLink) {
     	 $rootScope.isLoading = true;

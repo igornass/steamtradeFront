@@ -194,7 +194,7 @@ commonServices.service('GameFilters', ['$rootScope', function($rootScope){
 	  
 	  that.typeAhead = function(query) {
 	      return function(tag) {	    	  
-	    	  if ($rootScope.tagsProps[that.selectedGame].tags[$rootScope.language][tag].indexOf(query) == -1) return false;	    	  
+	    	  if ($rootScope.tagsProps[that.selectedGame].tags[$rootScope.language][tag] && $rootScope.tagsProps[that.selectedGame].tags[$rootScope.language][tag].indexOf(query) == -1) return false;	    	  
 	    	  return true;
 	      }	      
 	  };

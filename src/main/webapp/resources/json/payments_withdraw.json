@@ -1,0 +1,68 @@
+[
+	{
+		"name": "Карта", 
+		"alias": "AC",
+		"commission": "5",
+		"text": "Введите номер карты"
+	}, 	
+	{
+		"name": "Яндекс.Деньги", 
+		"alias": "PC",
+		"commission": "5",
+		"text": "Введите номер кошелька"
+	}, 
+	{
+		"name": "С мобильного", 
+		"alias": "MC",
+		"commission": "5",
+		"text": "Введите номер телефона"
+	}, 
+	{
+		"name": "WebMoney", 
+		"alias": "WM",
+		"commission": "5",
+		"text": "Введите номер кошелька"
+	}, 
+	{
+		"name": "QIWI Wallet", 
+		"alias": "QW",
+		"commission": "5",
+		"text": "Введите номер кошелька"
+	},
+	{
+		"name": "Альфа-Клик", 
+		"alias": "AB",
+		"commission": "5",
+		"text": "Поправьте JSON"
+	},
+	{
+		"name": "Промсвязьбанк", 
+		"alias": "PB",
+		"commission": "5",
+		"text": "Поправьте JSON"
+	},
+	{
+		"name": "MasterPass", 
+		"alias": "MA",
+		"commission": "5",
+		"text": "Поправьте JSON"
+	},
+	{
+		"name": "Сбербанк", 
+		"alias": "SB",
+		"commission": "5",
+		"text": "Поправьте JSON"
+	},
+	{
+		"name": "Мобильный терминал", 
+		"alias": "MP",
+		"commission": "5",
+		"text": "Поправьте JSON"
+	},
+	{
+		"name": "Наличные", 
+		"alias": "GP",
+		"commission": "5",
+		"text": "Поправьте JSON"
+	}
+]

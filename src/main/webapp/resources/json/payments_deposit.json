@@ -1,0 +1,57 @@
+[
+	{
+		"name": "Карта", 
+		"alias": "AC",
+		"commission": "5"
+	}, 	
+	{
+		"name": "Яндекс.Деньги", 
+		"alias": "PC",
+		"commission": "5"
+	}, 
+	{
+		"name": "С мобильного", 
+		"alias": "MC",
+		"commission": "5"
+	}, 
+	{
+		"name": "WebMoney", 
+		"alias": "WM",
+		"commission": "5"
+	}, 
+	{
+		"name": "QIWI Wallet", 
+		"alias": "QW",
+		"commission": "5"
+	},
+	{
+		"name": "Альфа-Клик", 
+		"alias": "AB",
+		"commission": "5"
+	},
+	{
+		"name": "Промсвязьбанк", 
+		"alias": "PB",
+		"commission": "5"
+	},
+	{
+		"name": "MasterPass", 
+		"alias": "MA",
+		"commission": "5"
+	},
+	{
+		"name": "Сбербанк", 
+		"alias": "SB",
+		"commission": "5"
+	},
+	{
+		"name": "Мобильный терминал", 
+		"alias": "MP",
+		"commission": "5"
+	},
+	{
+		"name": "Наличные", 
+		"alias": "GP",
+		"commission": "5"
+	}
+]

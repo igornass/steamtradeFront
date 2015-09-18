@@ -1468,17 +1468,25 @@ button.red {
 	min-height: 0;
 }
 
-.content .content-top.deposit .deposit-block {
+.content .content-top.deposit .deposit-block,
+.content .content-top .withdraw-block {
     display: inline-block;
-    width: 35%;
-    min-width: 250px;
+    width: 49%;
     vertical-align: top;
+}
+
+.content .content-top .withdraw-target {
+    width: 90%;
+}
+
+.content .content-top.deposit .deposit-block .default {
+    width: 100%;
 }
 
 .content .content-top.deposit button {
     padding: 10px 40px;
-    margin-top: 10px;
-    vertical-align: bottom;
+    display: block;
+    margin: 10px auto;
 }
 
 .content .content-top.support h1 {
@@ -1540,52 +1548,31 @@ button.red {
 	padding: 10px 20px;
 }
 
-.content .content-top.balance .method {
-	color: #d6dee8;	
-	cursor: pointer;
+.content .commission {
+    margin-top: 10px;
 }
 
-.content .content-top.balance .method:hover {
-	color: #495b69;
-}
-
-.content .content-top.balance .method.current,
-.content .content-top.balance .method.current:hover {
-	color: #df6e60;
-}
-
-.content .content-top.balance svg { 
-	width: 48px;
-	height: 48px;
-    margin: 5px 5px 0px 0px;
-}
-
-.content .content-top.balance path {
-	fill: currentColor;
-}
-
-.content .content-top.balance .left {
+.content .balance .left {
 	display: inline-block;
 	width: 65%;
 	min-width: 200px;
 }
 
-.content .content-top.balance input {
-	width: 75%;
+.content .balance input {
+	width: 100%;
 }
 
-.content .content-top.balance .right {
+.content .balance .right {
 	display: inline-block;
 	width: 30%;
 	min-width: 160px;
 }
 
-.content .content-top.balance .controls {
-	margin-top: 20px;
+.content .balance .controls {
 	text-align: center;
 }
 
-.content .content-top.balance .controls a {
+.content .balance .controls a {
 	float: left;
 	font-family: roboto-black;
     font-size: 11px;
@@ -2114,6 +2101,11 @@ h1 {
   .content .content-top .filter-button {
     margin: 10px 0 0 190px;
   }
+    
+    .content .content-top .withdraw-block,
+    .content .content-top .withdraw-target {        
+        width: 100%;
+    }
 }
 
 @media only screen and (max-width: 1150px) {
@@ -2176,6 +2168,12 @@ h1 {
   .content .content-top .filter-button {
     margin: 10px 0 0 10px;
   }
+    
+    .content .content-top.deposit .deposit-block,
+    .content .content-top.deposit .custom-select,
+    .content .content-top.deposit .default {
+        width: 100%;
+    }
 }
 
 @media only screen and (max-width: 935px) {
@@ -2350,8 +2348,14 @@ h1 {
       margin: 10px 0 0 70px;
     }
     
-    .content .content-top.balance input {
+    .content .balance input {
         min-width: 190px;
+    }
+    
+    .content .content-top.deposit .deposit-block,
+    .content .content-top.deposit .custom-select,
+    .content .content-top.deposit .default {
+        width: 100%;
     }
     
     .content .content-top.settings .trade-link {

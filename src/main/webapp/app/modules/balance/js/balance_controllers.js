@@ -5,33 +5,61 @@ balanceControllers.controller('BalanceContentCtrl', ['$scope', '$rootScope', '$w
    {
 	  var ctrl = this;
 	  
-	  $scope.paymentMethods = [{name: 'Карта', value: 'AC'}, 
-	                           {name: 'Яндекс.Деньги', value: 'PC'}];
+	  $scope.depositMethods = [];
+	  $scope.withdrawMethods = [];
+	  
 	  
 	  $scope.applicationUtils = ApplicationUtils;
 	  $scope.applicationUtils.setPath('Баланс');
 	  $scope.applicationUtils.setStep(0, 0);
 	  $scope.paymentHistory = {};
 	  
+	   $scope.initPaymentsMethods = function() {
+		   $.getJSON("resources/json/payments_deposit.json", function(data) {
+			   $scope.depositMethods = data;
+		   });
+
+		   $.getJSON("resources/json/payments_withdraw.json", function(data) {
+			   $scope.withdrawMethods = data;
+		   });
+	   };
+	  
 	  $scope.selectMethod = function(methodId) {
 		  $scope.selectedMethod = methodId;
 	  };
 	  
-	  $scope.deposit = function() {
+	  $scope.depositBtn = function() {
 		  $scope.depositSum = $scope.depositSum.replace(/,/g, '.')
 		  
-		  if ($scope.validateSum($scope.depositSum) && $scope.gateway) {
+		  if ($scope.validateSum($scope.depositSum) && $scope.deposit) {
 			  $rootScope.isLoading = true;
-			  json = {'sum' : parseInt(+$scope.depositSum*100), 'gateway' : $scope.gateway};
+			  json = {'sum' : parseInt(+$scope.depositSum*100), 'gateway' : $scope.deposit};
 			  BalanceService.requestDeposit(json, ctrl.cb_request_deposit_success, ApplicationUtils.cb_error_handler);
 		  } else {
 			  alert ('Invalid sum or gateway value');
 		  };
 	  };
 	  
+	  $scope.withdrawBtn = function() {
+		  $scope.withdrawSum = $scope.withdrawSum.replace(/,/g, '.')
+		  
+		  if ($scope.validateSum($scope.withdrawSum) && $scope.withdraw) {
+			  $rootScope.isLoading = true;
+			  json = {'sum' : parseInt(+$scope.withdrawSum*100), 'gateway' : $scope.withdraw, 'params' : $scope.withdrawTarget};
+			  BalanceService.requestWithdraw(json, ctrl.cb_request_withdraw_success, ApplicationUtils.cb_error_handler);
+		  } else {
+			  alert ('Invalid sum, params or gateway value');
+		  };
+	  };
+	  
 	  $scope.initCashHistory = function() {
 		  $rootScope.isLoading = true;
 		  BalanceService.getCashHistory(ctrl.cb_cash_history_success, ApplicationUtils.cb_error_handler);
+	  };
+	  
+	  ctrl.cb_request_withdraw_success = function(data) {
+		  $rootScope.isLoading = false;
+		  console.log(data);
 	  };
 
 	  ctrl.cb_request_deposit_success = function(data) {
@@ -73,7 +101,8 @@ balanceControllers.controller('BalanceContentCtrl', ['$scope', '$rootScope', '$w
 	  }
 	  else
 	  {
-	     $scope.initCashHistory();  
+	     $scope.initCashHistory();
+	     $scope.initPaymentsMethods();
 	  }
    },
 

@@ -2,17 +2,17 @@
     <div class="error-message">Для просмотра данной страницы необходимо войти на сайт через Steam.</div>
 </div>
 
-<div class="content" ng-show="isLoggedIn">
+<div class="content" ng-show="isLoggedIn && withdrawMethods.length && depositMethods.length">
     <div class="content-top deposit">
         <div><b>Пополнение средств</b></div>
         <div class="deposit-block">
             <h1>Платежный шлюз</h1>
             <div class="custom-select">
                 <ng-include src="'resources/svg/arrow.svg'"></ng-include>
-                <input readonly type="text" class="default" placeholder="Выберите способ" ng-model="gatewayDisplay" ng-focus="selectTheme = true" ng-blur="selectTheme = false">
-                <input type="text" class="hidden" ng-model="gateway">
-                <ul ng-class="{ 'visible': selectTheme == true }">
-                    <li ng-repeat="item in paymentMethods" ng-click="$parent.gatewayDisplay = item.name; $parent.gateway = item.value; $parent.selectTheme = false">{{item.name}}</li>
+                <input readonly type="text" class="default" placeholder="Выберите способ" ng-model="depositDisplay" ng-focus="selectDeposit = true" ng-blur="selectDeposit = false">
+                <input type="text" class="hidden" ng-model="deposit">
+                <ul ng-class="{ 'visible': selectDeposit == true }">
+                    <li ng-repeat="item in depositMethods" ng-click="$parent.depositMethod = item; $parent.depositDisplay = item.name; $parent.deposit = item.alias; $parent.selectDeposit = false">{{item.name}}</li>
                 </ul>
             </div>
         </div>
@@ -20,126 +20,39 @@
             <h1>Сумма</h1>
             <input type="text" placeholder="Введите сумму" ng-model="depositSum" class="default" onkeypress='return event.charCode >= 44 && event.charCode <= 57 && event.charCode != 45 && event.charCode != 47'>
         </div>
-        <button type="button" ng-click="deposit()">Пополнить</button>
+        <button type="button" ng-disabled="!depositDisplay || !depositSum" ng-click="depositBtn()">Пополнить</button>
+        <div class="commission" ng-show="depositDisplay">Комиссия: {{depositMethod.commission}}%</div>
     </div>
     
-	<div class="content-top balance">
-		<div><b>Вывод средств:</b> Шаг 1</div>
-		<h1>Платежные системы</h1>
-		<span id="visa" ng-click="selectMethod('visa')" ng-class="{ 'current': selectedMethod == 'visa' }" class="method"><ng-include src="'resources/svg/visa.svg'"></ng-include></span>
-		<span id="mastercard" ng-click="selectMethod('mastercard')" ng-class="{ 'current': selectedMethod == 'mastercard' }" class="method"><ng-include src="'resources/svg/mastercard.svg'"></ng-include></span>
-		<span id="paypal" ng-click="selectMethod('paypal')" ng-class="{ 'current': selectedMethod == 'paypal' }" class="method"><ng-include src="'resources/svg/paypal.svg'"></ng-include></span>
-		<span id="webmoney" ng-click="selectMethod('webmoney')" ng-class="{ 'current': selectedMethod == 'webmoney' }" class="method"><ng-include src="'resources/svg/webmoney.svg'"></ng-include></span>
-		<span id="qiwi" ng-click="selectMethod('qiwi')" ng-class="{ 'current': selectedMethod == 'qiwi' }" class="method"><ng-include src="'resources/svg/qiwi.svg'"></ng-include></span>
-		<span id="yandex" ng-click="selectMethod('yandex')" ng-class="{ 'current': selectedMethod == 'yandex' }" class="method"><ng-include src="'resources/svg/yandex.svg'"></ng-include></span>
-	</div>
-	
-	<div ng-show="selectedMethod == 'visa'" class="content-top balance">
-		<div><b>Вывод средств:</b> Шаг 2</div>
-		
-		<div class="left">
-			<h1>Номер вашей карты</h1>
-			<input type="text" placeholder="Введите номер карты" class="default">
-		</div>
-		<div class="right">
-			<h1>Сумма</h1>
-			<input type="text" placeholder="Введите сумму" class="default">
-		</div>
-		
-		<div class="controls">
-			<a href="#">О выводе средств</a>
-			<button type="button">Вывести</button>
-		</div>
-	</div>
-	
-	<div ng-show="selectedMethod == 'mastercard'" class="content-top balance">
-		<div><b>Вывод средств:</b> Шаг 2</div>
-		
-		<div class="left">
-			<h1>Номер вашей карты</h1>
-			<input type="text" placeholder="Введите номер карты" class="default">
-		</div>
-		<div class="right">
-			<h1>Сумма</h1>
-			<input type="text" placeholder="Введите сумму" class="default">
-		</div>
-		
-		<div class="controls">
-			<a href="#">О выводе средств</a>
-			<button type="button">Вывести</button>
-		</div>
-	</div>
-	
-	<div ng-show="selectedMethod == 'paypal'" class="content-top balance">
-		<div><b>Вывод средств:</b> Шаг 2</div>
-		
-		<div class="left">
-			<h1>Ваш кошелек PayPal</h1>
-			<input type="text" placeholder="Введите кошелек" class="default">
-		</div>
-		<div class="right">
-			<h1>Сумма</h1>
-			<input type="text" placeholder="Введите сумму" class="default">
-		</div>
-		
-		<div class="controls">
-			<a href="#">О выводе средств</a>
-			<button type="button">Вывести</button>
-		</div>
-	</div>
-	
-	<div ng-show="selectedMethod == 'webmoney'" class="content-top balance">
-		<div><b>Вывод средств:</b> Шаг 2</div>
-		
-		<div class="left">
-			<h1>Ваш кошелек Webmoney</h1>
-			<input type="text" placeholder="Введите номер кошелька" class="default">
-		</div>
-		<div class="right">
-			<h1>Сумма</h1>
-			<input type="text" placeholder="Введите сумму" class="default">
-		</div>
-		
-		<div class="controls">
-			<a href="#">О выводе средств</a>
-			<button type="button">Вывести</button>
-		</div>
-	</div>
-	
-	<div ng-show="selectedMethod == 'qiwi'" class="content-top balance">
-		<div><b>Вывод средств:</b> Шаг 2</div>
-		
-		<div class="left">
-			<h1>Ваш Qiwi кошелек</h1>
-			<input type="text" placeholder="Введите номер кошелька" class="default">
-		</div>
-		<div class="right">
-			<h1>Сумма</h1>
-			<input type="text" placeholder="Введите сумму" class="default">
-		</div>
-		
-		<div class="controls">
-			<a href="#">О выводе средств</a>
-			<button type="button">Вывести</button>
-		</div>
-	</div>
-	
-	<div ng-show="selectedMethod == 'yandex'" class="content-top balance">
-		<div><b>Вывод средств:</b> Шаг 2</div>
-		
-		<div class="left">
-			<h1>Ваш Яндекс кошелек</h1>
-			<input type="text" placeholder="Введите номер кошелька" class="default">
-		</div>
-		<div class="right">
-			<h1>Сумма</h1>
-			<input type="text" placeholder="Введите сумму" class="default">
-		</div>
-		
-		<div class="controls">
-			<a href="#">О выводе средств</a>
-			<button type="button">Вывести</button>
-		</div>
+	<div class="content-top deposit">
+		<div><b>Вывод средств</b></div>
+        <div class="deposit-block">
+    		<h1>Платежный шлюз</h1>
+            <div class="custom-select">
+                <ng-include src="'resources/svg/arrow.svg'"></ng-include>
+                <input readonly type="text" class="default" placeholder="Выберите способ" ng-model="withdrawDisplay" ng-focus="selectWithdraw = true" ng-blur="selectWithdraw = false">
+                <input type="text" class="hidden" ng-model="withdraw">
+                <ul ng-class="{ 'visible': selectWithdraw == true }">
+                    <li ng-repeat="item in withdrawMethods" ng-click="$parent.withdrawMethod = item; $parent.withdrawDisplay = item.name; $parent.withdraw = item.alias; $parent.selectWithdraw = false">{{item.name}}</li>
+                </ul>
+            </div>
+        </div>
+    
+        <div ng-show="withdrawDisplay" class="balance">            
+            <div class="withdraw-block">
+                <h1>{{withdrawMethod.text}}</h1>
+                <input type="text" ng-model="withdrawTarget" placeholder="{{withdrawMethod.text}}" class="default withdraw-target">
+            </div>
+            <div class="withdraw-block">
+                <h1>Сумма</h1>
+                <input type="text" ng-model="withdrawSum" placeholder="Введите сумму" class="default">
+            </div>
+            
+            <div class="controls">
+                <button type="button" ng-disabled="!withdrawDisplay || !withdrawTarget || !withdrawSum" ng-click="withdrawBtn()">Вывести</button>
+            </div>
+            <div class="commission">Комиссия: {{withdrawMethod.commission}}%</div>
+        </div>
 	</div>
 </div>
 

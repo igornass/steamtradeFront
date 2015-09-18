@@ -9,7 +9,12 @@ supportControllers.controller('SupportContentCtrl', ['$scope', '$rootScope','App
 	 $scope.applicationUtils.setStep(0, 0);
 	 $scope.ticketSubjects = [];
 	 $scope.tickets = [];
+	 $scope.faq = [];
+	 $scope.selectedFAQ = -1;
 	 
+	 $scope.setSelectedFAQ = function(index) {
+		 $scope.selectedFAQ = index;
+	 };
 	 
 	 $scope.initSubjects = function() {
 		 $rootScope.isLoading = true;
@@ -20,6 +25,12 @@ supportControllers.controller('SupportContentCtrl', ['$scope', '$rootScope','App
 		 $rootScope.isLoading = true;
 		 SupportService.getCurrentUserTickets(ctrl.cb_tickets_success, ApplicationUtils.cb_error_handler);
 	 };
+
+	 $scope.getFAQ = function() {
+		   $.getJSON("resources/json/faq.json", function(data) {
+			   $scope.faq = data;
+		   });
+	   };
 	 
 	 $scope.createTicket = function(subjectId, message) {
 		 $rootScope.isLoading = true;
@@ -91,6 +102,7 @@ supportControllers.controller('SupportContentCtrl', ['$scope', '$rootScope','App
 	  //entry point
 	  $scope.initSubjects();
 	  $scope.initTickets();
+	  $scope.getFAQ();
 	 
   }
 ]);                                 

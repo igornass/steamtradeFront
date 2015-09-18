@@ -23,4 +23,9 @@ settingsServices.service('SettingsService', ['HttpConnectionService', 'AuthServi
     	HttpConnectionService.raisePostHttpRequest(url, AuthService.getAuthToken(), dataJson, cb_success, cb_error);
     };
     
+    this.getOperations = function(cb_success, cb_error)
+    {
+    	HttpConnectionService.raiseGetHttpRequest(OPERATIONS_REST_WS_URL, AuthService.getAuthToken(), cb_success, cb_error);
+    }
+    
 }]);

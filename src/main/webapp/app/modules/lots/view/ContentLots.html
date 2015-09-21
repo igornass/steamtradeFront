@@ -11,7 +11,7 @@
     
     <div class="content-block lots" ng-repeat="offer in offers">
         <img ng-src="{{offer.item.icon_url_large ? applicationUtils.imageURL(offer.item.icon_url_large, 300) : applicationUtils.imageURL(offer.item.icon_url, 300)}}">
-        <div class="item">{{offer.item.name}}</div>
+        <div class="item">{{offer.item.market_name}}</div>
         <button type="button" class="red" ng-show="offer.status_offer == 'opening'" ng-click="deleteOfferById(offer.id)">Снять лот</button>
         <div class="status red" ng-show="offer.status_offer == 'canceled'">Снят</div>
         <div class="status" ng-show="offer.status_offer == 'closing'">Продан</div>

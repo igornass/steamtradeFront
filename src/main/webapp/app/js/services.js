@@ -230,7 +230,8 @@ commonServices.service('ApplicationUtils', ['$rootScope', function($rootScope){
     };
     
     this.humanTime = function(timestamp, withTime) {
-		 var date = new Date(timestamp);
+    	 var temp = new Date();
+		 var date = new Date(timestamp + temp.getTimezoneOffset()*60*1000);
 		 
 		 if (!withTime)
 		 	return date.getDate() + ' ' + MONTH[date.getMonth()] + ' ' + date.getFullYear();

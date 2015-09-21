@@ -810,6 +810,11 @@ button.red {
 
 /*	Content elements	*/
 
+.content .timer {
+    font-size: 12px;
+    margin-top: 10px;
+}
+
 .content .social-networks {
     display: inline-block;
     vertical-align: middle;
@@ -1287,10 +1292,11 @@ button.red {
 .content .content-top.settings button {
     padding: 10px 0;
     width: 230px;
+    margin: 10px 10px 0 0;
 }
 
 .content .content-top.settings input {
-    margin: 0 10px 10px 0;
+    margin-right: 10px;
 }
     
 .content .content-top.settings .trade-link {
@@ -2319,6 +2325,11 @@ h1 {
 		transition: right 0.5s ease, box-shadow 0.5s ease;
 	}
 
+    .sidebar .scroller {
+        overflow-y: scroll;        
+        -webkit-overflow-scrolling: touch;
+    }
+
 	.sidebar.maximized {
 		right: 0;
 		box-shadow: 0px 0px 0px 1000px rgba(0, 0, 0, 0.7);
@@ -2331,6 +2342,11 @@ h1 {
 	.content .content-block.exchange .body {
 	   max-width: 200px;
 	}
+
+    .content {
+        overflow-y: scroll;        
+        -webkit-overflow-scrolling: touch;
+    }
 }
 
 

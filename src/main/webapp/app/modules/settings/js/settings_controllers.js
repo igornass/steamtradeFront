@@ -1,7 +1,7 @@
 var settingsControllers = angular.module('Settings.controllers', []);
 
-settingsControllers.controller('SettingsContentCtrl', ['$scope', '$rootScope', 'SettingsService', 'ApplicationUtils',
-   function($scope, $rootScope, SettingsService, ApplicationUtils)
+settingsControllers.controller('SettingsContentCtrl', ['$scope', '$rootScope', '$timeout', 'SettingsService', 'ApplicationUtils',
+   function($scope, $rootScope, $timeout, SettingsService, ApplicationUtils)
    {
 	 var ctrl = this;
 	 $scope.applicationUtils = ApplicationUtils;
@@ -24,8 +24,32 @@ settingsControllers.controller('SettingsContentCtrl', ['$scope', '$rootScope', '
      
      ctrl.cb_get_operations_success = function(data) {
     	 $rootScope.isLoading = false;
-    	 console.log(data);
-     }
+    	 response = angular.fromJson(data);
+    	 for (operation in response) {
+    		 if (response[operation].alias == "setPhone") {
+    			 $scope.operationId = response[operation].operation_id;
+    			 var currentTime = new Date().getTime();
+    			 $scope.counter = Math.floor((response[operation].repeat_sms_time - currentTime) / 1000);
+    			 if ($scope.counter > 0) {
+    				 $scope.countdown();
+    			 } else {
+    				 $scope.counter = 0;
+    			 }
+    			 return;
+    		 }
+    	 }
+     };
+     
+     $scope.countdown = function() {
+	    stopped = $timeout(function() {
+	     if ($scope.counter <= 0) {
+	    	 $scope.counter = 0;
+	    	 return;
+	     }
+	     $scope.counter--;   
+	     if ($scope.counter > 0) $scope.countdown();
+	    }, 1000);
+	 };
      
      $scope.setTradeLink = function(tradeLink) {
     	 $rootScope.isLoading = true;
@@ -48,7 +72,10 @@ settingsControllers.controller('SettingsContentCtrl', ['$scope', '$rootScope', '
      ctrl.cb_set_phone_success = function(data) {
     	 $rootScope.isLoading = false;
     	 response = angular.fromJson(data);
-    	 $scope.operationId = response.OPERATION_ID;
+    	 $scope.operationId = response.operation_id;
+		 var currentTime = new Date().getTime();
+		 $scope.counter = Math.floor((response.repeat_sms_time - currentTime) / 1000);
+		 $scope.countdown();
      };
      
      $scope.sendCode = function(code) {
@@ -61,6 +88,22 @@ settingsControllers.controller('SettingsContentCtrl', ['$scope', '$rootScope', '
     	 $scope.operationId = undefined;
          
          $scope.getUserDetails();
+     };
+     
+     $scope.resendCode = function() {
+    	 $rootScope.isLoading = true;
+    	 SettingsService.resendCode($scope.operationId, ctrl.cb_set_phone_success, ApplicationUtils.cb_error_handler);
+     };
+     
+     $scope.cancelOperation = function() {
+    	 $rootScope.isLoading = true;
+    	 SettingsService.cancelOperation($scope.operationId, ctrl.cb_cancel_success, ApplicationUtils.cb_error_handler);
+     };
+     
+     ctrl.cb_cancel_success = function() {
+    	 $rootScope.isLoading = false;
+    	 $scope.operationId = undefined;
+    	 $scope.counter = 0;
      };
        
      $scope.getUserDetails();

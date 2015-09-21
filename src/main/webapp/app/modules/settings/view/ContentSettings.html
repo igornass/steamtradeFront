@@ -2,22 +2,34 @@
     <div class="error-message">Для просмотра данной страницы необходимо войти на сайт через Steam.</div>
 </div>
 
-<div class="content fullsize" ng-show="isLoggedIn">
+<div class="content fullsize" ng-show="isLoggedIn && user">
     <div class="content-top settings">
         <h1>Ссылка на обмен</h1>
         <input class="default trade-link" type="text" ng-model="user.link_trade" placeholder="Вставьте вашу ссылку">
         <button type="button" ng-click="setTradeLink(user.link_trade)">Применить</button>
         
+        <h1 ng-show="user.phone">Подключенный номер телефона</h1>
+        <div ng-show="user.phone">
+            <input class="default" type="text" disabled ng-model="phone" placeholder="+{{user.phone.substring(0, 4)}}xxx{{user.phone.substring(7, 11)}}">
+        </div>
+        
         <h1 ng-hide="user.trader || operationId">Подключить номер телефона для возможности продажи</h1>
-        <h1 ng-show="user.trader">Изменить номер телефона</h1>
+        
         <h1 ng-show="operationId">Подтвердите ваш номер с помощью кода, высланного вам в виде SMS</h1>
-        <div ng-hide="operationId">
+        <div ng-hide="operationId || user.phone">
             <input class="default" type="text" ng-model="phone" placeholder="7xxxxxxxxxx">
-            <button type="button" ng-click="setPhone(phone)">Получить код</button>
+            <button type="button" ng-disabled="!phone" ng-click="setPhone(phone)">Получить код</button>
         </div>
         <div ng-show="operationId">
             <input class="default" type="text" ng-model="code" placeholder="Введите код">
-            <button type="button" ng-click="sendCode(code)">Подтвердить</button>
+            <button type="button" ng-disabled="!code" ng-click="sendCode(code)">Подтвердить</button>
+        </div>
+        <div class="timer" ng-show="counter">
+            Отменить операцию или отправить код повторно станет возможно через <b>{{counter}}</b> секунд.
+        </div>
+        <div ng-show="operationId && !counter">
+            <button type="button" ng-click="resendCode()">Отправить код повторно</button>
+            <button type="button" ng-click="cancelOperation()">Отменить операцию</button>
         </div>
     </div>	
 </div>

@@ -26,6 +26,18 @@ settingsServices.service('SettingsService', ['HttpConnectionService', 'AuthServi
     this.getOperations = function(cb_success, cb_error)
     {
     	HttpConnectionService.raiseGetHttpRequest(OPERATIONS_REST_WS_URL, AuthService.getAuthToken(), cb_success, cb_error);
+    };
+    
+    this.resendCode = function(operationId, cb_success, cb_error)
+    {
+    	var url = OPERATIONS_REST_WS_URL + operationId + OPERATIONS_RESEND_REST_WS_URL;
+    	HttpConnectionService.raisePostHttpRequest(url, AuthService.getAuthToken(), null, cb_success, cb_error);
+    };
+        
+    this.cancelOperation = function(operationId, cb_success, cb_error)
+    {
+    	var url = OPERATIONS_REST_WS_URL + operationId;
+    	HttpConnectionService.raiseDeleteHttpRequest(url, AuthService.getAuthToken(), cb_success, cb_error);
     }
     
 }]);
